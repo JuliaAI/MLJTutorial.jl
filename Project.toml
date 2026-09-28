@@ -1,4 +1,5 @@
 authors = ["Anthony D. Blaom <anthony.blaom@gmail.com>"]
+version = "0.1.0"
 
 [workspace]
 projects = ["docs", "NotebookManagementTools"]

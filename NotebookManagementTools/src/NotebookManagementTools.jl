@@ -58,6 +58,8 @@ workspace package pattern, this might look something like this:
 """
 module NotebookManagementTools
 
+using Distributed
+
 const NOTEBOOK_MANAGEMENT_TOOLS_PATH = joinpath(@__DIR__, "..")
 
 include("utilities.jl")
