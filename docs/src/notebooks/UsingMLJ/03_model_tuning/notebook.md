@@ -77,23 +77,24 @@ ebase = evaluate(baseline, X, y; options...)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: ProbabilisticPipeline-112
+Tag: ProbabilisticPipeline-908
 Extract:
-┌──────────┬──────────────┬─────────────┐
-│ measure  │ operation    │ measurement │
-├──────────┼──────────────┼─────────────┤
-│ LPLoss(  │ predict_mean │ 0.568       │
-│   p = 1) │              │             │
-└──────────┴──────────────┴─────────────┘
-┌──────────────────────┬─────────┐
-│ per_fold             │ 1.96*SE │
-├──────────────────────┼─────────┤
-│ [0.544, 0.57, 0.592] │ 0.0332  │
-└──────────────────────┴─────────┘
-
+┌──────────┬──────────────┬─────────────┬─────────┐
+│ measure  │ operation    │ measurement │ 1.96*SE │
+├──────────┼──────────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict_mean │ 0.568       │ 0.033   │
+│   p = 1) │              │             │         │
+└──────────┴──────────────┴─────────────┴─────────┘
+┌──────────────────────┐
+│ per_fold             │
+├──────────────────────┤
+│ [0.544, 0.57, 0.592] │
+└──────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 Inspect hyper-parameters:
@@ -147,7 +148,7 @@ savefig("learning_curve.svg");
 ````
 [ Info: Training machine(DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …).
 [ Info: Attempting to evaluate 30 models.
-Evaluating over 30 metamodels:   7%[=>                       ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  10%[==>                      ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  13%[===>                     ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  17%[====>                    ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  20%[=====>                   ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  23%[=====>                   ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  27%[======>                  ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  30%[=======>                 ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  33%[========>                ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  37%[=========>               ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  40%[==========>              ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  43%[==========>              ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  47%[===========>             ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  50%[============>            ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  53%[=============>           ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  57%[==============>          ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  60%[===============>         ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  63%[===============>         ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  67%[================>        ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  70%[=================>       ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  73%[==================>      ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  77%[===================>     ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  80%[====================>    ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  83%[====================>    ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  87%[=====================>   ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  90%[======================>  ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  93%[=======================> ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  97%[========================>]  ETA: 0:00:01[KEvaluating over 30 metamodels: 100%[=========================] Time: 0:00:36[K
+Evaluating over 30 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 30 metamodels:  10%[==>                      ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  13%[===>                     ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  17%[====>                    ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  20%[=====>                   ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  23%[=====>                   ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  27%[======>                  ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  30%[=======>                 ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  33%[========>                ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  37%[=========>               ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  40%[==========>              ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  43%[==========>              ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  47%[===========>             ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  50%[============>            ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  53%[=============>           ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  57%[==============>          ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  60%[===============>         ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  63%[===============>         ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  67%[================>        ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  70%[=================>       ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  73%[==================>      ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  77%[===================>     ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  80%[====================>    ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  83%[====================>    ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  87%[=====================>   ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  90%[======================>  ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  93%[=======================> ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  97%[========================>]  ETA: 0:00:01[KEvaluating over 30 metamodels: 100%[=========================] Time: 0:00:28[K
 
 ````
 
@@ -224,7 +225,7 @@ savefig("tuned_model_grid.svg");
 ````
 [ Info: Training machine(DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …).
 [ Info: Attempting to evaluate 36 models.
-Evaluating over 36 metamodels:   6%[=>                       ]  ETA: 0:00:33[KEvaluating over 36 metamodels:   8%[==>                      ]  ETA: 0:00:45[KEvaluating over 36 metamodels:  11%[==>                      ]  ETA: 0:00:42[KEvaluating over 36 metamodels:  14%[===>                     ]  ETA: 0:00:37[KEvaluating over 36 metamodels:  17%[====>                    ]  ETA: 0:00:42[KEvaluating over 36 metamodels:  19%[====>                    ]  ETA: 0:00:39[KEvaluating over 36 metamodels:  22%[=====>                   ]  ETA: 0:00:36[KEvaluating over 36 metamodels:  25%[======>                  ]  ETA: 0:00:36[KEvaluating over 36 metamodels:  28%[======>                  ]  ETA: 0:00:34[KEvaluating over 36 metamodels:  31%[=======>                 ]  ETA: 0:00:33[KEvaluating over 36 metamodels:  33%[========>                ]  ETA: 0:00:30[KEvaluating over 36 metamodels:  36%[=========>               ]  ETA: 0:00:29[KEvaluating over 36 metamodels:  39%[=========>               ]  ETA: 0:00:28[KEvaluating over 36 metamodels:  42%[==========>              ]  ETA: 0:00:28[KEvaluating over 36 metamodels:  44%[===========>             ]  ETA: 0:00:28[KEvaluating over 36 metamodels:  47%[===========>             ]  ETA: 0:00:27[KEvaluating over 36 metamodels:  50%[============>            ]  ETA: 0:00:26[KEvaluating over 36 metamodels:  53%[=============>           ]  ETA: 0:00:25[KEvaluating over 36 metamodels:  56%[=============>           ]  ETA: 0:00:24[KEvaluating over 36 metamodels:  58%[==============>          ]  ETA: 0:00:22[KEvaluating over 36 metamodels:  61%[===============>         ]  ETA: 0:00:21[KEvaluating over 36 metamodels:  64%[===============>         ]  ETA: 0:00:19[KEvaluating over 36 metamodels:  67%[================>        ]  ETA: 0:00:18[KEvaluating over 36 metamodels:  69%[=================>       ]  ETA: 0:00:16[KEvaluating over 36 metamodels:  72%[==================>      ]  ETA: 0:00:15[KEvaluating over 36 metamodels:  75%[==================>      ]  ETA: 0:00:13[KEvaluating over 36 metamodels:  78%[===================>     ]  ETA: 0:00:12[KEvaluating over 36 metamodels:  81%[====================>    ]  ETA: 0:00:10[KEvaluating over 36 metamodels:  83%[====================>    ]  ETA: 0:00:09[KEvaluating over 36 metamodels:  86%[=====================>   ]  ETA: 0:00:08[KEvaluating over 36 metamodels:  89%[======================>  ]  ETA: 0:00:06[KEvaluating over 36 metamodels:  92%[======================>  ]  ETA: 0:00:04[KEvaluating over 36 metamodels:  94%[=======================> ]  ETA: 0:00:03[KEvaluating over 36 metamodels:  97%[========================>]  ETA: 0:00:01[KEvaluating over 36 metamodels: 100%[=========================] Time: 0:00:53[K
+Evaluating over 36 metamodels:   6%[=>                       ]  ETA: 0:00:43[KEvaluating over 36 metamodels:   8%[==>                      ]  ETA: 0:00:50[KEvaluating over 36 metamodels:  11%[==>                      ]  ETA: 0:00:43[KEvaluating over 36 metamodels:  14%[===>                     ]  ETA: 0:00:44[KEvaluating over 36 metamodels:  17%[====>                    ]  ETA: 0:00:42[KEvaluating over 36 metamodels:  19%[====>                    ]  ETA: 0:00:40[KEvaluating over 36 metamodels:  22%[=====>                   ]  ETA: 0:00:39[KEvaluating over 36 metamodels:  25%[======>                  ]  ETA: 0:00:35[KEvaluating over 36 metamodels:  28%[======>                  ]  ETA: 0:00:34[KEvaluating over 36 metamodels:  31%[=======>                 ]  ETA: 0:00:34[KEvaluating over 36 metamodels:  33%[========>                ]  ETA: 0:00:33[KEvaluating over 36 metamodels:  36%[=========>               ]  ETA: 0:00:30[KEvaluating over 36 metamodels:  39%[=========>               ]  ETA: 0:00:30[KEvaluating over 36 metamodels:  42%[==========>              ]  ETA: 0:00:29[KEvaluating over 36 metamodels:  44%[===========>             ]  ETA: 0:00:28[KEvaluating over 36 metamodels:  47%[===========>             ]  ETA: 0:00:26[KEvaluating over 36 metamodels:  50%[============>            ]  ETA: 0:00:25[KEvaluating over 36 metamodels:  53%[=============>           ]  ETA: 0:00:23[KEvaluating over 36 metamodels:  56%[=============>           ]  ETA: 0:00:22[KEvaluating over 36 metamodels:  58%[==============>          ]  ETA: 0:00:20[KEvaluating over 36 metamodels:  61%[===============>         ]  ETA: 0:00:19[KEvaluating over 36 metamodels:  64%[===============>         ]  ETA: 0:00:17[KEvaluating over 36 metamodels:  67%[================>        ]  ETA: 0:00:16[KEvaluating over 36 metamodels:  69%[=================>       ]  ETA: 0:00:15[KEvaluating over 36 metamodels:  72%[==================>      ]  ETA: 0:00:13[KEvaluating over 36 metamodels:  75%[==================>      ]  ETA: 0:00:12[KEvaluating over 36 metamodels:  78%[===================>     ]  ETA: 0:00:11[KEvaluating over 36 metamodels:  81%[====================>    ]  ETA: 0:00:09[KEvaluating over 36 metamodels:  83%[====================>    ]  ETA: 0:00:08[KEvaluating over 36 metamodels:  86%[=====================>   ]  ETA: 0:00:07[KEvaluating over 36 metamodels:  89%[======================>  ]  ETA: 0:00:05[KEvaluating over 36 metamodels:  92%[======================>  ]  ETA: 0:00:04[KEvaluating over 36 metamodels:  94%[=======================> ]  ETA: 0:00:03[KEvaluating over 36 metamodels:  97%[========================>]  ETA: 0:00:01[KEvaluating over 36 metamodels: 100%[=========================] Time: 0:00:48[K
 
 ````
 
@@ -271,18 +272,18 @@ CompactPerformanceEvaluation object with these fields:
   resampling, repeats
 Tag: 
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 0.171       │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌─────────────────────────────┬─────────┐
-│ per_fold                    │ 1.96*SE │
-├─────────────────────────────┼─────────┤
-│ [0.174, 0.16, 0.156, 0.192] │ 0.0181  │
-└─────────────────────────────┴─────────┘
-
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 0.171       │ 0.018   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌─────────────────────────────┐
+│ per_fold                    │
+├─────────────────────────────┤
+│ [0.174, 0.16, 0.156, 0.192] │
+└─────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 Instead we can use a random search strategy:
@@ -306,7 +307,7 @@ savefig("tuned_model_random.svg");
 ````
 [ Info: Training machine(DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …).
 [ Info: Attempting to evaluate 40 models.
-Evaluating over 40 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 40 metamodels:   2%[>                        ]  ETA: 0:00:32[KEvaluating over 40 metamodels:   5%[=>                       ]  ETA: 0:00:47[KEvaluating over 40 metamodels:   8%[=>                       ]  ETA: 0:00:44[KEvaluating over 40 metamodels:  10%[==>                      ]  ETA: 0:00:46[KEvaluating over 40 metamodels:  12%[===>                     ]  ETA: 0:00:53[KEvaluating over 40 metamodels:  15%[===>                     ]  ETA: 0:00:49[KEvaluating over 40 metamodels:  18%[====>                    ]  ETA: 0:00:47[KEvaluating over 40 metamodels:  20%[=====>                   ]  ETA: 0:00:46[KEvaluating over 40 metamodels:  22%[=====>                   ]  ETA: 0:00:47[KEvaluating over 40 metamodels:  25%[======>                  ]  ETA: 0:00:46[KEvaluating over 40 metamodels:  28%[======>                  ]  ETA: 0:00:43[KEvaluating over 40 metamodels:  30%[=======>                 ]  ETA: 0:00:42[KEvaluating over 40 metamodels:  32%[========>                ]  ETA: 0:00:40[KEvaluating over 40 metamodels:  35%[========>                ]  ETA: 0:00:40[KEvaluating over 40 metamodels:  38%[=========>               ]  ETA: 0:00:39[KEvaluating over 40 metamodels:  40%[==========>              ]  ETA: 0:00:37[KEvaluating over 40 metamodels:  42%[==========>              ]  ETA: 0:00:36[KEvaluating over 40 metamodels:  45%[===========>             ]  ETA: 0:00:34[KEvaluating over 40 metamodels:  48%[===========>             ]  ETA: 0:00:33[KEvaluating over 40 metamodels:  50%[============>            ]  ETA: 0:00:32[KEvaluating over 40 metamodels:  52%[=============>           ]  ETA: 0:00:30[KEvaluating over 40 metamodels:  55%[=============>           ]  ETA: 0:00:28[KEvaluating over 40 metamodels:  58%[==============>          ]  ETA: 0:00:27[KEvaluating over 40 metamodels:  60%[===============>         ]  ETA: 0:00:25[KEvaluating over 40 metamodels:  62%[===============>         ]  ETA: 0:00:24[KEvaluating over 40 metamodels:  65%[================>        ]  ETA: 0:00:22[KEvaluating over 40 metamodels:  68%[================>        ]  ETA: 0:00:21[KEvaluating over 40 metamodels:  70%[=================>       ]  ETA: 0:00:19[KEvaluating over 40 metamodels:  72%[==================>      ]  ETA: 0:00:17[KEvaluating over 40 metamodels:  75%[==================>      ]  ETA: 0:00:15[KEvaluating over 40 metamodels:  78%[===================>     ]  ETA: 0:00:14[KEvaluating over 40 metamodels:  80%[====================>    ]  ETA: 0:00:12[KEvaluating over 40 metamodels:  82%[====================>    ]  ETA: 0:00:11[KEvaluating over 40 metamodels:  85%[=====================>   ]  ETA: 0:00:09[KEvaluating over 40 metamodels:  88%[=====================>   ]  ETA: 0:00:08[KEvaluating over 40 metamodels:  90%[======================>  ]  ETA: 0:00:06[KEvaluating over 40 metamodels:  92%[=======================> ]  ETA: 0:00:05[KEvaluating over 40 metamodels:  95%[=======================> ]  ETA: 0:00:03[KEvaluating over 40 metamodels:  98%[========================>]  ETA: 0:00:02[KEvaluating over 40 metamodels: 100%[=========================] Time: 0:01:01[K
+Evaluating over 40 metamodels:   5%[=>                       ]  ETA: 0:00:56[KEvaluating over 40 metamodels:   8%[=>                       ]  ETA: 0:00:48[KEvaluating over 40 metamodels:  10%[==>                      ]  ETA: 0:00:48[KEvaluating over 40 metamodels:  12%[===>                     ]  ETA: 0:00:48[KEvaluating over 40 metamodels:  15%[===>                     ]  ETA: 0:00:44[KEvaluating over 40 metamodels:  18%[====>                    ]  ETA: 0:00:46[KEvaluating over 40 metamodels:  20%[=====>                   ]  ETA: 0:00:44[KEvaluating over 40 metamodels:  22%[=====>                   ]  ETA: 0:00:42[KEvaluating over 40 metamodels:  25%[======>                  ]  ETA: 0:00:41[KEvaluating over 40 metamodels:  28%[======>                  ]  ETA: 0:00:38[KEvaluating over 40 metamodels:  30%[=======>                 ]  ETA: 0:00:39[KEvaluating over 40 metamodels:  32%[========>                ]  ETA: 0:00:37[KEvaluating over 40 metamodels:  35%[========>                ]  ETA: 0:00:36[KEvaluating over 40 metamodels:  38%[=========>               ]  ETA: 0:00:35[KEvaluating over 40 metamodels:  40%[==========>              ]  ETA: 0:00:33[KEvaluating over 40 metamodels:  42%[==========>              ]  ETA: 0:00:33[KEvaluating over 40 metamodels:  45%[===========>             ]  ETA: 0:00:31[KEvaluating over 40 metamodels:  48%[===========>             ]  ETA: 0:00:29[KEvaluating over 40 metamodels:  50%[============>            ]  ETA: 0:00:28[KEvaluating over 40 metamodels:  52%[=============>           ]  ETA: 0:00:27[KEvaluating over 40 metamodels:  55%[=============>           ]  ETA: 0:00:26[KEvaluating over 40 metamodels:  58%[==============>          ]  ETA: 0:00:24[KEvaluating over 40 metamodels:  60%[===============>         ]  ETA: 0:00:23[KEvaluating over 40 metamodels:  62%[===============>         ]  ETA: 0:00:22[KEvaluating over 40 metamodels:  65%[================>        ]  ETA: 0:00:20[KEvaluating over 40 metamodels:  68%[================>        ]  ETA: 0:00:19[KEvaluating over 40 metamodels:  70%[=================>       ]  ETA: 0:00:17[KEvaluating over 40 metamodels:  72%[==================>      ]  ETA: 0:00:15[KEvaluating over 40 metamodels:  75%[==================>      ]  ETA: 0:00:14[KEvaluating over 40 metamodels:  78%[===================>     ]  ETA: 0:00:12[KEvaluating over 40 metamodels:  80%[====================>    ]  ETA: 0:00:11[KEvaluating over 40 metamodels:  82%[====================>    ]  ETA: 0:00:10[KEvaluating over 40 metamodels:  85%[=====================>   ]  ETA: 0:00:08[KEvaluating over 40 metamodels:  88%[=====================>   ]  ETA: 0:00:07[KEvaluating over 40 metamodels:  90%[======================>  ]  ETA: 0:00:06[KEvaluating over 40 metamodels:  92%[=======================> ]  ETA: 0:00:04[KEvaluating over 40 metamodels:  95%[=======================> ]  ETA: 0:00:03[KEvaluating over 40 metamodels:  98%[========================>]  ETA: 0:00:01[KEvaluating over 40 metamodels: 100%[=========================] Time: 0:00:55[K
 
 ````
 
@@ -336,23 +337,24 @@ e1 = evaluate(tuned_pipe, X, y; options...)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicTunedModel-250
+Tag: DeterministicTunedModel-569
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 0.175       │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌───────────────────────┬─────────┐
-│ per_fold              │ 1.96*SE │
-├───────────────────────┼─────────┤
-│ [0.166, 0.166, 0.192] │ 0.021   │
-└───────────────────────┴─────────┘
-
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 0.175       │ 0.021   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌───────────────────────┐
+│ per_fold              │
+├───────────────────────┤
+│ [0.166, 0.166, 0.192] │
+└───────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 Comparing with the baseline computed earlier:
@@ -362,9 +364,9 @@ Comparing with the baseline computed earlier:
 ````
 
 ````
-ebase = PerformanceEvaluation("ProbabilisticPipeline-112", 0.568 ± 0.0332)
-e0 = PerformanceEvaluation("DeterministicPipeline-658", 0.184 ± 0.0281)
-e1 = PerformanceEvaluation("DeterministicTunedModel-250", 0.175 ± 0.021)
+ebase = PerformanceEvaluation("ProbabilisticPipeline-908", 0.568 ± 0.033)
+e0 = PerformanceEvaluation("DeterministicPipeline-823", 0.184 ± 0.028)
+e1 = PerformanceEvaluation("DeterministicTunedModel-569", 0.175 ± 0.021)
 
 ````
 
@@ -380,8 +382,8 @@ describe.([e0, e1]) |> pretty
 │ String                      │ Measurement{Float64} │
 │ Textual                     │ Continuous           │
 ├─────────────────────────────┼──────────────────────┤
-│ DeterministicPipeline-658   │ 0.184±0.028          │
-│ DeterministicTunedModel-250 │ 0.175±0.021          │
+│ DeterministicPipeline-823   │ 0.184±0.028          │
+│ DeterministicTunedModel-569 │ 0.175±0.021          │
 └─────────────────────────────┴──────────────────────┘
 
 ````

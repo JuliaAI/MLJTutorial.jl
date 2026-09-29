@@ -31,8 +31,8 @@ x = rand(100);
 ````
 
 ````
-mean(x) = 0.52573272422357
-std(x) = 0.3020501201265377
+mean(x) = 0.47696749924138343
+std(x) = 0.29728842148044776
 
 ````
 
@@ -46,7 +46,7 @@ xhat = transform(mach, x);
 
 ````
 [ Info: Training machine(Standardizer(features = Symbol[], …), …).
-mean(xhat) = -1.8596235662471373e-16
+mean(xhat) = 2.042810365310288e-16
 std(xhat) = 1.0
 
 ````
@@ -497,10 +497,11 @@ evaluate!(mach, measure=mae, resampling=Holdout()) # `CV(nfolds=6)` is `resampli
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-661
+Tag: DeterministicPipeline-190
 Extract:
 ┌──────────┬───────────┬─────────────┐
 │ measure  │ operation │ measurement │
@@ -508,7 +509,7 @@ Extract:
 │ LPLoss(  │ predict   │ 176000.0    │
 │   p = 1) │           │             │
 └──────────┴───────────┴─────────────┘
-
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ### Training of composite models is "smart"
@@ -626,23 +627,24 @@ evaluate!(mach, measure=mae)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-106
+Tag: DeterministicPipeline-398
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 162000.0    │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌──────────────────────────────────────────────────────────────┬─────────┐
-│ per_fold                                                     │ 1.96*SE │
-├──────────────────────────────────────────────────────────────┼─────────┤
-│ [160000.0, 170000.0, 163000.0, 156000.0, 163000.0, 162000.0] │ 4140.0  │
-└──────────────────────────────────────────────────────────────┴─────────┘
-
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 162300.0    │ 4100.0  │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────────────────────────────────────────────┐
+│ per_fold                                                     │
+├──────────────────────────────────────────────────────────────┤
+│ [160000.0, 170000.0, 163000.0, 156000.0, 163000.0, 162000.0] │
+└──────────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 MLJ will also allow you to insert *learned* target transformations. For example, we
@@ -666,23 +668,24 @@ evaluate!(mach, measure=mae)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-264
+Tag: DeterministicPipeline-611
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 509000.0    │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌───────────────────────────────────────────────────────────┬──────────┐
-│ per_fold                                                  │ 1.96*SE  │
-├───────────────────────────────────────────────────────────┼──────────┤
-│ [162000.0, 2.2e6, 181000.0, 161000.0, 176000.0, 172000.0] │ 728000.0 │
-└───────────────────────────────────────────────────────────┴──────────┘
-
+┌──────────┬───────────┬─────────────┬──────────┐
+│ measure  │ operation │ measurement │ 1.96*SE  │
+├──────────┼───────────┼─────────────┼──────────┤
+│ LPLoss(  │ predict   │ 510000.0    │ 730000.0 │
+│   p = 1) │           │             │          │
+└──────────┴───────────┴─────────────┴──────────┘
+┌───────────────────────────────────────────────────────────┐
+│ per_fold                                                  │
+├───────────────────────────────────────────────────────────┤
+│ [162000.0, 2.2e6, 181000.0, 161000.0, 176000.0, 172000.0] │
+└───────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ````@julia
@@ -693,23 +696,24 @@ evaluate!(mach, measure=mae)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-300
+Tag: DeterministicPipeline-592
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 172000.0    │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌──────────────────────────────────────────────────────────────┬─────────┐
-│ per_fold                                                     │ 1.96*SE │
-├──────────────────────────────────────────────────────────────┼─────────┤
-│ [171000.0, 172000.0, 173000.0, 170000.0, 173000.0, 171000.0] │ 1240.0  │
-└──────────────────────────────────────────────────────────────┴─────────┘
-
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 171500.0    │ 1200.0  │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────────────────────────────────────────────┐
+│ per_fold                                                     │
+├──────────────────────────────────────────────────────────────┤
+│ [171000.0, 172000.0, 173000.0, 170000.0, 173000.0, 171000.0] │
+└──────────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ### Tutorial 3 Resources

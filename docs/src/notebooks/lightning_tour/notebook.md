@@ -246,8 +246,8 @@ mach = machine(self_tuning_pipe, X, y)
 untrained Machine; does not cache data
   model: DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …)
   args: 
-    1:	Source @477 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @252 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @634 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @471 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 
 ````
 
@@ -261,9 +261,9 @@ first(yhat, 3)
 
 ````
 3-element Vector{Float32}:
- -0.42176783
-  0.82785225
-  0.09056717
+ -2.8776388
+ -0.45805833
+ -0.8760577
 ````
 
 Evaluating the "self-tuning" pipeline model's performance using all data and 5-fold
@@ -281,25 +281,26 @@ evaluate!(
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicTunedModel-354
+Tag: DeterministicTunedModel-157
 Extract:
-┌───┬────────────┬───────────┬─────────────┐
-│   │ measure    │ operation │ measurement │
-├───┼────────────┼───────────┼─────────────┤
-│ A │ LPLoss(    │ predict   │ 0.309       │
-│   │   p = 1)   │           │             │
-│ B │ RSquared() │ predict   │ 0.946       │
-└───┴────────────┴───────────┴─────────────┘
-┌───┬─────────────────────────────────────┬─────────┐
-│   │ per_fold                            │ 1.96*SE │
-├───┼─────────────────────────────────────┼─────────┤
-│ A │ [0.211, 0.279, 0.414, 0.334, 0.305] │ 0.0729  │
-│ B │ [0.967, 0.957, 0.902, 0.944, 0.962] │ 0.0258  │
-└───┴─────────────────────────────────────┴─────────┘
-
+┌───┬────────────┬───────────┬─────────────┬─────────┐
+│   │ measure    │ operation │ measurement │ 1.96*SE │
+├───┼────────────┼───────────┼─────────────┼─────────┤
+│ A │ LPLoss(    │ predict   │ 0.17        │ 0.023   │
+│   │   p = 1)   │           │             │         │
+│ B │ RSquared() │ predict   │ 0.9699      │ 0.009   │
+└───┴────────────┴───────────┴─────────────┴─────────┘
+┌───┬────────────────────────────────────┐
+│   │ per_fold                           │
+├───┼────────────────────────────────────┤
+│ A │ [0.155, 0.159, 0.2, 0.19, 0.146]   │
+│ B │ [0.96, 0.981, 0.962, 0.969, 0.977] │
+└───┴────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 Compare to a dummy model:
@@ -319,7 +320,7 @@ describe.(evaluations) |> pretty
 
 ````
 [ Info: Performing evaluations using 1 thread.
-Evaluating over 5 folds:  40%[==========>              ]  ETA: 0:00:27[KEvaluating over 5 folds:  60%[===============>         ]  ETA: 0:00:15[KEvaluating over 5 folds:  80%[====================>    ]  ETA: 0:00:07[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:33[K
+Evaluating over 5 folds:  40%[==========>              ]  ETA: 0:00:11[KEvaluating over 5 folds:  60%[===============>         ]  ETA: 0:00:07[KEvaluating over 5 folds:  80%[====================>    ]  ETA: 0:00:04[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:18[K
 [ Info: Performing evaluations using 1 thread.
 Evaluating over 5 folds:  40%[==========>              ]  ETA: 0:00:01[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:00[K
 ┌─────────┬──────────────────────┬──────────────────────┐
@@ -327,8 +328,8 @@ describe.(evaluations) |> pretty
 │ String  │ Measurement{Float64} │ Measurement{Float64} │
 │ Textual │ Continuous           │ Continuous           │
 ├─────────┼──────────────────────┼──────────────────────┤
-│ booster │ 0.309±0.073          │ 0.946±0.026          │
-│ dummy   │ 1.48±0.15            │ -0.014±0.021         │
+│ booster │ 0.17±0.023           │ 0.9699±0.009         │
+│ dummy   │ 1.13±0.15            │ -0.0044±0.0051       │
 └─────────┴──────────────────────┴──────────────────────┘
 
 ````
