@@ -55,67 +55,69 @@ function generate(
 
     testing = tests && test_file_exists
 
-    # Since we get Literate to do the code execution, it's output needs vanilla code
-    # fencing:
-    literate_config = "codefence" => Pair("````@julia", "````" )
+    # Code to be executed in new remote process must be split into two remotecall's to
+    # prevent World Age issues (`using Test` cannot be in same call as `@testset`, etc).
 
-    # Note the use of '$ ⋯ ' to interpolate into a Julia code execution block. Naive use
-    # of $ doesn't work.
+    setup = quote
+        # Next if-end block makes sure the standard library is available.
+        # When calling generate(…) from
+        # NotebookManagementTools/test/runtests.jl,
+        # the standard library
+        # is mysteriously disappearing from LOAD_PATH here so that Pkg is not
+        # available.
 
-    cmd = `julia
-               --startup-file=no
-               --color=yes
-               --project=$notebook_dir -e '
-                   # Next if-end block makes sure the standard library is available.
-                   # When calling generate(…) from
-                   # NotebookManagementTools/test/runtests.jl in,
-                   # the standard library
-                   # is mysteriously disappearing from LOAD_PATH here so that Pkg is not
-                   # available.
+        if !("@stdlib" in LOAD_PATH)
+            push!(LOAD_PATH, "@stdlib")
+        end
 
-                   if !("@stdlib" in LOAD_PATH)
-                       push!(LOAD_PATH, "@stdlib")
-                   end
+        using Pkg
+        Pkg.activate($notebook_dir)
+        push!(LOAD_PATH, $path_to_literate)
 
-                   using Pkg
-                   push!(LOAD_PATH, "'$path_to_literate'")
+        # warn about missing Literate:
+        if VERSION < v"1.12"
+            literate_lost = !haskey(Pkg.project().dependencies, "Literate")
+            literate_lost && @warn "You are generating notebook markdown using "*
+                "julia version < 1.12. You may need to explicitly "*
+                "add Literate to your notebook projects. "
+        end
 
-                   # make Literate available:
-                   if VERSION < v"1.12"
-                       literate_lost = !haskey(Pkg.project().dependencies, "Literate")
-                       literate_lost && @warn "You are generating notebook markdown using "*
-                               "julia version < 1.12. You may need to explicitly "*
-                               "add Literate to your notebook projects. "
-                   end
+        Pkg.instantiate()
 
-                   Pkg.instantiate();
-                   using Test
-                   using Literate
-
-                   if '$testing'
-                       @info "Testing '$name'."
-                       @testset "'$name'" begin
-                           include("'$test_file'")
-                           @test true
-                       end
-                   end
-
-                   @info "Generating markdown for '$name'."
-
-                   Literate.markdown(
-                       "'$script_file'",
-                       "'$notebook_dir'",
-                       execute=true,
-                       config=Dict("codefence" => Pair("\`\`\`\`@julia", "\`\`\`\`" )),
-                   )'`
-
-    try
-        run(cmd)
-    catch excptn
-        success = false
-        excptn isa ProcessFailedException || rethrow(excptn)
+        using Literate
+        using Test
     end
 
+    program = quote
+        if $testing
+            @info "Testing "*$name*"."
+            @testset $name begin
+                include($test_file)
+                Test.@test true
+            end
+        end
+
+        @info "Generating markdown for "*$name*"."
+        Literate.markdown(
+            $script_file,
+            $notebook_dir,
+            execute=true,
+            config=Dict("codefence" => Pair("````@julia", "````" )),
+        )
+    end
+
+    id = addprocs(1) |> only
+    future = try
+        future1 = remotecall(Main.eval, id, setup)
+        fetch(future1)
+        future2 = remotecall(Main.eval, id, program)
+        fetch(future2)
+        rmprocs(id)
+    catch ex
+        success = false
+        rmprocs(id)
+        ex isa RemoteException || rethrow(ex)
+    end
     return success ? markdown_file : ""
 end
 

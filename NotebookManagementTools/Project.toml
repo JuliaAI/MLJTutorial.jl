@@ -3,12 +3,14 @@ uuid = "5f7a4451-2f7d-477b-8022-3bb7ed7b80c0"
 version = "0.1.0"
 authors = ["Anthony D. Blaom <anthony.blaom@gmail.com>"]
 
+[workspace]
+projects = ["test"]
+
 [deps]
+Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 
 [compat]
+Distributed = "1"
 Literate = "2.21"
 julia = "1.10"
-
-[workspace]
-projects = ["test"]
