@@ -363,23 +363,24 @@ err = evaluate!(mach, resampling=CV(nfolds=3), measure=log_loss)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: ProbabilisticPipeline-509
+Tag: ProbabilisticPipeline-307
 Extract:
-┌──────────────────────┬───────────┬─────────────┐
-│ measure              │ operation │ measurement │
-├──────────────────────┼───────────┼─────────────┤
-│ LogLoss(             │ predict   │ 0.782       │
-│   tol = 2.22045e-16) │           │             │
-└──────────────────────┴───────────┴─────────────┘
-┌──────────────────────┬─────────┐
-│ per_fold             │ 1.96*SE │
-├──────────────────────┼─────────┤
-│ [0.83, 0.721, 0.794] │ 0.0773  │
-└──────────────────────┴─────────┘
-
+┌──────────────────────┬───────────┬─────────────┬─────────┐
+│ measure              │ operation │ measurement │ 1.96*SE │
+├──────────────────────┼───────────┼─────────────┼─────────┤
+│ LogLoss(             │ predict   │ 0.782       │ 0.077   │
+│   tol = 2.22045e-16) │           │             │         │
+└──────────────────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────┐
+│ per_fold             │
+├──────────────────────┤
+│ [0.83, 0.721, 0.794] │
+└──────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ````@julia
@@ -389,23 +390,24 @@ tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=log_loss)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: ProbabilisticTunedModel-395
+Tag: ProbabilisticTunedModel-779
 Extract:
-┌──────────────────────┬───────────┬─────────────┐
-│ measure              │ operation │ measurement │
-├──────────────────────┼───────────┼─────────────┤
-│ LogLoss(             │ predict   │ 0.779       │
-│   tol = 2.22045e-16) │           │             │
-└──────────────────────┴───────────┴─────────────┘
-┌───────────────────────┬─────────┐
-│ per_fold              │ 1.96*SE │
-├───────────────────────┼─────────┤
-│ [0.798, 0.802, 0.738] │ 0.0496  │
-└───────────────────────┴─────────┘
-
+┌──────────────────────┬───────────┬─────────────┬─────────┐
+│ measure              │ operation │ measurement │ 1.96*SE │
+├──────────────────────┼───────────┼─────────────┼─────────┤
+│ LogLoss(             │ predict   │ 0.779       │ 0.05    │
+│   tol = 2.22045e-16) │           │             │         │
+└──────────────────────┴───────────┴─────────────┴─────────┘
+┌───────────────────────┐
+│ per_fold              │
+├───────────────────────┤
+│ [0.798, 0.802, 0.738] │
+└───────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ### Tutorial 4 Resources

@@ -50,8 +50,8 @@ A = rand(2, 3)
 
 ````
 2×3 Matrix{Float64}:
- 0.441502  0.871795  0.685263
- 0.535322  0.850152  0.76627
+ 0.301055  0.691879  0.504642
+ 0.572222  0.788816  0.738401
 ````
 
 ````@julia
@@ -77,8 +77,8 @@ Asparse = sparse(A)
 
 ````
 2×3 SparseArrays.SparseMatrixCSC{Float64, Int64} with 6 stored entries:
- 0.441502  0.871795  0.685263
- 0.535322  0.850152  0.76627
+ 0.301055  0.691879  0.504642
+ 0.572222  0.788816  0.738401
 ````
 
 ````@julia
@@ -95,8 +95,8 @@ C = coerce(A, Multiclass)
 
 ````
 2×3 CategoricalArrays.CategoricalArray{Float64,2,UInt32}:
- 0.441502  0.871795  0.685263
- 0.535322  0.850152  0.76627
+ 0.301055  0.691879  0.504642
+ 0.572222  0.788816  0.738401
 ````
 
 ````@julia
@@ -326,15 +326,15 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
 
 ````
 10-element Vector{Int64}:
- 4
+ 2
  3
  2
- 4
- 6
+ 3
+ 3
+ 0
+ 2
  1
- 3
- 2
- 2
+ 1
  2
 ````
 
@@ -411,10 +411,10 @@ pretty(X)
 │ Float64    │ Float64    │
 │ Continuous │ Continuous │
 ├────────────┼────────────┤
-│ 0.256611   │ 0.672213   │
-│ 0.385614   │ 0.149492   │
-│ 0.873735   │ 0.269848   │
-│ 0.753635   │ 0.206412   │
+│ 0.11433    │ 0.538742   │
+│ 0.0704153  │ 0.19053    │
+│ 0.130344   │ 0.0186654  │
+│ 0.760926   │ 0.454443   │
 └────────────┴────────────┘
 
 ````
@@ -518,7 +518,7 @@ fitted_params(mach)
 ````
 
 ````
-(classes = CategoricalArrays.CategoricalValue{Int64, UInt32}[CategoricalValue(CategoricalArrays.CategoricalPool{Int64, UInt32}([1, 2, 3]), 1), CategoricalValue(CategoricalArrays.CategoricalPool{Int64, UInt32}([1, 2, 3]), 2), CategoricalValue(CategoricalArrays.CategoricalPool{Int64, UInt32}([1, 2, 3]), 3)], coefs = Pair{Symbol, SubArray{Float64, 1, Matrix{Float64}, Tuple{Int64, Base.Slice{Base.OneTo{Int64}}}, true}}[:rectal_temperature => [0.01679940181352405, -0.006529534963799633, -0.010269866849724429], :pulse => [-0.002078922183617693, 0.00248508277505068, -0.00040616059143293954], :respiratory_rate => [-0.002078922183617693, 0.00248508277505068, -0.00040616059143293954], :packed_cell_volume => [0.0026345470622363147, 0.002707772252298626, -0.005342319314534946], :total_protein => [0.009110258500266177, -0.01679787903626504, 0.0076876205359988755]], intercept = [0.00043563961897106053, -0.00016706727792654562, -0.0005913867104289383])
+(classes = CategoricalArrays.CategoricalValue{Int64, UInt32}[CategoricalValue(CategoricalArrays.CategoricalPool{Int64, UInt32}([1, 2, 3]), 1), CategoricalValue(CategoricalArrays.CategoricalPool{Int64, UInt32}([1, 2, 3]), 2), CategoricalValue(CategoricalArrays.CategoricalPool{Int64, UInt32}([1, 2, 3]), 3)], coefs = Pair{Symbol, SubArray{Float64, 1, Matrix{Float64}, Tuple{Int64, Base.Slice{Base.OneTo{Int64}}}, true}}[:rectal_temperature => [0.016799401813523955, -0.0065295349637995905, -0.010269866849724361], :pulse => [-0.0020789221836177217, 0.0024850827750506855, -0.0004061605914329617], :respiratory_rate => [-0.0020789221836177217, 0.0024850827750506855, -0.0004061605914329617], :packed_cell_volume => [0.0026345470622364743, 0.002707772252298548, -0.005342319314535014], :total_protein => [0.009110258500266097, -0.016797879036265145, 0.0076876205359990195]], intercept = [0.00043563961897105766, -0.00016706727792654296, -0.0005913867104289052])
 ````
 
 ````@julia
@@ -532,7 +532,7 @@ err = log_loss(yhat, y[test])
 ````
 
 ````
-0.8334775485441969
+0.8334775485441962
 ````
 
 6(b)(iii)
@@ -586,23 +586,24 @@ evaluate!(mach, resampling=CV(nfolds=6), measure=log_loss)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestClassifier-372
+Tag: RandomForestClassifier-355
 Extract:
-┌──────────────────────┬───────────┬─────────────┐
-│ measure              │ operation │ measurement │
-├──────────────────────┼───────────┼─────────────┤
-│ LogLoss(             │ predict   │ 1.1         │
-│   tol = 2.22045e-16) │           │             │
-└──────────────────────┴───────────┴─────────────┘
-┌─────────────────────────────────────────┬─────────┐
-│ per_fold                                │ 1.96*SE │
-├─────────────────────────────────────────┼─────────┤
-│ [0.762, 1.39, 1.79, 1.31, 0.697, 0.629] │ 0.411   │
-└─────────────────────────────────────────┴─────────┘
-
+┌──────────────────────┬───────────┬─────────────┬─────────┐
+│ measure              │ operation │ measurement │ 1.96*SE │
+├──────────────────────┼───────────┼─────────────┼─────────┤
+│ LogLoss(             │ predict   │ 1.27        │ 0.33    │
+│   tol = 2.22045e-16) │           │             │         │
+└──────────────────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────────────────────┐
+│ per_fold                             │
+├──────────────────────────────────────┤
+│ [1.27, 1.4, 1.79, 1.27, 1.26, 0.616] │
+└──────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ````@julia
@@ -660,7 +661,7 @@ err_forest =
 ````
 
 ````
-0.987927309743752
+1.290842672700936
 ````
 
 #### Exercise 7
@@ -722,23 +723,24 @@ evaluate!(mach, resampling=CV(nfolds=6), measure=log_loss)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: ProbabilisticPipeline-616
+Tag: ProbabilisticPipeline-524
 Extract:
-┌──────────────────────┬───────────┬─────────────┐
-│ measure              │ operation │ measurement │
-├──────────────────────┼───────────┼─────────────┤
-│ LogLoss(             │ predict   │ 0.847       │
-│   tol = 2.22045e-16) │           │             │
-└──────────────────────┴───────────┴─────────────┘
-┌───────────────────────────────────────────┬─────────┐
-│ per_fold                                  │ 1.96*SE │
-├───────────────────────────────────────────┼─────────┤
-│ [0.888, 1.15, 0.847, 0.812, 0.782, 0.608] │ 0.154   │
-└───────────────────────────────────────────┴─────────┘
-
+┌──────────────────────┬───────────┬─────────────┬─────────┐
+│ measure              │ operation │ measurement │ 1.96*SE │
+├──────────────────────┼───────────┼─────────────┼─────────┤
+│ LogLoss(             │ predict   │ 0.85        │ 0.11    │
+│   tol = 2.22045e-16) │           │             │         │
+└──────────────────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────────────────────────┐
+│ per_fold                                 │
+├──────────────────────────────────────────┤
+│ [0.927, 1.02, 0.773, 0.85, 0.875, 0.665] │
+└──────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 7(c)
@@ -825,23 +827,24 @@ best_err = evaluate!(best_mach, resampling=CV(nfolds=3), measure=mae)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-942
+Tag: DeterministicPipeline-491
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 66800.0     │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌─────────────────────────────┬─────────┐
-│ per_fold                    │ 1.96*SE │
-├─────────────────────────────┼─────────┤
-│ [66200.0, 66700.0, 67500.0] │ 941.0   │
-└─────────────────────────────┴─────────┘
-
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 66780.0     │ 940.0   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌─────────────────────────────┐
+│ per_fold                    │
+├─────────────────────────────┤
+│ [66200.0, 66700.0, 67500.0] │
+└─────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ````@julia
@@ -851,23 +854,24 @@ tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=mae)
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicTunedModel-175
+Tag: DeterministicTunedModel-859
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 67600.0     │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌─────────────────────────────┬─────────┐
-│ per_fold                    │ 1.96*SE │
-├─────────────────────────────┼─────────┤
-│ [67600.0, 67800.0, 67500.0] │ 214.0   │
-└─────────────────────────────┴─────────┘
-
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 67620.0     │ 210.0   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌─────────────────────────────┐
+│ per_fold                    │
+├─────────────────────────────┤
+│ [67600.0, 67800.0, 67500.0] │
+└─────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 ---

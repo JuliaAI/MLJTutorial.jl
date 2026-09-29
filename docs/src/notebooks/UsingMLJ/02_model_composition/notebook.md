@@ -142,24 +142,25 @@ e1 = evaluate(pipe, X, y; resampling=CV(nfolds=4, rng=123), repeats=2, measure=m
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-381
+Tag: DeterministicPipeline-639
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 180000.0    │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 179980.0    │ 630.0   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
 ┌───────────────────────────────────────────────────────────────────────────────
 │ per_fold                                                                     ⋯
 ├───────────────────────────────────────────────────────────────────────────────
 │ [180000.0, 180000.0, 181000.0, 179000.0, 179000.0, 180000.0, 180000.0, 18100 ⋯
 └───────────────────────────────────────────────────────────────────────────────
-                                                               2 columns omitted
-
+                                                                1 column omitted
+Apply `describe` to this result for a named tuple summary.
 ````
 
 Notice the target very large on the current scale:
@@ -206,24 +207,24 @@ e2 = evaluate(norm_pipe, X, y; resampling=CV(nfolds=4, rng=123), repeats=2, meas
 ````
 PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: TransformedTargetModelDeterministic-404
+Tag: TransformedTargetModelDeterministic-399
 Extract:
-┌──────────┬───────────┬─────────────┐
-│ measure  │ operation │ measurement │
-├──────────┼───────────┼─────────────┤
-│ LPLoss(  │ predict   │ 19800.0     │
-│   p = 1) │           │             │
-└──────────┴───────────┴─────────────┘
-┌──────────────────────────────────────────────────────────────────────────┬────
-│ per_fold                                                                 │ 1 ⋯
-├──────────────────────────────────────────────────────────────────────────┼────
-│ [18100.0, 19800.0, 21400.0, 19600.0, 20300.0, 19500.0, 18700.0, 20900.0] │ 8 ⋯
-└──────────────────────────────────────────────────────────────────────────┴────
-                                                                1 column omitted
-
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 19780.0     │ 800.0   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────────────────────────────────────────────────────────┐
+│ per_fold                                                                 │
+├──────────────────────────────────────────────────────────────────────────┤
+│ [18100.0, 19800.0, 21400.0, 19600.0, 20300.0, 19500.0, 18700.0, 20900.0] │
+└──────────────────────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.
 ````
 
 Changing the regularization parameter `lambda` of ridge regressor, we can arrange that
@@ -248,9 +249,9 @@ evaluations = evaluate(
 
 ````
 3-element Vector{PerformanceEvaluation{M, Vector{StatisticalMeasuresBase.RobustMeasure{StatisticalMeasuresBase.FussyMeasure{StatisticalMeasuresBase.RobustMeasure{StatisticalMeasuresBase.Multimeasure{StatisticalMeasuresBase.SupportsMissingsMeasure{StatisticalMeasures.LPLossOnScalars{Int64}}, Nothing, StatisticalMeasuresBase.Mean, typeof(identity)}}, Nothing}}}, Vector{Float64}, Vector{Float64}, Vector{typeof(predict)}, Vector{Vector{Float64}}, Vector{Vector{Vector{Float64}}}, FittedParamsPerFold, ReportPerFold, CV} where {M, FittedParamsPerFold, ReportPerFold}}:
- PerformanceEvaluation("default lambda", 180000.0 ± 635.0)
- PerformanceEvaluation("new lambda", 180000.0 ± 1470.0)
- PerformanceEvaluation("new lambda & normalized target", 18500.0 ± 443.0)
+ PerformanceEvaluation("default lambda", 179980.0 ± 630.0)
+ PerformanceEvaluation("new lambda", 180100.0 ± 1500.0)
+ PerformanceEvaluation("new lambda & normalized target", 18460.0 ± 440.0)
 ````
 
 Here's a pretty view of these results:
