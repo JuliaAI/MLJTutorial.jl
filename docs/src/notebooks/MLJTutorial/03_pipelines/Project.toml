@@ -8,7 +8,7 @@ MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
 MLJMultivariateStatsInterface = "1b6a4a23-ba22-4f51-9698-8599985d3728"
 
 [compat]
-CSV = "0.10.16"
+CSV = "0.10.16, 1.1"
 DataFrames = "1.8.2"
 EvoTrees = "0.19"
 MLJ = "0.23.3"
