@@ -7,6 +7,18 @@
 # To run the code in this tutorial in a live Julia session, first follow the instructions
 # given [here](@ref instructions).
 
+# ### Video Timings
+
+# - 00:00 Introduction
+# - 01:05 Goals
+# - 01:48 Prerequisites and Getting Help
+# - 02:21 Supervised Learning Recap
+# - 05:31 Models and Machines
+# - 09:28 **Live Coding:** Regression
+# - 28:55 Scientific Types
+# - 32:29 **Live Coding:** Scitypes and Classification
+# - 55:45 End
+
 # We start by inspecting the packages, and their exact versions, in the currently active
 # package environment:
 
@@ -14,7 +26,7 @@ using Pkg
 Pkg.status()
 
 
-# # Part I. Regression
+# ## Part I. Regression
 
 using MLJ
 using UnicodePlots # for pretty display of labeled probability vectors
@@ -116,7 +128,7 @@ scitype(3.143f0)
 scitype(["cat", "mouse", "dog"])
 
 
-# # Part II. Classification
+# ## Part II. Classification
 
 # New data set for classification, the Adult Dataset (census data):
 using Downloads, CSV

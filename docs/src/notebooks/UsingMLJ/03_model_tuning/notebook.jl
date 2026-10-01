@@ -7,6 +7,20 @@
 # To run the code in this tutorial in a live Julia session, first follow the instructions
 # given [here](@ref instructions).
 
+# ### Video Timings
+
+# - 00:00 Introduction
+# - 00:06 Goals
+# - 01:12 Prerequisites and Getting Help
+# - 01:27 Live Coding: Learning Curves
+# - 13:27 Tuning as Model Wrapper
+# - 18:45 Live Coding: Grid Search
+# - 26:17 Live Coding: Random Search
+# - 30:48 Nested Resampling
+# - 33:11 Final Observations
+# - 36:59 End
+
+
 # ## Part I. Learning Curves
 
 using MLJ, Plots
@@ -123,7 +137,7 @@ e1 = evaluate(tuned_pipe, X, y; options...)
 
 @show ebase e0 e1;
 
-# Or, we can do this:
+# Or, we can do this (needs MLJBase 1.13.0 or higher):
 
 describe.([e0, e1]) |> pretty
 
