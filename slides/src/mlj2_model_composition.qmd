@@ -92,7 +92,7 @@ ProbabilisticEnsembleModel(
 
 ## Kinds of composite models in MLJ
 
-The simplest kinds of model compostion in MLJ:
+The simplest kinds of model composition in MLJ:
 
 - **pipelines**
 - **model wrappers**
@@ -178,7 +178,7 @@ Some supervised models perform poorly unless the **target** data is standardized
 
 Sample task:
 
-1. Learn standarization parameters for target $y$.
+1. Learn standardization parameters for target $y$.
 2. Apply standardization to $y$ to get $z$
 2. Train a ridge regressor using some input features $X$ and target $z$
 3. Predict on some new data $X_{\mathrm{new}}$ to obtain $\hat z$

@@ -1,6 +1,6 @@
 [files]
 # we exclude markdown in the notebooks, as they are auto-generated:
-extend-exclude = ["*.svg", "*.drawio", "*.html", "*.pdf", "docs/src/notebooks/**/*.md"]
+extend-exclude = ["*.js", "*.css", "*.svg", "*.drawio", "*.html", "*.pdf", "docs/src/notebooks/**/*.md"]
 
 [default.extend-words]
 # Don't correct "mape" to "map"
