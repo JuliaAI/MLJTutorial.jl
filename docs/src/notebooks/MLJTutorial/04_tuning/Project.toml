@@ -16,5 +16,5 @@ EvoTrees = "0.19"
 MLJ = "0.23.3"
 MLJLinearModels = "0.10.2"
 Plots = "1.41.6"
-Downloads = "1.7.0"
+Downloads = "1.6, 1.7.0"
 
