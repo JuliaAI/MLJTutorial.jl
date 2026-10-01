@@ -7,6 +7,20 @@
 # To run the code in this tutorial in a live Julia session, first follow the instructions
 # given [here](@ref instructions).
 
+# ### Video Timings
+
+# - 00:00 Introduction
+# - 00:08 Goals
+# - 01:19 Prerequisites and Getting Help
+# - 02:00 Composite Models Defined
+# - 04:13 Model Pipelines
+# - 05:59 Data Leakage
+# - 08:37 Target Transformations
+# - 12:43 Live Coding: Pipelines
+# - 18:42 Live Coding: Target Transformations
+# - 20:35 Other Model Wrappers
+# - 25:02 End
+
 using MLJ
 
 # Load some model code:
