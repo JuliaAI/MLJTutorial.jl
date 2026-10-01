@@ -11,6 +11,18 @@ Notebook supporting the video series "Using MLJ".
 To run the code in this tutorial in a live Julia session, first follow the instructions
 given [here](@ref instructions).
 
+### Video Timings
+
+- 00:00 Introduction
+- 01:05 Goals
+- 01:48 Prerequisites and Getting Help
+- 02:21 Supervised Learning Recap
+- 05:31 Models and Machines
+- 09:28 **Live Coding:** Regression
+- 28:55 Scientific Types
+- 32:29 **Live Coding:** Scitypes and Classification
+- 55:45 End
+
 We start by inspecting the packages, and their exact versions, in the currently active
 package environment:
 
@@ -30,7 +42,7 @@ Info Packages marked with ⌃ have new versions available and may be upgradable.
 
 ````
 
-# Part I. Regression
+## Part I. Regression
 
 ````@julia
 using MLJ
@@ -187,8 +199,8 @@ fitted_params(mach)
 ````
 (forest = Ensemble of Decision Trees
 Trees:      100
-Avg Leaves: 147.25
-Avg Depth:  14.49,)
+Avg Leaves: 146.21
+Avg Depth:  14.61,)
 ````
 
 ````@julia
@@ -207,9 +219,9 @@ predict(mach, X)[1:3]
 
 ````
 3-element Vector{Float64}:
- 26.984
- 22.682999999999993
- 35.31
+ 27.011
+ 22.410999999999994
+ 34.27
 ````
 
 Predict in the `test` rows:
@@ -225,7 +237,7 @@ mae(ypred, y[test])
 ````
 
 ````
-4.410905940594058
+4.574237623762377
 ````
 
 `mae` is actually just an alias:
@@ -272,14 +284,14 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-162
+Tag: RandomForestRegressor-336
 Extract:
 ┌────────────┬───────────┬─────────────┐
 │ measure    │ operation │ measurement │
 ├────────────┼───────────┼─────────────┤
-│ LPLoss(    │ predict   │ 4.41        │
+│ LPLoss(    │ predict   │ 4.57        │
 │   p = 1)   │           │             │
-│ RSquared() │ predict   │ 0.369       │
+│ RSquared() │ predict   │ 0.33        │
 └────────────┴───────────┴─────────────┘
 Apply `describe` to this result for a named tuple summary.
 ````
@@ -301,21 +313,21 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-267
+Tag: RandomForestRegressor-817
 Extract:
 ┌───┬────────────┬───────────┬─────────────┬─────────┐
 │   │ measure    │ operation │ measurement │ 1.96*SE │
 ├───┼────────────┼───────────┼─────────────┼─────────┤
-│ A │ LPLoss(    │ predict   │ 2.99        │ 0.92    │
+│ A │ LPLoss(    │ predict   │ 3.05        │ 0.89    │
 │   │   p = 1)   │           │             │         │
-│ B │ RSquared() │ predict   │ 0.67        │ 0.17    │
+│ B │ RSquared() │ predict   │ 0.65        │ 0.16    │
 └───┴────────────┴───────────┴─────────────┴─────────┘
-┌───┬──────────────────────────────────────────┐
-│   │ per_fold                                 │
-├───┼──────────────────────────────────────────┤
-│ A │ [2.14, 2.11, 3.32, 2.5, 4.9, 2.96]       │
-│ B │ [0.74, 0.871, 0.73, 0.813, 0.454, 0.392] │
-└───┴──────────────────────────────────────────┘
+┌───┬─────────────────────────────────────────┐
+│   │ per_fold                                │
+├───┼─────────────────────────────────────────┤
+│ A │ [2.27, 2.36, 3.25, 2.48, 4.97, 2.96]    │
+│ B │ [0.723, 0.81, 0.742, 0.806, 0.441, 0.4] │
+└───┴─────────────────────────────────────────┘
 Apply `describe` to this result for a named tuple summary.
 ````
 
@@ -338,21 +350,21 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-760
+Tag: RandomForestRegressor-621
 Extract:
 ┌───┬────────────┬───────────┬─────────────┬─────────┐
 │   │ measure    │ operation │ measurement │ 1.96*SE │
 ├───┼────────────┼───────────┼─────────────┼─────────┤
-│ A │ LPLoss(    │ predict   │ 2.49        │ 0.14    │
+│ A │ LPLoss(    │ predict   │ 2.48        │ 0.1     │
 │   │   p = 1)   │           │             │         │
-│ B │ RSquared() │ predict   │ 0.823       │ 0.033   │
+│ B │ RSquared() │ predict   │ 0.817       │ 0.038   │
 └───┴────────────┴───────────┴─────────────┴─────────┘
-┌───┬────────────────────────────────────────────────────────────────────────┐
-│   │ per_fold                                                               │
-├───┼────────────────────────────────────────────────────────────────────────┤
-│ A │ [2.64, 2.35, 2.17, 2.66, 2.86, 2.27, 2.67, 2.47, 2.54, 2.28]           │
-│ B │ [0.752, 0.874, 0.897, 0.758, 0.777, 0.853, 0.835, 0.792, 0.824, 0.864] │
-└───┴────────────────────────────────────────────────────────────────────────┘
+┌───┬──────────────────────────────────────────────────────────────────────┐
+│   │ per_fold                                                             │
+├───┼──────────────────────────────────────────────────────────────────────┤
+│ A │ [2.37, 2.74, 2.27, 2.42, 2.75, 2.54, 2.36, 2.48, 2.41, 2.5]          │
+│ B │ [0.87, 0.702, 0.857, 0.848, 0.824, 0.72, 0.843, 0.834, 0.839, 0.834] │
+└───┴──────────────────────────────────────────────────────────────────────┘
 Apply `describe` to this result for a named tuple summary.
 ````
 
@@ -362,8 +374,8 @@ e.uncertainty_radius_95
 
 ````
 2-element Vector{Float64}:
- 0.14383105341435692
- 0.032989951374955834
+ 0.10349121844149421
+ 0.03773282475420102
 ````
 
 # Interlude on scientific types
@@ -400,7 +412,7 @@ scitype(["cat", "mouse", "dog"])
 AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})
 ````
 
-# Part II. Classification
+## Part II. Classification
 
 New data set for classification, the Adult Dataset (census data):
 
@@ -608,8 +620,8 @@ first(yprob, 5)
 5-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{2}, InlineStrings.String7, UInt32, Float64}:
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(<=50K=>1.0, >50K=>0.0)
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(<=50K=>1.0, >50K=>0.0)
- UnivariateFinite{ScientificTypesBase.Multiclass{2}}(<=50K=>0.91, >50K=>0.09)
- UnivariateFinite{ScientificTypesBase.Multiclass{2}}(<=50K=>0.33, >50K=>0.67)
+ UnivariateFinite{ScientificTypesBase.Multiclass{2}}(<=50K=>0.89, >50K=>0.11)
+ UnivariateFinite{ScientificTypesBase.Multiclass{2}}(<=50K=>0.28, >50K=>0.72)
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(<=50K=>1.0, >50K=>0.0)
 ````
 
@@ -620,8 +632,8 @@ yprob[3]
 ````
          UnivariateFinite{ScientificTypesBase.Multiclass{2}} 
          ┌                                        ┐ 
-   <=50K ┤■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 0.91   
-    >50K ┤■■■ 0.09                                  
+   <=50K ┤■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 0.89   
+    >50K ┤■■■■ 0.11                                 
          └                                        ┘ 
 ````
 
@@ -632,7 +644,7 @@ accuracy(ypoint, y[test])
 ````
 
 ````
-0.7823616727235502
+0.7821057480677689
 ````
 
 ````@julia
@@ -640,7 +652,7 @@ log_loss(yprob, y[test])
 ````
 
 ````
-1.5655836383744342
+1.53133125245395
 ````
 
 Evaluate with one command:
@@ -660,12 +672,12 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestClassifier-308
+Tag: RandomForestClassifier-321
 Extract:
 ┌──────────────────────┬──────────────┬─────────────┐
 │ measure              │ operation    │ measurement │
 ├──────────────────────┼──────────────┼─────────────┤
-│ Accuracy()           │ predict_mode │ 0.781       │
+│ Accuracy()           │ predict_mode │ 0.782       │
 │ LogLoss(             │ predict      │ 1.55        │
 │   tol = 2.22045e-16) │              │             │
 └──────────────────────┴──────────────┴─────────────┘

@@ -11,6 +11,20 @@ Notebook supporting the video series "Using MLJ".
 To run the code in this tutorial in a live Julia session, first follow the instructions
 given [here](@ref instructions).
 
+### Video Timings
+
+- 00:00 Introduction
+- 00:08 Goals
+- 01:19 Prerequisites and Getting Help
+- 02:00 Composite Models Defined
+- 04:13 Model Pipelines
+- 05:59 Data Leakage
+- 08:37 Target Transformations
+- 12:43 Live Coding: Pipelines
+- 18:42 Live Coding: Target Transformations
+- 20:35 Other Model Wrappers
+- 25:02 End
+
 ````@julia
 using MLJ
 ````
@@ -146,7 +160,7 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-639
+Tag: DeterministicPipeline-500
 Extract:
 ┌──────────┬───────────┬─────────────┬─────────┐
 │ measure  │ operation │ measurement │ 1.96*SE │
@@ -211,7 +225,7 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: TransformedTargetModelDeterministic-399
+Tag: TransformedTargetModelDeterministic-470
 Extract:
 ┌──────────┬───────────┬─────────────┬─────────┐
 │ measure  │ operation │ measurement │ 1.96*SE │
@@ -254,7 +268,10 @@ evaluations = evaluate(
  PerformanceEvaluation("new lambda & normalized target", 18460.0 ± 440.0)
 ````
 
-Here's a pretty view of these results:
+(To provide multiple models, tagged with strings, to `evaluate` requires MLJBase 1.12.0
+or higher.)
+
+Here's a pretty view of these results (needs MLJBase 1.13.0 or higher):
 
 ````@julia
 describe.(evaluations) |> pretty
