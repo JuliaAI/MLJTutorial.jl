@@ -64,7 +64,10 @@ evaluations = evaluate(
     measure=mav,
 )
 
-# Here's a pretty view of these results:
+# (To provide mulitiple models, tagged with strings, to `evaluate` requires MLJBase 1.12.0
+# or higher.)
+
+# Here's a pretty view of these results (needs MLJBase 1.13.0 or higher):
 
 describe.(evaluations) |> pretty
 

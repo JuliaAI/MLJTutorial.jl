@@ -123,7 +123,7 @@ e1 = evaluate(tuned_pipe, X, y; options...)
 
 @show ebase e0 e1;
 
-# Or, we can do this:
+# Or, we can do this (needs MLJBase 1.13.0 or higher):
 
 describe.([e0, e1]) |> pretty
 
