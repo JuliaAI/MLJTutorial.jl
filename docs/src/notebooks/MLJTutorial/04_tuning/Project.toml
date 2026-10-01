@@ -9,7 +9,7 @@ MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 
 [compat]
-CSV = "0.10.16"
+CSV = "0.10.16, 1.1"
 DataFrames = "1.8.2"
 Distributions = "0.25.130"
 EvoTrees = "0.19"
