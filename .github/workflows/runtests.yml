@@ -14,6 +14,8 @@ permissions:
 
 jobs:
   test_packages:
+    # exclude pull requests spawned by the generate_notebooks workflow:
+    if: ${{ !startsWith(github.head_ref, 'auto-update-notebooks') }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
