@@ -1,7 +1,7 @@
 using Documenter
 
 const REPO_NAME = "MLJTutorial.jl"
-const  REPO = Remotes.GitHub("ablaom", REPO_NAME)
+const  REPO = Remotes.GitHub("JuliaAI", REPO_NAME)
 
 using NotebookManagementTools
 
@@ -26,7 +26,7 @@ makedocs(
             ),
         ],
         size_threshold = 10485760,
-        repolink = "https://github.com/ablaom/MLJTutorial.jl",
+        repolink = "https://github.com/JuliaAI/MLJTutorial.jl",
     ),
     pages=[
         "Home" =>                   "index.md",
@@ -56,11 +56,11 @@ makedocs(
     ],
     sitename=REPO_NAME,
     warnonly = [:cross_references, :missing_docs],
-    repo = Remotes.GitHub("ablaom", REPO_NAME),
+    repo = REPO,
 )
 
 deploydocs(
     devbranch="dev", # deployment to gh-pages only happens when this is the target
     push_preview=false,
-    repo="github.com/ablaom/$REPO_NAME.git",
+    repo="github.com/JuliaAI/$REPO_NAME.git",
 )
