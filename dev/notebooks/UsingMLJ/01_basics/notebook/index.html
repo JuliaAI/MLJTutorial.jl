@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>1. Basics · MLJTutorial.jl</title><meta name="title" content="1. Basics · MLJTutorial.jl"/><meta property="og:title" content="1. Basics · MLJTutorial.jl"/><meta property="twitter:title" content="1. Basics · MLJTutorial.jl"/><meta name="description" content="Documentation for MLJTutorial.jl."/><meta property="og:description" content="Documentation for MLJTutorial.jl."/><meta property="twitter:description" content="Documentation for MLJTutorial.jl."/><script data-outdated-warner src="../../../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../../assets/documenter.js"></script><script src="../../../../search_index.js"></script><script src="../../../../siteinfo.js"></script><script src="../../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../../assets/themeswap.js"></script><link href="../../../../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../../../"><img src="../../../../assets/logo.svg" alt="MLJTutorial.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../../../">MLJTutorial.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../../../">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox" checked/><label class="tocitem" for="menuitem-2"><span class="docs-label">Using MLJ (video series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li class="is-active"><a class="tocitem" href>1. Basics</a><ul class="internal"><li class="toplevel"><a class="tocitem" href="#Part-I.-Regression"><span>Part I. Regression</span></a></li><li class="toplevel"><a class="tocitem" href="#Interlude-on-scientific-types"><span>Interlude on scientific types</span></a></li><li class="toplevel"><a class="tocitem" href="#Part-II.-Classification"><span>Part II. Classification</span></a></li></ul></li><li><a class="tocitem" href="../../02_model_composition/notebook/">2. Model Composition</a></li><li><a class="tocitem" href="../../03_model_tuning/notebook/">3. Model Tuning</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox"/><label class="tocitem" for="menuitem-3"><span class="docs-label">MLJTutorial (original series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../MLJTutorial/01_data_representation/notebook/">1. Data Representation</a></li><li><a class="tocitem" href="../../../MLJTutorial/02_models/notebook/">2. Models</a></li><li><a class="tocitem" href="../../../MLJTutorial/03_pipelines/notebook/">3. Pipelines</a></li><li><a class="tocitem" href="../../../MLJTutorial/04_tuning/notebook/">4. Tuning</a></li><li><a class="tocitem" href="../../../MLJTutorial/05_composition/notebook/">5. Composition</a></li><li><a class="tocitem" href="../../../MLJTutorial/99_solution_to_exercises/notebook/">Solutions to Exercises</a></li></ul></li><li><a class="tocitem" href="../../../lightning_tour/notebook/">Lightning Tour of MLJ</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Using MLJ (video series)</a></li><li class="is-active"><a href>1. Basics</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>1. Basics</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/ablaom/MLJTutorial.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/ablaom/MLJTutorial.jl/blob/dev/docs/src/notebooks/UsingMLJ/01_basics/notebook.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Lesson-1.-Basics"><a class="docs-heading-anchor" href="#Lesson-1.-Basics">Lesson 1. Basics</a><a id="Lesson-1.-Basics-1"></a><a class="docs-heading-anchor-permalink" href="#Lesson-1.-Basics" title="Permalink"></a></h1><p>Notebook supporting the video series &quot;Using MLJ&quot;.</p><p><a href="../slides.pdf">Slides</a> from the video.</p><p>To run the code in this tutorial in a live Julia session, first follow the instructions given <a href="../../../../#instructions">here</a>.</p><p>We start by inspecting the packages, and their exact versions, in the currently active package environment:</p><pre><code class="language- hljs">using Pkg
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>1. Basics · MLJTutorial.jl</title><meta name="title" content="1. Basics · MLJTutorial.jl"/><meta property="og:title" content="1. Basics · MLJTutorial.jl"/><meta property="twitter:title" content="1. Basics · MLJTutorial.jl"/><meta name="description" content="Documentation for MLJTutorial.jl."/><meta property="og:description" content="Documentation for MLJTutorial.jl."/><meta property="twitter:description" content="Documentation for MLJTutorial.jl."/><script data-outdated-warner src="../../../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../../assets/documenter.js"></script><script src="../../../../search_index.js"></script><script src="../../../../siteinfo.js"></script><script src="../../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../../assets/themeswap.js"></script><link href="../../../../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../../../"><img src="../../../../assets/logo.svg" alt="MLJTutorial.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../../../">MLJTutorial.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../../../">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox" checked/><label class="tocitem" for="menuitem-2"><span class="docs-label">Using MLJ (video series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li class="is-active"><a class="tocitem" href>1. Basics</a><ul class="internal"><li><a class="tocitem" href="#Part-I.-Regression"><span>Part I. Regression</span></a></li><li class="toplevel"><a class="tocitem" href="#Interlude-on-scientific-types"><span>Interlude on scientific types</span></a></li><li><a class="tocitem" href="#Part-II.-Classification"><span>Part II. Classification</span></a></li></ul></li><li><a class="tocitem" href="../../02_model_composition/notebook/">2. Model Composition</a></li><li><a class="tocitem" href="../../03_model_tuning/notebook/">3. Model Tuning</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox"/><label class="tocitem" for="menuitem-3"><span class="docs-label">MLJTutorial (original series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../MLJTutorial/01_data_representation/notebook/">1. Data Representation</a></li><li><a class="tocitem" href="../../../MLJTutorial/02_models/notebook/">2. Models</a></li><li><a class="tocitem" href="../../../MLJTutorial/03_pipelines/notebook/">3. Pipelines</a></li><li><a class="tocitem" href="../../../MLJTutorial/04_tuning/notebook/">4. Tuning</a></li><li><a class="tocitem" href="../../../MLJTutorial/05_composition/notebook/">5. Composition</a></li><li><a class="tocitem" href="../../../MLJTutorial/99_solution_to_exercises/notebook/">Solutions to Exercises</a></li></ul></li><li><a class="tocitem" href="../../../lightning_tour/notebook/">Lightning Tour of MLJ</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Using MLJ (video series)</a></li><li class="is-active"><a href>1. Basics</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>1. Basics</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl/blob/dev/docs/src/notebooks/UsingMLJ/01_basics/notebook.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Lesson-1.-Basics"><a class="docs-heading-anchor" href="#Lesson-1.-Basics">Lesson 1. Basics</a><a id="Lesson-1.-Basics-1"></a><a class="docs-heading-anchor-permalink" href="#Lesson-1.-Basics" title="Permalink"></a></h1><p>Notebook supporting the video series &quot;Using MLJ&quot;.</p><p><a href="../slides.pdf">Slides</a> from the video.</p><p>To run the code in this tutorial in a live Julia session, first follow the instructions given <a href="../../../../#instructions">here</a>.</p><h3 id="Video-Timings"><a class="docs-heading-anchor" href="#Video-Timings">Video Timings</a><a id="Video-Timings-1"></a><a class="docs-heading-anchor-permalink" href="#Video-Timings" title="Permalink"></a></h3><ul><li>00:00 Introduction</li><li>01:05 Goals</li><li>01:48 Prerequisites and Getting Help</li><li>02:21 Supervised Learning Recap</li><li>05:31 Models and Machines</li><li>09:28 <strong>Live Coding:</strong> Regression</li><li>28:55 Scientific Types</li><li>32:29 <strong>Live Coding:</strong> Scitypes and Classification</li><li>55:45 End</li></ul><p>We start by inspecting the packages, and their exact versions, in the currently active package environment:</p><pre><code class="language- hljs">using Pkg
 Pkg.status()</code></pre><pre><code class="nohighlight hljs">Status `~/work/MLJTutorial.jl/MLJTutorial.jl/docs/src/notebooks/UsingMLJ/01_basics/Project.toml`
-  [336ed68f] CSV v0.10.17
+⌃ [336ed68f] CSV v0.10.17
   [add582a8] MLJ v0.23.3
   [c6f25543] MLJDecisionTreeInterface v0.5.0
-  [b8865327] UnicodePlots v3.8.4
+  [b8865327] UnicodePlots v3.9.0
   [44cfe95a] Pkg v1.12.1
-</code></pre><h1 id="Part-I.-Regression"><a class="docs-heading-anchor" href="#Part-I.-Regression">Part I. Regression</a><a id="Part-I.-Regression-1"></a><a class="docs-heading-anchor-permalink" href="#Part-I.-Regression" title="Permalink"></a></h1><pre><code class="language- hljs">using MLJ
+Info Packages marked with ⌃ have new versions available and may be upgradable.
+</code></pre><h2 id="Part-I.-Regression"><a class="docs-heading-anchor" href="#Part-I.-Regression">Part I. Regression</a><a id="Part-I.-Regression-1"></a><a class="docs-heading-anchor-permalink" href="#Part-I.-Regression" title="Permalink"></a></h2><pre><code class="language- hljs">using MLJ
 using UnicodePlots # for pretty display of labeled probability vectors</code></pre><p>Load data and inspect the schema:</p><pre><code class="language- hljs">data = load_boston()
 schema(data) # &#39;MedV&#39;= median value of owner-occupied homes in $1000s.</code></pre><pre><code class="nohighlight hljs">┌─────────┬────────────┬─────────┐
 │ names   │ scitypes   │ types   │
@@ -81,11 +82,11 @@ model = Regressor()</code></pre><pre><code class="nohighlight hljs">RandomForest
 fit!(mach, rows=train);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(RandomForestRegressor(max_depth = -1, …), …).
 </code></pre><p>Inspect the trained machine:</p><pre><code class="language- hljs">fitted_params(mach)</code></pre><pre><code class="nohighlight hljs">(forest = Ensemble of Decision Trees
 Trees:      100
-Avg Leaves: 147.07
-Avg Depth:  14.67,)</code></pre><pre><code class="language- hljs">report(mach)</code></pre><pre><code class="nohighlight hljs">(features = [:Crim, :Zn, :Indus, :Chas, :NOx, :Rm, :Age, :Dis, :Rad, :Tax, :PTRatio, :Black, :LStat],)</code></pre><p>Predict on some &quot;new&quot; data</p><pre><code class="language- hljs">predict(mach, X)[1:3]</code></pre><pre><code class="nohighlight hljs">3-element Vector{Float64}:
- 26.394000000000002
- 22.337
- 34.722</code></pre><p>Predict in the <code>test</code> rows:</p><pre><code class="language- hljs">ypred = predict(mach, rows=test);</code></pre><p>Get the mean absolute error:</p><pre><code class="language- hljs">mae(ypred, y[test])</code></pre><pre><code class="nohighlight hljs">4.623326732673267</code></pre><p><code>mae</code> is actually just an alias:</p><pre><code class="language- hljs">mae</code></pre><pre><code class="nohighlight hljs">LPLoss(
+Avg Leaves: 146.21
+Avg Depth:  14.61,)</code></pre><pre><code class="language- hljs">report(mach)</code></pre><pre><code class="nohighlight hljs">(features = [:Crim, :Zn, :Indus, :Chas, :NOx, :Rm, :Age, :Dis, :Rad, :Tax, :PTRatio, :Black, :LStat],)</code></pre><p>Predict on some &quot;new&quot; data</p><pre><code class="language- hljs">predict(mach, X)[1:3]</code></pre><pre><code class="nohighlight hljs">3-element Vector{Float64}:
+ 27.011
+ 22.410999999999994
+ 34.27</code></pre><p>Predict in the <code>test</code> rows:</p><pre><code class="language- hljs">ypred = predict(mach, rows=test);</code></pre><p>Get the mean absolute error:</p><pre><code class="language- hljs">mae(ypred, y[test])</code></pre><pre><code class="nohighlight hljs">4.574237623762377</code></pre><p><code>mae</code> is actually just an alias:</p><pre><code class="language- hljs">mae</code></pre><pre><code class="nohighlight hljs">LPLoss(
   p = 1)</code></pre><p>List other pertinent metrics:</p><pre><code class="language- hljs">measures(ypred, y)</code></pre><pre><code class="nohighlight hljs">OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}} with 10 entries:
   LPLoss =&gt; (aliases = (&quot;l1&quot;, &quot;l2&quot;, &quot;mae&quot;, &quot;mav&quot;, &quot;mean_absolute_error&quot;, &quot;mean_absolute_value&quot;), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Point(), observation_scitype = Union{Missing, Infinite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Loss(), external_aggregation_mode = Mean(), human_name = &quot;``L^p`` loss&quot;)
   LPSumLoss =&gt; (aliases = (&quot;l1_sum&quot;, &quot;l2_sum&quot;), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Point(), observation_scitype = Union{Missing, Infinite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Loss(), external_aggregation_mode = Sum(), human_name = &quot;``L^p`` sum loss&quot;)
@@ -98,43 +99,45 @@ Avg Depth:  14.67,)</code></pre><pre><code class="language- hljs">report(mach)</
   RSquared =&gt; (aliases = (&quot;rsq&quot;, &quot;rsquared&quot;), consumes_multiple_observations = true, can_report_unaggregated = false, kind_of_proxy = Point(), observation_scitype = Union{Missing, Infinite}, can_consume_tables = false, supports_weights = false, supports_class_weights = false, orientation = Score(), external_aggregation_mode = Mean(), human_name = &quot;R² coefficient&quot;)
   WillmottD =&gt; (aliases = (&quot;willmott_d&quot;,), consumes_multiple_observations = true, can_report_unaggregated = false, kind_of_proxy = Point(), observation_scitype = Union{Missing, Infinite}, can_consume_tables = false, supports_weights = false, supports_class_weights = false, orientation = Score(), external_aggregation_mode = Mean(), human_name = &quot;Willmott index of agreement (d)&quot;)</code></pre><p>Get performance estimates in one hit:</p><pre><code class="language- hljs">evaluate!(mach; resampling=[(train, test),], measures=[mae, RSquared()])</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-413
+Tag: RandomForestRegressor-336
 Extract:
 ┌────────────┬───────────┬─────────────┐
 │ measure    │ operation │ measurement │
 ├────────────┼───────────┼─────────────┤
-│ LPLoss(    │ predict   │ 4.62        │
+│ LPLoss(    │ predict   │ 4.57        │
 │   p = 1)   │           │             │
-│ RSquared() │ predict   │ 0.323       │
+│ RSquared() │ predict   │ 0.33        │
 └────────────┴───────────┴─────────────┘
-</code></pre><p>Something fancier:</p><pre><code class="language- hljs">evaluate(
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Something fancier:</p><pre><code class="language- hljs">evaluate(
     model, X, y;
     resampling=CV(nfolds=6),
     measures=[mae, RSquared()],
 )</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-666
+Tag: RandomForestRegressor-817
 Extract:
-┌───┬────────────┬───────────┬─────────────┐
-│   │ measure    │ operation │ measurement │
-├───┼────────────┼───────────┼─────────────┤
-│ A │ LPLoss(    │ predict   │ 3.0         │
-│   │   p = 1)   │           │             │
-│ B │ RSquared() │ predict   │ 0.656       │
-└───┴────────────┴───────────┴─────────────┘
-┌───┬──────────────────────────────────────────┬─────────┐
-│   │ per_fold                                 │ 1.96*SE │
-├───┼──────────────────────────────────────────┼─────────┤
-│ A │ [2.24, 2.29, 3.32, 2.41, 4.73, 3.03]     │ 0.834   │
-│ B │ [0.726, 0.838, 0.7, 0.819, 0.472, 0.376] │ 0.166   │
-└───┴──────────────────────────────────────────┴─────────┘
-</code></pre><p>Dietterich&#39;s 5 x 2 test:</p><pre><code class="language- hljs">e = evaluate(
+┌───┬────────────┬───────────┬─────────────┬─────────┐
+│   │ measure    │ operation │ measurement │ 1.96*SE │
+├───┼────────────┼───────────┼─────────────┼─────────┤
+│ A │ LPLoss(    │ predict   │ 3.05        │ 0.89    │
+│   │   p = 1)   │           │             │         │
+│ B │ RSquared() │ predict   │ 0.65        │ 0.16    │
+└───┴────────────┴───────────┴─────────────┴─────────┘
+┌───┬─────────────────────────────────────────┐
+│   │ per_fold                                │
+├───┼─────────────────────────────────────────┤
+│ A │ [2.27, 2.36, 3.25, 2.48, 4.97, 2.96]    │
+│ B │ [0.723, 0.81, 0.742, 0.806, 0.441, 0.4] │
+└───┴─────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Dietterich&#39;s 5 x 2 test:</p><pre><code class="language- hljs">e = evaluate(
     model, X, y;
     resampling=CV(nfolds=2, shuffle=true),
     repeats=5,
@@ -142,28 +145,28 @@ Extract:
     acceleration=CPUThreads(),
 )</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-199
+Tag: RandomForestRegressor-621
 Extract:
-┌───┬────────────┬───────────┬─────────────┐
-│   │ measure    │ operation │ measurement │
-├───┼────────────┼───────────┼─────────────┤
-│ A │ LPLoss(    │ predict   │ 2.45        │
-│   │   p = 1)   │           │             │
-│ B │ RSquared() │ predict   │ 0.842       │
-└───┴────────────┴───────────┴─────────────┘
-┌───┬───────────────────────────────────────────────────────────────────────┬───
-│   │ per_fold                                                              │  ⋯
-├───┼───────────────────────────────────────────────────────────────────────┼───
-│ A │ [2.49, 2.49, 2.6, 2.47, 2.35, 2.52, 2.43, 2.35, 2.52, 2.24]           │  ⋯
-│ B │ [0.817, 0.855, 0.835, 0.83, 0.853, 0.808, 0.863, 0.856, 0.835, 0.867] │  ⋯
-└───┴───────────────────────────────────────────────────────────────────────┴───
-                                                                1 column omitted
-</code></pre><pre><code class="language- hljs">e.uncertainty_radius_95</code></pre><pre><code class="nohighlight hljs">2-element Vector{Float64}:
- 0.06904375445230268
- 0.013098268581533108</code></pre><h1 id="Interlude-on-scientific-types"><a class="docs-heading-anchor" href="#Interlude-on-scientific-types">Interlude on scientific types</a><a id="Interlude-on-scientific-types-1"></a><a class="docs-heading-anchor-permalink" href="#Interlude-on-scientific-types" title="Permalink"></a></h1><pre><code class="language- hljs">typeof(3.14)</code></pre><pre><code class="nohighlight hljs">Float64</code></pre><pre><code class="language- hljs">scitype(3.14)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype(3.143f0)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype([&quot;cat&quot;, &quot;mouse&quot;, &quot;dog&quot;])</code></pre><pre><code class="nohighlight hljs">AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})</code></pre><h1 id="Part-II.-Classification"><a class="docs-heading-anchor" href="#Part-II.-Classification">Part II. Classification</a><a id="Part-II.-Classification-1"></a><a class="docs-heading-anchor-permalink" href="#Part-II.-Classification" title="Permalink"></a></h1><p>New data set for classification, the Adult Dataset (census data):</p><pre><code class="language- hljs">using Downloads, CSV
+┌───┬────────────┬───────────┬─────────────┬─────────┐
+│   │ measure    │ operation │ measurement │ 1.96*SE │
+├───┼────────────┼───────────┼─────────────┼─────────┤
+│ A │ LPLoss(    │ predict   │ 2.48        │ 0.1     │
+│   │   p = 1)   │           │             │         │
+│ B │ RSquared() │ predict   │ 0.817       │ 0.038   │
+└───┴────────────┴───────────┴─────────────┴─────────┘
+┌───┬──────────────────────────────────────────────────────────────────────┐
+│   │ per_fold                                                             │
+├───┼──────────────────────────────────────────────────────────────────────┤
+│ A │ [2.37, 2.74, 2.27, 2.42, 2.75, 2.54, 2.36, 2.48, 2.41, 2.5]          │
+│ B │ [0.87, 0.702, 0.857, 0.848, 0.824, 0.72, 0.843, 0.834, 0.839, 0.834] │
+└───┴──────────────────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><pre><code class="language- hljs">e.uncertainty_radius_95</code></pre><pre><code class="nohighlight hljs">2-element Vector{Float64}:
+ 0.10349121844149421
+ 0.03773282475420102</code></pre><h1 id="Interlude-on-scientific-types"><a class="docs-heading-anchor" href="#Interlude-on-scientific-types">Interlude on scientific types</a><a id="Interlude-on-scientific-types-1"></a><a class="docs-heading-anchor-permalink" href="#Interlude-on-scientific-types" title="Permalink"></a></h1><pre><code class="language- hljs">typeof(3.14)</code></pre><pre><code class="nohighlight hljs">Float64</code></pre><pre><code class="language- hljs">scitype(3.14)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype(3.143f0)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype([&quot;cat&quot;, &quot;mouse&quot;, &quot;dog&quot;])</code></pre><pre><code class="nohighlight hljs">AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})</code></pre><h2 id="Part-II.-Classification"><a class="docs-heading-anchor" href="#Part-II.-Classification">Part II. Classification</a><a id="Part-II.-Classification-1"></a><a class="docs-heading-anchor-permalink" href="#Part-II.-Classification" title="Permalink"></a></h2><p>New data set for classification, the Adult Dataset (census data):</p><pre><code class="language- hljs">using Downloads, CSV
 url = &quot;https://raw.githubusercontent.com/&quot;*
     &quot;saravrajavelu/Adult-Income-Analysis/refs/heads/master/&quot;*
     &quot;adult.csv&quot;
@@ -275,30 +278,31 @@ yprob = predict(mach, rows=test);
 first(yprob, 5)</code></pre><pre><code class="nohighlight hljs">5-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{2}, InlineStrings.String7, UInt32, Float64}:
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;1.0, &gt;50K=&gt;0.0)
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;1.0, &gt;50K=&gt;0.0)
- UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.98, &gt;50K=&gt;0.02)
- UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.24, &gt;50K=&gt;0.76)
+ UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.89, &gt;50K=&gt;0.11)
+ UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.28, &gt;50K=&gt;0.72)
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;1.0, &gt;50K=&gt;0.0)</code></pre><pre><code class="language- hljs">yprob[3]</code></pre><pre><code class="nohighlight hljs">         UnivariateFinite{ScientificTypesBase.Multiclass{2}} 
          ┌                                        ┐ 
-   &lt;=50K ┤■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 0.98   
-    &gt;50K ┤■ 0.02                                    
+   &lt;=50K ┤■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 0.89   
+    &gt;50K ┤■■■■ 0.11                                 
          └                                        ┘ </code></pre><pre><code class="language- hljs">ypoint = mode.(yprob)
 ypoint = predict_mode(mach, rows=test) # same thing
-accuracy(ypoint, y[test])</code></pre><pre><code class="nohighlight hljs">0.7822081179300814</code></pre><pre><code class="language- hljs">log_loss(yprob, y[test])</code></pre><pre><code class="nohighlight hljs">1.5659651402227337</code></pre><p>Evaluate with one command:</p><pre><code class="language- hljs">evaluate(
+accuracy(ypoint, y[test])</code></pre><pre><code class="nohighlight hljs">0.7821057480677689</code></pre><pre><code class="language- hljs">log_loss(yprob, y[test])</code></pre><pre><code class="nohighlight hljs">1.53133125245395</code></pre><p>Evaluate with one command:</p><pre><code class="language- hljs">evaluate(
     model, Xhot, y;
     resampling=Holdout(fraction_train=0.6),
     measures = [accuracy, log_loss],
 )</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
   model, tag, measure, operation,
-  measurement, uncertainty_radius_95, per_fold, per_observation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestClassifier-400
+Tag: RandomForestClassifier-321
 Extract:
 ┌──────────────────────┬──────────────┬─────────────┐
 │ measure              │ operation    │ measurement │
 ├──────────────────────┼──────────────┼─────────────┤
-│ Accuracy()           │ predict_mode │ 0.781       │
-│ LogLoss(             │ predict      │ 1.53        │
+│ Accuracy()           │ predict_mode │ 0.782       │
+│ LogLoss(             │ predict      │ 1.55        │
 │   tol = 2.22045e-16) │              │             │
 └──────────────────────┴──────────────┴─────────────┘
-</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../../../">« Home</a><a class="docs-footer-nextpage" href="../../02_model_composition/notebook/">2. Model Composition »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Sunday 30 August 2026 22:49">Sunday 30 August 2026</span>. Using Julia version 1.12.7.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+Apply `describe` to this result for a named tuple summary.</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../../../">« Home</a><a class="docs-footer-nextpage" href="../../02_model_composition/notebook/">2. Model Composition »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 2 October 2026 00:59">Friday 2 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
