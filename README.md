@@ -1,8 +1,7 @@
 # MLJTutorial.jl
 
-Tutorials for introducing the machine learning toolbox
-[MLJ](https://JuliaAI.github.io/MLJ.jl/stable/) (Machine
-Learning in Julia) 
+Tutorials for introducing the machine learning toolbox [MLJ](https://juliaml.ai) (Machine
+Learning in Julia)
 
 <div align="center">
 	<img src="assets/MLJLogo2.svg" alt="MLJ" width="200">
