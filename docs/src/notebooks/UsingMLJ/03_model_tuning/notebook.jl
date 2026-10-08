@@ -10,16 +10,14 @@
 # ### Video Timings
 
 # - 00:00 Introduction
-# - 00:06 Goals
-# - 01:12 Prerequisites and Getting Help
-# - 01:27 Live Coding: Learning Curves
-# - 13:27 Tuning as Model Wrapper
-# - 18:45 Live Coding: Grid Search
-# - 26:17 Live Coding: Random Search
-# - 30:48 Nested Resampling
-# - 33:11 Final Observations
-# - 36:59 End
-
+# - 00:11 Goals
+# - 01:21 Prerequisites and Getting Help
+# - 01:42 **Live Coding:** Learning Curves
+# - 13:57 Tuning as Model Wrapper
+# - 18:53 **Live Coding:** Grid Search
+# - 26:32 **Live Coding:** Random Search
+# - 31:07 Nested Resampling
+# - 33:31 Final Observations
 
 # ## Part I. Learning Curves
 
