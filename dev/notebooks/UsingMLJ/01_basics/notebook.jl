@@ -10,14 +10,13 @@
 # ### Video Timings
 
 # - 00:00 Introduction
-# - 01:05 Goals
-# - 01:48 Prerequisites and Getting Help
-# - 02:21 Supervised Learning Recap
-# - 05:31 Models and Machines
-# - 09:28 **Live Coding:** Regression
-# - 28:55 Scientific Types
-# - 32:29 **Live Coding:** Scitypes and Classification
-# - 55:45 End
+# - 01:10 Goals
+# - 01:57 Prerequisites and Getting Help
+# - 02:33 Supervised Learning Recap
+# - 05:48 Models and Machines
+# - 09:49 **Live Coding:** Regression
+# - 29:20 Scientific Types
+# - 32:52 **Live Coding:** Scitypes and Classification
 
 # We start by inspecting the packages, and their exact versions, in the currently active
 # package environment:
