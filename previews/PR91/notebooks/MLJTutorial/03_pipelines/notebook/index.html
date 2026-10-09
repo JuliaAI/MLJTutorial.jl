@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>3. Pipelines · MLJTutorial.jl</title><meta name="title" content="3. Pipelines · MLJTutorial.jl"/><meta property="og:title" content="3. Pipelines · MLJTutorial.jl"/><meta property="twitter:title" content="3. Pipelines · MLJTutorial.jl"/><meta name="description" content="Documentation for MLJTutorial.jl."/><meta property="og:description" content="Documentation for MLJTutorial.jl."/><meta property="twitter:description" content="Documentation for MLJTutorial.jl."/><script data-outdated-warner src="../../../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../../assets/documenter.js"></script><script src="../../../../search_index.js"></script><script src="../../../../siteinfo.js"></script><script src="../../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../../assets/themeswap.js"></script><link href="../../../../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../../../"><img src="../../../../assets/logo.svg" alt="MLJTutorial.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../../../">MLJTutorial.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../../../">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox"/><label class="tocitem" for="menuitem-2"><span class="docs-label">Using MLJ (video series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../UsingMLJ/01_basics/notebook/">1. Basics</a></li><li><a class="tocitem" href="../../../UsingMLJ/02_model_composition/notebook/">2. Model Composition</a></li><li><a class="tocitem" href="../../../UsingMLJ/03_model_tuning/notebook/">3. Model Tuning</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox" checked/><label class="tocitem" for="menuitem-3"><span class="docs-label">MLJTutorial (original series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../01_data_representation/notebook/">1. Data Representation</a></li><li><a class="tocitem" href="../../02_models/notebook/">2. Models</a></li><li class="is-active"><a class="tocitem" href>3. Pipelines</a></li><li><a class="tocitem" href="../../04_tuning/notebook/">4. Tuning</a></li><li><a class="tocitem" href="../../05_composition/notebook/">5. Composition</a></li><li><a class="tocitem" href="../../99_solution_to_exercises/notebook/">Solutions to Exercises</a></li></ul></li><li><a class="tocitem" href="../../../lightning_tour/notebook/">Lightning Tour of MLJ</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">MLJTutorial (original series)</a></li><li class="is-active"><a href>3. Pipelines</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>3. Pipelines</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl/blob/dev/docs/src/notebooks/MLJTutorial/03_pipelines/notebook.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Tutorial-3.-Transformers-and-Pipelines"><a class="docs-heading-anchor" href="#Tutorial-3.-Transformers-and-Pipelines">Tutorial 3. Transformers and Pipelines</a><a id="Tutorial-3.-Transformers-and-Pipelines-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-3.-Transformers-and-Pipelines" title="Permalink"></a></h1><blockquote><p><strong>Goals:</strong> Learn how to:</p><ol><li>Apply common data preprocessing tasks using an MLJ <strong>transformer</strong>.</li><li>Combine a sequence of transformers with a supervised model in a single standalone model called a <strong>pipelines</strong></li><li>Wrap a supervised model in transformations/inverse transformations of the target variable</li></ol></blockquote><p>To run the code in this tutorial in a live Julia session, first follow the instructions given <a href="../../../../#instructions">here</a>.</p><h3 id="Transformers"><a class="docs-heading-anchor" href="#Transformers">Transformers</a><a id="Transformers-1"></a><a class="docs-heading-anchor-permalink" href="#Transformers" title="Permalink"></a></h3><p>Unsupervised models, which receive no target <code>y</code> during training, always have a <code>transform</code> operation. They sometimes also support an <code>inverse_transform</code> operation, with obvious meaning, and sometimes support a <code>predict</code> operation (see the clustering example discussed <a href="https://juliaai.github.io/MLJ.jl/dev/transformers/#Transformers-that-also-predict-1">here</a>). Otherwise, they are handled much like supervised models.</p><p>Here&#39;s a simple standardization example:</p><pre><code class="language- hljs">using MLJ
+
+x = rand(100);
+@show mean(x) std(x);</code></pre><pre><code class="nohighlight hljs">mean(x) = 0.47696749924138343
+std(x) = 0.29728842148044776
+</code></pre><pre><code class="language- hljs">model = Standardizer() # a built-in model
+mach = machine(model, x)
+fit!(mach)
+xhat = transform(mach, x);
+@show mean(xhat) std(xhat);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(Standardizer(features = Symbol[], …), …).
+mean(xhat) = 2.042810365310288e-16
+std(xhat) = 1.0
+</code></pre><p>This particular model has an <code>inverse_transform</code>:</p><pre><code class="language- hljs">inverse_transform(mach, xhat) ≈ x</code></pre><pre><code class="nohighlight hljs">true</code></pre><h3 id="Re-encoding-the-King-County-House-data-as-continuous"><a class="docs-heading-anchor" href="#Re-encoding-the-King-County-House-data-as-continuous">Re-encoding the King County House data as continuous</a><a id="Re-encoding-the-King-County-House-data-as-continuous-1"></a><a class="docs-heading-anchor-permalink" href="#Re-encoding-the-King-County-House-data-as-continuous" title="Permalink"></a></h3><p>For further illustrations of transformers, let&#39;s re-encode <em>all</em> of the King County House input features (see Exercise 3) into a set of <code>Continuous</code> features. We do this with the <code>ContinuousEncoder</code> model, which, by default, will:</p><ul><li>one-hot encode all <code>Multiclass</code> features</li><li>coerce all <code>OrderedFactor</code> features to <code>Continuous</code> ones</li><li>coerce all <code>Count</code> features to <code>Continuous</code> ones (there aren&#39;t any)</li><li>drop any remaining non-Continuous features (none of these either)</li></ul><p>First, we reload the data and fix the scitypes (Exercise 3):</p><pre><code class="language- hljs">import Downloads, CSV
+import DataFrames
+url = &quot;https://raw.githubusercontent.com/ablaom/&quot;*
+    &quot;MachineLearningInJulia2020/for-MLJ-version-0.16/&quot;*
+    &quot;data/house.csv&quot;
+csv_file = Downloads.download(url)
+house = CSV.read(csv_file, DataFrames.DataFrame)
+coerce!(house, autotype(house))
+coerce!(house, Count =&gt; Continuous, :zipcode =&gt; Multiclass)
+schema(house)</code></pre><pre><code class="nohighlight hljs">┌───────────────┬───────────────────┬───────────────────────────────────┐
+│ names         │ scitypes          │ types                             │
+├───────────────┼───────────────────┼───────────────────────────────────┤
+│ price         │ Continuous        │ Float64                           │
+│ bedrooms      │ OrderedFactor{13} │ CategoricalValue{Int64, UInt32}   │
+│ bathrooms     │ OrderedFactor{30} │ CategoricalValue{Float64, UInt32} │
+│ sqft_living   │ Continuous        │ Float64                           │
+│ sqft_lot      │ Continuous        │ Float64                           │
+│ floors        │ OrderedFactor{6}  │ CategoricalValue{Float64, UInt32} │
+│ waterfront    │ OrderedFactor{2}  │ CategoricalValue{Int64, UInt32}   │
+│ view          │ OrderedFactor{5}  │ CategoricalValue{Int64, UInt32}   │
+│ condition     │ OrderedFactor{5}  │ CategoricalValue{Int64, UInt32}   │
+│ grade         │ OrderedFactor{12} │ CategoricalValue{Int64, UInt32}   │
+│ sqft_above    │ Continuous        │ Float64                           │
+│ sqft_basement │ Continuous        │ Float64                           │
+│ yr_built      │ Continuous        │ Float64                           │
+│ zipcode       │ Multiclass{70}    │ CategoricalValue{Int64, UInt32}   │
+│ lat           │ Continuous        │ Float64                           │
+│ long          │ Continuous        │ Float64                           │
+│ sqft_living15 │ Continuous        │ Float64                           │
+│ sqft_lot15    │ Continuous        │ Float64                           │
+│ is_renovated  │ OrderedFactor{2}  │ CategoricalValue{Bool, UInt32}    │
+└───────────────┴───────────────────┴───────────────────────────────────┘
+</code></pre><pre><code class="language- hljs">y, X = unpack(house, ==(:price), rng=123);</code></pre><p>Instantiate the unsupervised model (transformer):</p><pre><code class="language- hljs">encoder = ContinuousEncoder() # a built-in model; no need to @load it</code></pre><pre><code class="nohighlight hljs">ContinuousEncoder(
+  drop_last = false, 
+  one_hot_ordered_factors = false)</code></pre><p>Bind the model to the data and fit!</p><pre><code class="language- hljs">mach = machine(encoder, X) |&gt; fit!;</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(ContinuousEncoder(drop_last = false, …), …).
+</code></pre><p>Transform and inspect the result:</p><pre><code class="language- hljs">Xcont = transform(mach, X);
+schema(Xcont)</code></pre><pre><code class="nohighlight hljs">┌────────────────┬────────────┬─────────┐
+│ names          │ scitypes   │ types   │
+├────────────────┼────────────┼─────────┤
+│ bedrooms       │ Continuous │ Float64 │
+│ bathrooms      │ Continuous │ Float64 │
+│ sqft_living    │ Continuous │ Float64 │
+│ sqft_lot       │ Continuous │ Float64 │
+│ floors         │ Continuous │ Float64 │
+│ waterfront     │ Continuous │ Float64 │
+│ view           │ Continuous │ Float64 │
+│ condition      │ Continuous │ Float64 │
+│ grade          │ Continuous │ Float64 │
+│ sqft_above     │ Continuous │ Float64 │
+│ sqft_basement  │ Continuous │ Float64 │
+│ yr_built       │ Continuous │ Float64 │
+│ zipcode__98001 │ Continuous │ Float64 │
+│ zipcode__98002 │ Continuous │ Float64 │
+│ zipcode__98003 │ Continuous │ Float64 │
+│ zipcode__98004 │ Continuous │ Float64 │
+│ zipcode__98005 │ Continuous │ Float64 │
+│ zipcode__98006 │ Continuous │ Float64 │
+│ zipcode__98007 │ Continuous │ Float64 │
+│ zipcode__98008 │ Continuous │ Float64 │
+│ zipcode__98010 │ Continuous │ Float64 │
+│ zipcode__98011 │ Continuous │ Float64 │
+│ zipcode__98014 │ Continuous │ Float64 │
+│ zipcode__98019 │ Continuous │ Float64 │
+│ zipcode__98022 │ Continuous │ Float64 │
+│ zipcode__98023 │ Continuous │ Float64 │
+│ zipcode__98024 │ Continuous │ Float64 │
+│ zipcode__98027 │ Continuous │ Float64 │
+│ zipcode__98028 │ Continuous │ Float64 │
+│ zipcode__98029 │ Continuous │ Float64 │
+│ zipcode__98030 │ Continuous │ Float64 │
+│ zipcode__98031 │ Continuous │ Float64 │
+│ zipcode__98032 │ Continuous │ Float64 │
+│ zipcode__98033 │ Continuous │ Float64 │
+│ zipcode__98034 │ Continuous │ Float64 │
+│ zipcode__98038 │ Continuous │ Float64 │
+│ zipcode__98039 │ Continuous │ Float64 │
+│ zipcode__98040 │ Continuous │ Float64 │
+│ zipcode__98042 │ Continuous │ Float64 │
+│ zipcode__98045 │ Continuous │ Float64 │
+│ zipcode__98052 │ Continuous │ Float64 │
+│ zipcode__98053 │ Continuous │ Float64 │
+│ zipcode__98055 │ Continuous │ Float64 │
+│ zipcode__98056 │ Continuous │ Float64 │
+│ zipcode__98058 │ Continuous │ Float64 │
+│ zipcode__98059 │ Continuous │ Float64 │
+│ zipcode__98065 │ Continuous │ Float64 │
+│ zipcode__98070 │ Continuous │ Float64 │
+│ zipcode__98072 │ Continuous │ Float64 │
+│ zipcode__98074 │ Continuous │ Float64 │
+│ zipcode__98075 │ Continuous │ Float64 │
+│ zipcode__98077 │ Continuous │ Float64 │
+│ zipcode__98092 │ Continuous │ Float64 │
+│ zipcode__98102 │ Continuous │ Float64 │
+│ zipcode__98103 │ Continuous │ Float64 │
+│ zipcode__98105 │ Continuous │ Float64 │
+│ zipcode__98106 │ Continuous │ Float64 │
+│ zipcode__98107 │ Continuous │ Float64 │
+│ zipcode__98108 │ Continuous │ Float64 │
+│ zipcode__98109 │ Continuous │ Float64 │
+│ zipcode__98112 │ Continuous │ Float64 │
+│ zipcode__98115 │ Continuous │ Float64 │
+│ zipcode__98116 │ Continuous │ Float64 │
+│ zipcode__98117 │ Continuous │ Float64 │
+│ zipcode__98118 │ Continuous │ Float64 │
+│ zipcode__98119 │ Continuous │ Float64 │
+│ zipcode__98122 │ Continuous │ Float64 │
+│ zipcode__98125 │ Continuous │ Float64 │
+│ zipcode__98126 │ Continuous │ Float64 │
+│ zipcode__98133 │ Continuous │ Float64 │
+│ zipcode__98136 │ Continuous │ Float64 │
+│ zipcode__98144 │ Continuous │ Float64 │
+│ zipcode__98146 │ Continuous │ Float64 │
+│ zipcode__98148 │ Continuous │ Float64 │
+│ zipcode__98155 │ Continuous │ Float64 │
+│ zipcode__98166 │ Continuous │ Float64 │
+│ zipcode__98168 │ Continuous │ Float64 │
+│ zipcode__98177 │ Continuous │ Float64 │
+│ zipcode__98178 │ Continuous │ Float64 │
+│ zipcode__98188 │ Continuous │ Float64 │
+│ zipcode__98198 │ Continuous │ Float64 │
+│ zipcode__98199 │ Continuous │ Float64 │
+│ lat            │ Continuous │ Float64 │
+│ long           │ Continuous │ Float64 │
+│ sqft_living15  │ Continuous │ Float64 │
+│ sqft_lot15     │ Continuous │ Float64 │
+│ is_renovated   │ Continuous │ Float64 │
+└────────────────┴────────────┴─────────┘
+</code></pre><h3 id="More-transformers"><a class="docs-heading-anchor" href="#More-transformers">More transformers</a><a id="More-transformers-1"></a><a class="docs-heading-anchor-permalink" href="#More-transformers" title="Permalink"></a></h3><p>Here&#39;s how to list all of MLJ&#39;s unsupervised models:</p><pre><code class="language- hljs">models(m-&gt;!m.is_supervised)</code></pre><pre><code class="nohighlight hljs">92-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :constructor, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :tags, :target_in_fit, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = ABODDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = ABODDetector, package_name = OutlierDetectionPython, ... )
+ (name = AffinityPropagation, package_name = Clustering, ... )
+ (name = AffinityPropagation, package_name = MLJScikitLearnInterface, ... )
+ (name = AgglomerativeClustering, package_name = MLJScikitLearnInterface, ... )
+ (name = AutoEncoder, package_name = BetaML, ... )
+ (name = BM25Transformer, package_name = MLJText, ... )
+ (name = Birch, package_name = MLJScikitLearnInterface, ... )
+ (name = BisectingKMeans, package_name = MLJScikitLearnInterface, ... )
+ (name = BorderlineSMOTE1, package_name = Imbalance, ... )
+ (name = CBLOFDetector, package_name = OutlierDetectionPython, ... )
+ (name = CDDetector, package_name = OutlierDetectionPython, ... )
+ (name = COFDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = COFDetector, package_name = OutlierDetectionPython, ... )
+ (name = COPODDetector, package_name = OutlierDetectionPython, ... )
+ (name = CardinalityReducer, package_name = MLJTransforms, ... )
+ (name = ClusterUndersampler, package_name = Imbalance, ... )
+ (name = ContinuousEncoder, package_name = MLJTransforms, ... )
+ (name = ContrastEncoder, package_name = MLJTransforms, ... )
+ (name = CountTransformer, package_name = MLJText, ... )
+ (name = DBSCAN, package_name = Clustering, ... )
+ (name = DBSCAN, package_name = MLJScikitLearnInterface, ... )
+ (name = DNNDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = ECODDetector, package_name = OutlierDetectionPython, ... )
+ (name = ENNUndersampler, package_name = Imbalance, ... )
+ (name = FactorAnalysis, package_name = MultivariateStats, ... )
+ (name = FeatureAgglomeration, package_name = MLJScikitLearnInterface, ... )
+ (name = FeatureSelector, package_name = FeatureSelection, ... )
+ (name = FillImputer, package_name = MLJTransforms, ... )
+ (name = FrequencyEncoder, package_name = MLJTransforms, ... )
+ (name = GMMDetector, package_name = OutlierDetectionPython, ... )
+ (name = GaussianMixtureClusterer, package_name = BetaML, ... )
+ (name = GaussianMixtureImputer, package_name = BetaML, ... )
+ (name = GeneralImputer, package_name = BetaML, ... )
+ (name = HBOSDetector, package_name = OutlierDetectionPython, ... )
+ (name = HDBSCAN, package_name = MLJScikitLearnInterface, ... )
+ (name = HierarchicalClustering, package_name = Clustering, ... )
+ (name = ICA, package_name = MultivariateStats, ... )
+ (name = IForestDetector, package_name = OutlierDetectionPython, ... )
+ (name = INNEDetector, package_name = OutlierDetectionPython, ... )
+ (name = InteractionTransformer, package_name = MLJTransforms, ... )
+ (name = KDEDetector, package_name = OutlierDetectionPython, ... )
+ (name = KMeans, package_name = Clustering, ... )
+ (name = KMeans, package_name = MLJScikitLearnInterface, ... )
+ (name = KMeans, package_name = ParallelKMeans, ... )
+ (name = KMeansClusterer, package_name = BetaML, ... )
+ (name = KMedoids, package_name = Clustering, ... )
+ (name = KMedoidsClusterer, package_name = BetaML, ... )
+ (name = KNNDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = KNNDetector, package_name = OutlierDetectionPython, ... )
+ (name = KernelPCA, package_name = MultivariateStats, ... )
+ (name = LMDDDetector, package_name = OutlierDetectionPython, ... )
+ (name = LOCIDetector, package_name = OutlierDetectionPython, ... )
+ (name = LODADetector, package_name = OutlierDetectionPython, ... )
+ (name = LOFDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = LOFDetector, package_name = OutlierDetectionPython, ... )
+ (name = MCDDetector, package_name = OutlierDetectionPython, ... )
+ (name = MeanShift, package_name = MLJScikitLearnInterface, ... )
+ (name = MiniBatchKMeans, package_name = MLJScikitLearnInterface, ... )
+ (name = MissingnessEncoder, package_name = MLJTransforms, ... )
+ (name = OCSVMDetector, package_name = OutlierDetectionPython, ... )
+ (name = OPTICS, package_name = MLJScikitLearnInterface, ... )
+ (name = OneClassSVM, package_name = LIBSVM, ... )
+ (name = OneHotEncoder, package_name = MLJTransforms, ... )
+ (name = OrdinalEncoder, package_name = MLJTransforms, ... )
+ (name = PCA, package_name = MultivariateStats, ... )
+ (name = PCADetector, package_name = OutlierDetectionPython, ... )
+ (name = PPCA, package_name = MultivariateStats, ... )
+ (name = RODDetector, package_name = OutlierDetectionPython, ... )
+ (name = ROSE, package_name = Imbalance, ... )
+ (name = RandomForestImputer, package_name = BetaML, ... )
+ (name = RandomOversampler, package_name = Imbalance, ... )
+ (name = RandomUndersampler, package_name = Imbalance, ... )
+ (name = RandomWalkOversampler, package_name = Imbalance, ... )
+ (name = SMOTE, package_name = Imbalance, ... )
+ (name = SMOTEN, package_name = Imbalance, ... )
+ (name = SMOTENC, package_name = Imbalance, ... )
+ (name = SODDetector, package_name = OutlierDetectionPython, ... )
+ (name = SOSDetector, package_name = OutlierDetectionPython, ... )
+ (name = SelfOrganizingMap, package_name = SelfOrganizingMaps, ... )
+ (name = SimpleImputer, package_name = BetaML, ... )
+ (name = SpectralClustering, package_name = MLJScikitLearnInterface, ... )
+ (name = Standardizer, package_name = MLJTransforms, ... )
+ (name = TSVDTransformer, package_name = TSVD, ... )
+ (name = TargetEncoder, package_name = MLJTransforms, ... )
+ (name = TfidfTransformer, package_name = MLJText, ... )
+ (name = TomekUndersampler, package_name = Imbalance, ... )
+ (name = UnivariateBoxCoxTransformer, package_name = MLJTransforms, ... )
+ (name = UnivariateDiscretizer, package_name = MLJTransforms, ... )
+ (name = UnivariateFillImputer, package_name = MLJTransforms, ... )
+ (name = UnivariateStandardizer, package_name = MLJTransforms, ... )
+ (name = UnivariateTimeTypeToContinuous, package_name = MLJTransforms, ... )</code></pre><p>Some commonly used ones are built-in (do not require <code>@load</code>ing):</p><table><tr><th style="text-align: right">model type</th><th style="text-align: right">does what?</th></tr><tr><td style="text-align: right">ContinuousEncoder</td><td style="text-align: right">transform input table to a table of <code>Continuous</code> features (see above)</td></tr><tr><td style="text-align: right">FeatureSelector</td><td style="text-align: right">retain or dump selected features</td></tr><tr><td style="text-align: right">FillImputer</td><td style="text-align: right">impute missing values</td></tr><tr><td style="text-align: right">OneHotEncoder</td><td style="text-align: right">one-hot encoder <code>Multiclass</code> (and optionally <code>OrderedFactor</code>) features</td></tr><tr><td style="text-align: right">Standardizer</td><td style="text-align: right">standardize (whiten) a vector or all <code>Continuous</code> features of a table</td></tr><tr><td style="text-align: right">UnivariateBoxCoxTransformer</td><td style="text-align: right">apply a learned Box-Cox transformation to a vector</td></tr><tr><td style="text-align: right">UnivariateDiscretizer</td><td style="text-align: right">discretize a <code>Continuous</code> vector, and hence render its elscitypw <code>OrderedFactor</code></td></tr></table><p>In addition to &quot;dynamic&quot; transformers (ones that learn something from the data and must be <code>fit!</code>) users can wrap ordinary functions as transformers, and such <em>static</em> transformers can depend on parameters, like the dynamic ones. See <a href="https://juliaai.github.io/MLJ.jl/dev/transformers/#Static-transformers-1">here</a> for how to define your own static transformers.</p><h3 id="Pipelines"><a class="docs-heading-anchor" href="#Pipelines">Pipelines</a><a id="Pipelines-1"></a><a class="docs-heading-anchor-permalink" href="#Pipelines" title="Permalink"></a></h3><pre><code class="language- hljs">length(schema(Xcont).names)</code></pre><pre><code class="nohighlight hljs">87</code></pre><p>Let&#39;s suppose that additionally we&#39;d like to reduce the dimension of our data.  A model that will do this is <code>PCA</code> from <code>MultivariateStats.jl</code>:</p><pre><code class="language- hljs">PCA = @load PCA
+reducer = PCA()</code></pre><pre><code class="nohighlight hljs">PCA(
+  maxoutdim = 0, 
+  method = :auto, 
+  variance_ratio = 0.99, 
+  mean = nothing)</code></pre><p>Now, rather simply repeating the work-flow above, applying the new transformation to <code>Xcont</code>, we can combine both the encoding and the dimension-reducing models into a single model, known as a <em>pipeline</em>. While MLJ offers a powerful interface for composing models in a variety of ways, we&#39;ll stick to these simplest class of composite models for now. The simplest way to construct a pipeline is using the Julia&#39;s <code>|&gt;</code> syntax:</p><pre><code class="language- hljs">pipe = encoder |&gt; reducer</code></pre><pre><code class="nohighlight hljs">UnsupervisedPipeline(
+  continuous_encoder = ContinuousEncoder(
+        drop_last = false, 
+        one_hot_ordered_factors = false), 
+  pca = PCA(
+        maxoutdim = 0, 
+        method = :auto, 
+        variance_ratio = 0.99, 
+        mean = nothing), 
+  cache = true)</code></pre><p>Notice that the model <code>pipe</code> has other models as hyperparameters (with names automatically generated based on the mode type name). The hyperparameters of the component models are are now <em>nested</em>, but we can still access them:</p><pre><code class="language- hljs">@show pipe.pca.variance_ratio</code></pre><pre><code class="nohighlight hljs">0.99</code></pre><pre><code class="language- hljs">pipe.pca.variance_ratio = 0.9995</code></pre><pre><code class="nohighlight hljs">0.9995</code></pre><p>The pipeline model behaves like any other transformer:</p><pre><code class="language- hljs">mach = machine(pipe, X)
+fit!(mach)
+Xsmall = transform(mach, X)
+schema(Xsmall)</code></pre><pre><code class="nohighlight hljs">┌───────┬────────────┬─────────┐
+│ names │ scitypes   │ types   │
+├───────┼────────────┼─────────┤
+│ x1    │ Continuous │ Float64 │
+│ x2    │ Continuous │ Float64 │
+│ x3    │ Continuous │ Float64 │
+└───────┴────────────┴─────────┘
+</code></pre><p>Want to combine this pre-processing with ridge regression?</p><pre><code class="language- hljs">RidgeRegressor = @load RidgeRegressor pkg=MLJLinearModels
+rgs = RidgeRegressor()
+pipe2 = pipe |&gt; rgs</code></pre><pre><code class="nohighlight hljs">DeterministicPipeline(
+  continuous_encoder = ContinuousEncoder(
+        drop_last = false, 
+        one_hot_ordered_factors = false), 
+  pca = PCA(
+        maxoutdim = 0, 
+        method = :auto, 
+        variance_ratio = 0.9995, 
+        mean = nothing), 
+  ridge_regressor = RidgeRegressor(
+        lambda = 1.0, 
+        fit_intercept = true, 
+        penalize_intercept = false, 
+        scale_penalty_with_samples = true, 
+        solver = nothing), 
+  cache = true)</code></pre><p>Now our pipeline is a supervised model, instead of a transformer, whose performance we can evaluate:</p><pre><code class="language- hljs">mach = machine(pipe2, X, y)
+evaluate!(mach, measure=mae, resampling=Holdout()) # `CV(nfolds=6)` is `resampling` default</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: DeterministicPipeline-190
+Extract:
+┌──────────┬───────────┬─────────────┐
+│ measure  │ operation │ measurement │
+├──────────┼───────────┼─────────────┤
+│ LPLoss(  │ predict   │ 176000.0    │
+│   p = 1) │           │             │
+└──────────┴───────────┴─────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><h3 id="Training-of-composite-models-is-&quot;smart&quot;"><a class="docs-heading-anchor" href="#Training-of-composite-models-is-&quot;smart&quot;">Training of composite models is &quot;smart&quot;</a><a id="Training-of-composite-models-is-&quot;smart&quot;-1"></a><a class="docs-heading-anchor-permalink" href="#Training-of-composite-models-is-&quot;smart&quot;" title="Permalink"></a></h3><p>Now notice what happens if we train on all the data, then change a regressor hyperparameter and retrain:</p><pre><code class="language- hljs">fit!(mach);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …).
+[ Info: Training machine(:continuous_encoder, …).
+[ Info: Training machine(:pca, …).
+[ Info: Training machine(:ridge_regressor, …).
+┌ Info: Solver: MLJLinearModels.Analytical
+│   iterative: Bool false
+└   max_inner: Int64 200
+</code></pre><pre><code class="language- hljs">pipe2.ridge_regressor.lambda = 0.1
+fit!(mach);</code></pre><pre><code class="nohighlight hljs">[ Info: Updating machine(DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …) (with warm restart if possible).
+[ Info: Not retraining machine(:continuous_encoder, …). Use `force=true` to force.
+[ Info: Not retraining machine(:pca, …). Use `force=true` to force.
+[ Info: Updating machine(:ridge_regressor, …) (with warm restart if possible).
+┌ Info: Solver: MLJLinearModels.Analytical
+│   iterative: Bool false
+└   max_inner: Int64 200
+</code></pre><p>Second time only the ridge regressor is retrained!</p><p>Mutate a hyperparameter of the <code>PCA</code> model and every model except the <code>ContinuousEncoder</code> (which comes before it will be retrained):</p><pre><code class="language- hljs">pipe2.pca.variance_ratio = 0.9999
+fit!(mach);</code></pre><pre><code class="nohighlight hljs">[ Info: Updating machine(DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …) (with warm restart if possible).
+[ Info: Not retraining machine(:continuous_encoder, …). Use `force=true` to force.
+[ Info: Updating machine(:pca, …) (with warm restart if possible).
+[ Info: Training machine(:ridge_regressor, …).
+┌ Info: Solver: MLJLinearModels.Analytical
+│   iterative: Bool false
+└   max_inner: Int64 200
+</code></pre><h3 id="Inspecting-composite-models"><a class="docs-heading-anchor" href="#Inspecting-composite-models">Inspecting composite models</a><a id="Inspecting-composite-models-1"></a><a class="docs-heading-anchor-permalink" href="#Inspecting-composite-models" title="Permalink"></a></h3><p>The dot syntax used above to change the values of <em>nested</em> hyperparameters is also useful when inspecting the learned parameters and report generated when training a composite model:</p><pre><code class="language- hljs">fitted_params(mach).ridge_regressor</code></pre><pre><code class="nohighlight hljs">(coefs = [:x1 =&gt; -0.7328956348620362, :x2 =&gt; -0.16590563197071073, :x3 =&gt; 194.59514735965914, :x4 =&gt; 102.7129805185524], intercept = 540088.1417665293)</code></pre><pre><code class="language- hljs">report(mach).pca</code></pre><pre><code class="nohighlight hljs">(indim = 87, outdim = 4, tprincipalvar = 2.463215246230865e9, tresidualvar = 157533.26199674606, tvar = 2.4633727794928617e9, mean = [4.369869985656781, 8.45912182482765, 2079.8997362698374, 15106.967565816869, 1.988617961412113, 1.0075417572757137, 1.2343034284921113, 3.4094295100171195, 6.6569194466293435, 1788.3906907879516, 291.5090454818859, 1971.0051357978994, 0.01674917873502059, 0.009207421459306898, 0.012955165872391617, 0.01466709850552908, 0.007773099523434969, 0.023041687873039375, 0.006523851385740064, 0.013093971221024384, 0.004626844954425577, 0.009022347661129875, 0.005737287743487716, 0.008791005413408597, 0.010826817193355851, 0.02308795632258363, 0.0037477444130847174, 0.01906260121223338, 0.013093971221024384, 0.014852172303706102, 0.011844723083329478, 0.012677555175126082, 0.005783556193031971, 0.019987970203118495, 0.025216305001619397, 0.027298385231110906, 0.0023134224772127887, 0.013047702771480128, 0.025355110350252164, 0.010225327349280526, 0.02655809003840281, 0.018738722065423586, 0.012399944477860548, 0.018784990514967844, 0.021052144542636375, 0.021653634386711702, 0.01434321935871929, 0.005459677046222181, 0.012631286725581826, 0.020404386249016797, 0.016610373386387822, 0.009161153009762642, 0.016240225790033775, 0.0048581872021468565, 0.027853606625641975, 0.010595474945634571, 0.015499930597325684, 0.012307407578772035, 0.008605931615231573, 0.005043261000323879, 0.012446212927404802, 0.026974506084301113, 0.015268588349604404, 0.02558645259797344, 0.02350437236848193, 0.008513394716143062, 0.013417850367834173, 0.018970064313144866, 0.016379031138666542, 0.02285661407486235, 0.012168602230139268, 0.01587007819367973, 0.013325313468745662, 0.002637301624022579, 0.020635728496738073, 0.011752186184240966, 0.012446212927404802, 0.011798454633785222, 0.012122333780595013, 0.006292509138018785, 0.012955165872391617, 0.01466709850552908, 47.560052519317075, -122.21389640494147, 1986.552491556008, 12768.455651691113, 1.9577106371165502], principalvars = [2.1770715510450835e9, 2.8418139726430434e8, 1.6850160830642523e6, 277281.83841332485], loadings = [-0.03094830022236769 -0.0028697042773965405 0.5095749351696565 0.14813207201762205; -0.2858879205025633 -0.05108905045966113 2.268889769352169 0.26924666347207565; -171.31152075330942 -44.87769073823875 875.5659689915609 168.66602408773912; -40575.715872989625 8322.862769828478 -3.2832135973351932 0.12584457836092736; 0.007778995904394227 0.010162646821257629 0.45831749135900773 -0.40525347805466555; -0.002211643733571352 -0.0014772314887836425 0.008030553125354504 0.005029961404333902; -0.06029631790584413 -0.008960249584414274 0.1958156352012937 0.16895626991097693; 0.005151697385623508 -0.003924246356610304 -0.0665597154098043 0.1354264847325144; -0.1437593832705363 -0.035785564907580926 0.9296582832070637 -0.04708045076934479; -163.86359230271847 -42.2761711031475 759.8406475174772 -258.1268732347522; -7.4479284505907195 -2.6015196350913126 115.72532147407891 426.79289732249435; -1.807573225134045 -1.0484988749143294 10.79613973242878 -7.023826170513946; 0.00032880415830771555 0.0012608115742089364 -0.002945476396696076 -0.0036782279694778045; 0.0018081489212890985 0.00041720803785755316 -0.004581868056013803 -0.0029394721466696524; 0.0015021831533924377 0.00031177511754644895 -0.0019320797726573077 -0.0002596561899149827; 0.0005396372791692474 -0.000893346454772592 0.01417719412810004 0.0031706817296192446; -0.0011599327900621245 -0.0011496200901734738 0.004972673322122764 0.002520313937122101; 0.0008852219451363187 -0.0004482791535716682 0.021874476941801627 0.010727396671281166; 0.0007603631489364767 0.00022354851848726864 0.0011083720581940193 -0.00017177945017749513; 0.0016539107318789892 0.0003248505808109719 0.0005427567135431955 0.0038757212549927747; -0.005197066654766852 -0.0028999696129264957 -0.0006610034877139049 -0.0016313631088370703; 0.0009483368558858148 0.0005124522329180149 0.002517643264875871 -0.0004027030686682856; -0.012705747793516893 -0.005556238235984659 -0.0024627691630764673 -0.0017728103263237398; -0.006308120223093767 -0.004629616612497465 9.875656548477721e-5 -0.0033864500235734796; -0.016336236551631574 -0.0028974171250481205 -0.006012357830940101 -0.0033676160018411743; 0.0027366321306056475 0.0004778242487191469 -0.0015501314219459148 0.0001325216045831566; -0.008668652483283187 -0.003256324995816614 -0.0006435711877160101 -0.0011877774016416137; -0.009468251570438523 -0.005500626005433714 0.0075196267669614385 0.0028126131539448814; 0.001140913317722173 0.000572531307418339 0.0010254522492583957 0.001382814504817588; 0.0026777974153313257 0.0015871226964074357 0.005756335524299741 -0.007719851104656195; 0.0012602481447323685 0.0014069712977438811 -0.0006748299461092006 -0.0035038683290240713; 0.0012878877889526351 0.0016854326076529065 -0.0014589422671149055 -0.0015576793048326606; 0.0007239635803662536 0.00024346172904716153 -0.0024096750648439557 0.0007940243060852357; 0.002320308225076724 0.00023562759375918166 0.007624840796732388 -0.0006306379558992351; 0.0036470315314979505 0.0016212181889954844 -0.00251393157775493 0.002289684485585593; -0.0073353565650927785 -0.0020449897917742764 0.003491080287892121 -0.013741345923645823; -0.0002104501319689401 -0.0003858234183143582 0.0045051712747222195 -3.92719223312614e-5; 0.00033418349045190743 -0.0005639291977603692 0.015379903941725859 0.006595063200323842; -0.0023370798111320176 0.0003284085425596085 -0.0015943786174122238 -0.008914392100202995; -0.008765678603957602 0.00023187662391027837 -0.001519299580633708 -0.003796430858632887; 0.0027305490507038913 0.000599735899014808 0.011343201263716001 -0.004577608138018805; -0.010376916001404328 -0.00456162359333042 0.012105411259293885 -0.01278846025734618; 0.0018397756388539932 0.0014729352637121139 -0.0035169570693632315 -0.0015998490258304814; 0.0029219175203259503 0.001739257034488365 -0.0005149817059623669 -0.0025909215858809995; -0.001965284760130314 0.0015785374825356144 -0.0006069857511606733 -0.00219821881275978; 0.00032033258247913735 -0.00025798020795042684 0.01082421581718693 -0.01075391091924657; -0.000293460268859073 0.0019482533579054907 0.010459732530058656 -0.008559046853872078; -0.012318617611505073 -0.006161809467829765 -0.004132795384379822 -0.00029595675265855993; -0.0051856378680646305 -0.0015107896501709397 0.0040265456441313675 -0.0010191161617766563; 0.00013118014979864297 -0.000787928971632483 0.01597756701191326 -0.00793136267530889; -0.0016113765212340324 -7.33427424547173e-5 0.0210518547697063 -0.009419400935426998; -0.009956208196007156 -0.00481086366221152 0.0074555113774001786 -0.0043428620714396765; -0.008261126915915021 -0.006344276309120161 0.0015564118816391935 -0.006710779485139364; 0.0015266831650697353 0.0007354422376225503 0.0004910771824210794 0.001054084874306195; 0.008777127223503491 0.0038805618162346964 -0.013479885793856396 0.00043029522712262434; 0.0028498175899847743 0.0011806267800324505 0.000853458794615925 0.003981869684338035; 0.004016070520843419 0.0017837724256102544 -0.011326651734512382 0.0031597957001893405; 0.003948858799778384 0.0016323806118867471 -0.006892677209652593 0.0009724769062962991; 0.002292298584120738 0.0009344403206429057 -0.004200692032859572 0.003369296656326426; 0.0015687063137883983 0.0006874861400338182 -0.00010724691357676522 0.0015500117520519344; 0.003382513606730918 0.0013635336536355926 0.006106632924822598 0.004364598499839203; 0.0069953817842506785 0.0027816782783378195 -0.008938140708670947 0.011020861304471573; 0.004150298652275991 0.0016515208124795427 -0.004769302492821057 0.006341303049228332; 0.007196359156943736 0.0028885154281337107 -0.012543285317966009 0.0072296394391801475; 0.00588328598079174 0.002337829809000462 -0.011212640648660066 0.006637182966451212; 0.00263814386620444 0.0011058181556187474 -0.0007686370270878558 0.0027171243111618316; 0.004208545377777481 0.0018166341117660785 -0.0041414038861467784 0.001159338319292009; 0.003726764304357646 0.001220952516575207 -0.007686277512764395 0.0034348177918453035; 0.004393939480701817 0.0017519372185008568 -0.010742912491051243 0.0028370467607631553; 0.0048836455528599235 0.0017652635795699628 -0.012242459606510638 0.0010894477109835194; 0.00297371007280959 0.0011539226050821653 -0.005186313967598504 0.0037906859730574044; 0.004743676806900177 0.002123728476316075 -0.0036046729924437836 0.006333692127823337; 0.0021481035188033247 0.0007241479186690785 -0.007265886268770565 0.0004436433404978908; 0.00041273078328325183 6.39973020863696e-5 -0.0012817768113536098 -0.0007018097016022647; 0.002501357265610357 0.00023483865414235618 -0.007382224243867089 0.0027604332546305745; 0.00033739547227819603 -0.0004701304360301899 -0.0008154621561255123 0.0021060499992519794; 0.0012898963743125335 0.0005466730464324534 -0.008997546594791591 0.0006904779808614219; 0.0008384737928569485 -0.0004514419383083872 0.0028482748345335786 0.004722431074377536; 0.0021293453661839793 0.0004772139524893017 -0.005575691447448697 0.004663496790067156; 0.0007853579603687956 6.195606481721725e-5 -0.0023251345925029234 0.0008424639677204089; 0.0015579654177854262 0.000462509645666839 -0.004963183688635742 0.000639768638271226; 0.00380542176999362 0.0015091461760304568 0.00048796129399739536 0.009547467619654531; 0.012624052290056621 0.002461611691125208 0.008168721684362822 0.01408320838621929; -0.035312401805926756 -0.011278569363365095 0.03676354955402072 -0.031109555124367007; -112.88077365642482 -56.84662012968592 572.2199960847366 -1.495676954161905; -23035.0566009115 -14659.614997914887 -8.975922676497527 0.23006892666563608; 0.0016649390524045601 0.00035640148161712997 -0.006972328544533634 -0.012428541266700524])</code></pre><h3 id="Incorporating-target-transformations"><a class="docs-heading-anchor" href="#Incorporating-target-transformations">Incorporating target transformations</a><a id="Incorporating-target-transformations-1"></a><a class="docs-heading-anchor-permalink" href="#Incorporating-target-transformations" title="Permalink"></a></h3><p>Next, suppose that instead of using the raw <code>:price</code> as the training target, we want to use the log-price (a common practice in dealing with house price data). However, suppose that we still want to report final <em>predictions</em> on the original linear scale (and use these for evaluation purposes). Then we wrap our supervised model using <code>TransformedTargetModel</code>, which has two keyword arguments <code>transformer</code> and <code>inverse</code>.</p><pre><code class="language- hljs">rgs_log = TransformedTargetModel(rgs, transformer=y-&gt;log.(y), inverse=z-&gt;exp.(z))</code></pre><pre><code class="nohighlight hljs">TransformedTargetModelDeterministic(
+  model = RidgeRegressor(
+        lambda = 0.1, 
+        fit_intercept = true, 
+        penalize_intercept = false, 
+        scale_penalty_with_samples = true, 
+        solver = nothing), 
+  transformer = Main.var&quot;##277&quot;.var&quot;#6#7&quot;(), 
+  inverse = Main.var&quot;##277&quot;.var&quot;#8#9&quot;(), 
+  cache = true)</code></pre><p>And here is a revised pipeline model:</p><pre><code class="language- hljs">pipe3 = pipe |&gt; rgs_log
+mach = machine(pipe3, X, y)
+evaluate!(mach, measure=mae)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: DeterministicPipeline-398
+Extract:
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 162300.0    │ 4100.0  │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────────────────────────────────────────────┐
+│ per_fold                                                     │
+├──────────────────────────────────────────────────────────────┤
+│ [160000.0, 170000.0, 163000.0, 156000.0, 163000.0, 162000.0] │
+└──────────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>MLJ will also allow you to insert <em>learned</em> target transformations. For example, we might want to apply <code>Standardizer()</code> to the target, to standardize it, or <code>UnivariateBoxCoxTransformer()</code> to make it look Gaussian. Then instead of specifying a <em>function</em> for <code>target</code>, we specify a unsupervised <em>model</em> (or model type). One does not specify <code>inverse</code> because only models implementing <code>inverse_transform</code> are allowed.</p><p>Let&#39;s see which of these two options results in a better outcome:</p><pre><code class="language- hljs">box = UnivariateBoxCoxTransformer(n=20)
+stand = Standardizer()
+
+rgs_box = TransformedTargetModel(rgs, transformer=box)
+pipe4 = pipe |&gt; rgs_box
+mach = machine(pipe4, X, y)
+evaluate!(mach, measure=mae)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: DeterministicPipeline-611
+Extract:
+┌──────────┬───────────┬─────────────┬──────────┐
+│ measure  │ operation │ measurement │ 1.96*SE  │
+├──────────┼───────────┼─────────────┼──────────┤
+│ LPLoss(  │ predict   │ 510000.0    │ 730000.0 │
+│   p = 1) │           │             │          │
+└──────────┴───────────┴─────────────┴──────────┘
+┌───────────────────────────────────────────────────────────┐
+│ per_fold                                                  │
+├───────────────────────────────────────────────────────────┤
+│ [162000.0, 2.2e6, 181000.0, 161000.0, 176000.0, 172000.0] │
+└───────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><pre><code class="language- hljs">pipe4.transformed_target_model_deterministic.transformer = stand
+evaluate!(mach, measure=mae)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: DeterministicPipeline-592
+Extract:
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 171500.0    │ 1200.0  │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌──────────────────────────────────────────────────────────────┐
+│ per_fold                                                     │
+├──────────────────────────────────────────────────────────────┤
+│ [171000.0, 172000.0, 173000.0, 170000.0, 173000.0, 171000.0] │
+└──────────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><h3 id="Tutorial-3-Resources"><a class="docs-heading-anchor" href="#Tutorial-3-Resources">Tutorial 3 Resources</a><a id="Tutorial-3-Resources-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-3-Resources" title="Permalink"></a></h3><ul><li>From the MLJ manual:<ul><li><a href="https://juliaai.github.io/MLJ.jl/dev/transformers/">Transformers and other unsupervised models</a></li><li><a href="https://juliaai.github.io/MLJ.jl/dev/linear_pipelines/#Linear-Pipelines">Linear pipelines</a></li></ul></li><li>From Data Science Tutorials:<ul><li><a href="https://juliaai.github.io/DataScienceTutorials.jl/getting-started/composing-models/">Composing models</a></li></ul></li></ul><h3 id="Tutorial-3-Exercises"><a class="docs-heading-anchor" href="#Tutorial-3-Exercises">Tutorial 3 Exercises</a><a id="Tutorial-3-Exercises-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-3-Exercises" title="Permalink"></a></h3><h4 id="Exercise-7"><a class="docs-heading-anchor" href="#Exercise-7">Exercise 7</a><a id="Exercise-7-1"></a><a class="docs-heading-anchor-permalink" href="#Exercise-7" title="Permalink"></a></h4><p>Consider again the Horse Colic classification problem considered in Exercise 6, but with all features, <code>Finite</code> and <code>Infinite</code>:</p><pre><code class="language- hljs">import Downloads
+import CSV
+url = &quot;https://raw.githubusercontent.com/ablaom/&quot;*
+    &quot;MachineLearningInJulia2020/&quot;*
+    &quot;for-MLJ-version-0.16/data/horse.csv&quot;
+csv_file = Downloads.download(url)
+horse = CSV.read(csv_file, DataFrames.DataFrame)
+coerce!(horse, autotype(horse));
+coerce!(horse, Count =&gt; Continuous);
+coerce!(
+    horse,
+    :surgery               =&gt; Multiclass,
+    :age                   =&gt; Multiclass,
+    :mucous_membranes      =&gt; Multiclass,
+    :capillary_refill_time =&gt; Multiclass,
+    :outcome               =&gt; Multiclass,
+    :cp_data               =&gt; Multiclass,
+)
+schema(X)</code></pre><pre><code class="nohighlight hljs">┌───────────────┬───────────────────┬───────────────────────────────────┐
+│ names         │ scitypes          │ types                             │
+├───────────────┼───────────────────┼───────────────────────────────────┤
+│ bedrooms      │ OrderedFactor{13} │ CategoricalValue{Int64, UInt32}   │
+│ bathrooms     │ OrderedFactor{30} │ CategoricalValue{Float64, UInt32} │
+│ sqft_living   │ Continuous        │ Float64                           │
+│ sqft_lot      │ Continuous        │ Float64                           │
+│ floors        │ OrderedFactor{6}  │ CategoricalValue{Float64, UInt32} │
+│ waterfront    │ OrderedFactor{2}  │ CategoricalValue{Int64, UInt32}   │
+│ view          │ OrderedFactor{5}  │ CategoricalValue{Int64, UInt32}   │
+│ condition     │ OrderedFactor{5}  │ CategoricalValue{Int64, UInt32}   │
+│ grade         │ OrderedFactor{12} │ CategoricalValue{Int64, UInt32}   │
+│ sqft_above    │ Continuous        │ Float64                           │
+│ sqft_basement │ Continuous        │ Float64                           │
+│ yr_built      │ Continuous        │ Float64                           │
+│ zipcode       │ Multiclass{70}    │ CategoricalValue{Int64, UInt32}   │
+│ lat           │ Continuous        │ Float64                           │
+│ long          │ Continuous        │ Float64                           │
+│ sqft_living15 │ Continuous        │ Float64                           │
+│ sqft_lot15    │ Continuous        │ Float64                           │
+│ is_renovated  │ OrderedFactor{2}  │ CategoricalValue{Bool, UInt32}    │
+└───────────────┴───────────────────┴───────────────────────────────────┘
+</code></pre><p>(a) Define a pipeline that:</p><ul><li>uses <code>Standardizer</code> to ensure that features that are already continuous are centered at zero and have unit variance</li><li>re-encodes the full set of features as <code>Continuous</code>, using <code>ContinuousEncoder</code></li><li>uses the <code>KMeans</code> clustering model from <code>Clustering.jl</code> to reduce the dimension of the feature space to <code>k=10</code>.</li><li>trains a <code>EvoTreeClassifier</code> (a gradient tree boosting algorithm in <code>EvoTrees.jl</code>) on the reduced data, using <code>nrounds=50</code> and default values for the other  hyperparameters</li></ul><p>(b) Evaluate the pipeline on all data, using 6-fold cross-validation and <code>cross_entropy</code> loss.</p><p>(c) Plot a learning curve which examines the effect on this loss as the tree booster parameter <code>max_depth</code> varies from 2 to 10.</p><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../02_models/notebook/">« 2. Models</a><a class="docs-footer-nextpage" href="../../04_tuning/notebook/">4. Tuning »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 01:33">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

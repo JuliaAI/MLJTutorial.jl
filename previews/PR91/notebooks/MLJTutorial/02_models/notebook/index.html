@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>2. Models · MLJTutorial.jl</title><meta name="title" content="2. Models · MLJTutorial.jl"/><meta property="og:title" content="2. Models · MLJTutorial.jl"/><meta property="twitter:title" content="2. Models · MLJTutorial.jl"/><meta name="description" content="Documentation for MLJTutorial.jl."/><meta property="og:description" content="Documentation for MLJTutorial.jl."/><meta property="twitter:description" content="Documentation for MLJTutorial.jl."/><script data-outdated-warner src="../../../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../../assets/documenter.js"></script><script src="../../../../search_index.js"></script><script src="../../../../siteinfo.js"></script><script src="../../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../../assets/themeswap.js"></script><link href="../../../../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../../../"><img src="../../../../assets/logo.svg" alt="MLJTutorial.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../../../">MLJTutorial.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../../../">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox"/><label class="tocitem" for="menuitem-2"><span class="docs-label">Using MLJ (video series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../UsingMLJ/01_basics/notebook/">1. Basics</a></li><li><a class="tocitem" href="../../../UsingMLJ/02_model_composition/notebook/">2. Model Composition</a></li><li><a class="tocitem" href="../../../UsingMLJ/03_model_tuning/notebook/">3. Model Tuning</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox" checked/><label class="tocitem" for="menuitem-3"><span class="docs-label">MLJTutorial (original series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../01_data_representation/notebook/">1. Data Representation</a></li><li class="is-active"><a class="tocitem" href>2. Models</a></li><li><a class="tocitem" href="../../03_pipelines/notebook/">3. Pipelines</a></li><li><a class="tocitem" href="../../04_tuning/notebook/">4. Tuning</a></li><li><a class="tocitem" href="../../05_composition/notebook/">5. Composition</a></li><li><a class="tocitem" href="../../99_solution_to_exercises/notebook/">Solutions to Exercises</a></li></ul></li><li><a class="tocitem" href="../../../lightning_tour/notebook/">Lightning Tour of MLJ</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">MLJTutorial (original series)</a></li><li class="is-active"><a href>2. Models</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>2. Models</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl/blob/dev/docs/src/notebooks/MLJTutorial/02_models/notebook.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Tutorial-2.-Selecting,-Training-and-Evaluating-Models"><a class="docs-heading-anchor" href="#Tutorial-2.-Selecting,-Training-and-Evaluating-Models">Tutorial 2. Selecting, Training and Evaluating Models</a><a id="Tutorial-2.-Selecting,-Training-and-Evaluating-Models-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-2.-Selecting,-Training-and-Evaluating-Models" title="Permalink"></a></h1><blockquote><p><strong>Goals:</strong></p><ol><li>Search MLJ&#39;s database of model metadata to identify model candidates for a supervised learning task.</li><li>Evaluate the performance of a model on a holdout set using basic <code>fit!</code>/<code>predict</code> workflow.</li><li>Inspect the outcomes of training and save these to a file.</li><li>Evaluate performance using other resampling strategies, such as cross-validation, in one line, using <code>evaluate!</code></li><li>Plot a &quot;learning curve&quot;, to inspect performance as a function of some model hyperparameter, such as an iteration parameter</li></ol></blockquote><p>To run the code in this tutorial in a live Julia session, first follow the instructions given <a href="../../../../#instructions">here</a>.</p><p>The &quot;Hello World!&quot; of machine learning is classification of iris flowers using a famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">dataset</a> of Ronald Fisher. This time, we&#39;ll grab the data from <a href="https://www.openml.org">OpenML</a>:</p><pre><code class="language- hljs">using MLJ
+iris = OpenML.load(61); # a column dictionary table</code></pre><pre><code class="nohighlight hljs">[ Info: Downloading dataset 61.
+</code></pre><p>To describe the dataset, with no need to load it first, run <code>OpenML.describe_dataset(61)</code>.</p><pre><code class="language- hljs">import DataFrames
+iris = DataFrames.DataFrame(iris);
+first(iris, 4)</code></pre><div><div style = "float: left;"><span>4×5 DataFrame</span></div><div style = "clear: both;"></div></div><div class = "data-frame" style = "overflow-x: scroll;"><table class = "data-frame" style = "margin-bottom: 6px;"><thead><tr class = "columnLabelRow"><th class = "stubheadLabel" style = "font-weight: bold; text-align: right;">Row</th><th style = "text-align: left;">sepallength</th><th style = "text-align: left;">sepalwidth</th><th style = "text-align: left;">petallength</th><th style = "text-align: left;">petalwidth</th><th style = "text-align: left;">class</th></tr><tr class = "columnLabelRow"><th class = "stubheadLabel" style = "font-weight: bold; text-align: right;"></th><th title = "Float64" style = "text-align: left;">Float64</th><th title = "Float64" style = "text-align: left;">Float64</th><th title = "Float64" style = "text-align: left;">Float64</th><th title = "Float64" style = "text-align: left;">Float64</th><th title = "CategoricalArrays.CategoricalValue{String, UInt32}" style = "text-align: left;">Cat…</th></tr></thead><tbody><tr class = "dataRow"><td class = "rowLabel" style = "font-weight: bold; text-align: right;">1</td><td style = "text-align: right;">5.1</td><td style = "text-align: right;">3.5</td><td style = "text-align: right;">1.4</td><td style = "text-align: right;">0.2</td><td style = "text-align: left;">Iris-setosa</td></tr><tr class = "dataRow"><td class = "rowLabel" style = "font-weight: bold; text-align: right;">2</td><td style = "text-align: right;">4.9</td><td style = "text-align: right;">3.0</td><td style = "text-align: right;">1.4</td><td style = "text-align: right;">0.2</td><td style = "text-align: left;">Iris-setosa</td></tr><tr class = "dataRow"><td class = "rowLabel" style = "font-weight: bold; text-align: right;">3</td><td style = "text-align: right;">4.7</td><td style = "text-align: right;">3.2</td><td style = "text-align: right;">1.3</td><td style = "text-align: right;">0.2</td><td style = "text-align: left;">Iris-setosa</td></tr><tr class = "dataRow"><td class = "rowLabel" style = "font-weight: bold; text-align: right;">4</td><td style = "text-align: right;">4.6</td><td style = "text-align: right;">3.1</td><td style = "text-align: right;">1.5</td><td style = "text-align: right;">0.2</td><td style = "text-align: left;">Iris-setosa</td></tr></tbody></table></div><p><strong>Main goal:</strong> To build and evaluate models for predicting the <code>:class</code> variable, given the four remaining measurement variables.</p><h3 id="Step-1.-Inspect-and-fix-scientific-types"><a class="docs-heading-anchor" href="#Step-1.-Inspect-and-fix-scientific-types">Step 1. Inspect and fix scientific types</a><a id="Step-1.-Inspect-and-fix-scientific-types-1"></a><a class="docs-heading-anchor-permalink" href="#Step-1.-Inspect-and-fix-scientific-types" title="Permalink"></a></h3><pre><code class="language- hljs">schema(iris)</code></pre><pre><code class="nohighlight hljs">┌─────────────┬───────────────┬──────────────────────────────────┐
+│ names       │ scitypes      │ types                            │
+├─────────────┼───────────────┼──────────────────────────────────┤
+│ sepallength │ Continuous    │ Float64                          │
+│ sepalwidth  │ Continuous    │ Float64                          │
+│ petallength │ Continuous    │ Float64                          │
+│ petalwidth  │ Continuous    │ Float64                          │
+│ class       │ Multiclass{3} │ CategoricalValue{String, UInt32} │
+└─────────────┴───────────────┴──────────────────────────────────┘
+</code></pre><p>These look fine.</p><h3 id="Step-2.-Split-data-into-input-and-target-parts"><a class="docs-heading-anchor" href="#Step-2.-Split-data-into-input-and-target-parts">Step 2. Split data into input and target parts</a><a id="Step-2.-Split-data-into-input-and-target-parts-1"></a><a class="docs-heading-anchor-permalink" href="#Step-2.-Split-data-into-input-and-target-parts" title="Permalink"></a></h3><p>Here&#39;s how we split the data into target and input features, which is needed for MLJ supervised models. We can randomize the data at the same time:</p><pre><code class="language- hljs">y, X = unpack(iris, ==(:class), rng=123);
+scitype(y)</code></pre><pre><code class="nohighlight hljs">AbstractVector{Multiclass{3}} (alias for AbstractArray{ScientificTypesBase.Multiclass{3}, 1})</code></pre><p>This puts the <code>:class</code> column into a vector <code>y</code>, and all remaining columns into a table <code>X</code>.</p><p>To see the documentation for this function, type <code>?unpack</code> in the Julia REPL (or use <code>@doc unpack</code> elsewhere).</p><h3 id="On-searching-for-a-model"><a class="docs-heading-anchor" href="#On-searching-for-a-model">On searching for a model</a><a id="On-searching-for-a-model-1"></a><a class="docs-heading-anchor-permalink" href="#On-searching-for-a-model" title="Permalink"></a></h3><p>Here&#39;s how to see <em>all</em> models (not immediately useful):</p><pre><code class="language- hljs">all_models = models()</code></pre><pre><code class="nohighlight hljs">239-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :constructor, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :tags, :target_in_fit, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = ABODDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = ABODDetector, package_name = OutlierDetectionPython, ... )
+ (name = ARDRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = AdaBoostClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = AdaBoostRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = AdaBoostStumpClassifier, package_name = DecisionTree, ... )
+ (name = AffinityPropagation, package_name = Clustering, ... )
+ (name = AffinityPropagation, package_name = MLJScikitLearnInterface, ... )
+ (name = AgglomerativeClustering, package_name = MLJScikitLearnInterface, ... )
+ (name = AutoEncoder, package_name = BetaML, ... )
+ (name = BM25Transformer, package_name = MLJText, ... )
+ (name = BaggingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = BaggingRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MultivariateStats, ... )
+ (name = BayesianQDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianRidgeRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianSubspaceLDA, package_name = MultivariateStats, ... )
+ (name = BernoulliNBClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = Birch, package_name = MLJScikitLearnInterface, ... )
+ (name = BisectingKMeans, package_name = MLJScikitLearnInterface, ... )
+ (name = BorderlineSMOTE1, package_name = Imbalance, ... )
+ (name = CBLOFDetector, package_name = OutlierDetectionPython, ... )
+ (name = CDDetector, package_name = OutlierDetectionPython, ... )
+ (name = COFDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = COFDetector, package_name = OutlierDetectionPython, ... )
+ (name = COPODDetector, package_name = OutlierDetectionPython, ... )
+ (name = CardinalityReducer, package_name = MLJTransforms, ... )
+ (name = CatBoostClassifier, package_name = CatBoost, ... )
+ (name = CatBoostRegressor, package_name = CatBoost, ... )
+ (name = ClusterUndersampler, package_name = Imbalance, ... )
+ (name = ComplementNBClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ConstantClassifier, package_name = MLJModels, ... )
+ (name = ConstantRegressor, package_name = MLJModels, ... )
+ (name = ContinuousEncoder, package_name = MLJTransforms, ... )
+ (name = ContrastEncoder, package_name = MLJTransforms, ... )
+ (name = CountTransformer, package_name = MLJText, ... )
+ (name = DBSCAN, package_name = Clustering, ... )
+ (name = DBSCAN, package_name = MLJScikitLearnInterface, ... )
+ (name = DNNDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = DecisionTreeClassifier, package_name = BetaML, ... )
+ (name = DecisionTreeClassifier, package_name = DecisionTree, ... )
+ (name = DecisionTreeRegressor, package_name = BetaML, ... )
+ (name = DecisionTreeRegressor, package_name = DecisionTree, ... )
+ (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
+ (name = DeterministicConstantRegressor, package_name = MLJModels, ... )
+ (name = DummyClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = DummyRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = ECODDetector, package_name = OutlierDetectionPython, ... )
+ (name = ENNUndersampler, package_name = Imbalance, ... )
+ (name = ElasticNetCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = ElasticNetRegressor, package_name = MLJLinearModels, ... )
+ (name = ElasticNetRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = EpsilonSVR, package_name = LIBSVM, ... )
+ (name = EvoLinearRegressor, package_name = EvoLinear, ... )
+ (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = EvoTreeCount, package_name = EvoTrees, ... )
+ (name = EvoTreeGaussian, package_name = EvoTrees, ... )
+ (name = EvoTreeMLE, package_name = EvoTrees, ... )
+ (name = EvoTreeRegressor, package_name = EvoTrees, ... )
+ (name = ExtraTreesClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ExtraTreesRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = FactorAnalysis, package_name = MultivariateStats, ... )
+ (name = FeatureAgglomeration, package_name = MLJScikitLearnInterface, ... )
+ (name = FeatureSelector, package_name = FeatureSelection, ... )
+ (name = FillImputer, package_name = MLJTransforms, ... )
+ (name = FrequencyEncoder, package_name = MLJTransforms, ... )
+ (name = GMMDetector, package_name = OutlierDetectionPython, ... )
+ (name = GaussianMixtureClusterer, package_name = BetaML, ... )
+ (name = GaussianMixtureImputer, package_name = BetaML, ... )
+ (name = GaussianMixtureRegressor, package_name = BetaML, ... )
+ (name = GaussianNBClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianNBClassifier, package_name = NaiveBayes, ... )
+ (name = GaussianProcessClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianProcessRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = GeneralImputer, package_name = BetaML, ... )
+ (name = GradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GradientBoostingRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = HBOSDetector, package_name = OutlierDetectionPython, ... )
+ (name = HDBSCAN, package_name = MLJScikitLearnInterface, ... )
+ (name = HierarchicalClustering, package_name = Clustering, ... )
+ (name = HistGradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = HistGradientBoostingRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = HuberRegressor, package_name = MLJLinearModels, ... )
+ (name = HuberRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = ICA, package_name = MultivariateStats, ... )
+ (name = IForestDetector, package_name = OutlierDetectionPython, ... )
+ (name = INNEDetector, package_name = OutlierDetectionPython, ... )
+ (name = ImageClassifier, package_name = MLJFlux, ... )
+ (name = InteractionTransformer, package_name = MLJTransforms, ... )
+ (name = KDEDetector, package_name = OutlierDetectionPython, ... )
+ (name = KMeans, package_name = Clustering, ... )
+ (name = KMeans, package_name = MLJScikitLearnInterface, ... )
+ (name = KMeans, package_name = ParallelKMeans, ... )
+ (name = KMeansClusterer, package_name = BetaML, ... )
+ (name = KMedoids, package_name = Clustering, ... )
+ (name = KMedoidsClusterer, package_name = BetaML, ... )
+ (name = KNNClassifier, package_name = NearestNeighborModels, ... )
+ (name = KNNDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = KNNDetector, package_name = OutlierDetectionPython, ... )
+ (name = KNNRegressor, package_name = NearestNeighborModels, ... )
+ (name = KNeighborsClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = KNeighborsRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = KernelPCA, package_name = MultivariateStats, ... )
+ (name = KernelPerceptronClassifier, package_name = BetaML, ... )
+ (name = LADRegressor, package_name = MLJLinearModels, ... )
+ (name = LDA, package_name = MultivariateStats, ... )
+ (name = LGBMClassifier, package_name = LightGBM, ... )
+ (name = LGBMRegressor, package_name = LightGBM, ... )
+ (name = LMDDDetector, package_name = OutlierDetectionPython, ... )
+ (name = LOCIDetector, package_name = OutlierDetectionPython, ... )
+ (name = LODADetector, package_name = OutlierDetectionPython, ... )
+ (name = LOFDetector, package_name = OutlierDetectionNeighbors, ... )
+ (name = LOFDetector, package_name = OutlierDetectionPython, ... )
+ (name = LarsCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LarsRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LassoCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LassoLarsCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LassoLarsICRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LassoLarsRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LassoRegressor, package_name = MLJLinearModels, ... )
+ (name = LassoRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LinearBinaryClassifier, package_name = GLM, ... )
+ (name = LinearCountRegressor, package_name = GLM, ... )
+ (name = LinearRegressor, package_name = GLM, ... )
+ (name = LinearRegressor, package_name = MLJLinearModels, ... )
+ (name = LinearRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LinearRegressor, package_name = MultivariateStats, ... )
+ (name = LinearSVC, package_name = LIBSVM, ... )
+ (name = LogisticCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = LogisticClassifier, package_name = MLJLinearModels, ... )
+ (name = LogisticClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = MCDDetector, package_name = OutlierDetectionPython, ... )
+ (name = MaxnetBinaryClassifier, package_name = Maxnet, ... )
+ (name = MeanShift, package_name = MLJScikitLearnInterface, ... )
+ (name = MiniBatchKMeans, package_name = MLJScikitLearnInterface, ... )
+ (name = MissingnessEncoder, package_name = MLJTransforms, ... )
+ (name = MultiTaskElasticNetCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = MultiTaskElasticNetRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = MultiTaskLassoCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = MultiTaskLassoRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = MultinomialClassifier, package_name = MLJLinearModels, ... )
+ (name = MultinomialNBClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = MultinomialNBClassifier, package_name = NaiveBayes, ... )
+ (name = MultitargetGaussianMixtureRegressor, package_name = BetaML, ... )
+ (name = MultitargetKNNClassifier, package_name = NearestNeighborModels, ... )
+ (name = MultitargetKNNRegressor, package_name = NearestNeighborModels, ... )
+ (name = MultitargetLinearRegressor, package_name = MultivariateStats, ... )
+ (name = MultitargetNeuralNetworkRegressor, package_name = BetaML, ... )
+ (name = MultitargetNeuralNetworkRegressor, package_name = MLJFlux, ... )
+ (name = MultitargetRidgeRegressor, package_name = MultivariateStats, ... )
+ (name = MultitargetSRRegressor, package_name = SymbolicRegression, ... )
+ (name = MultitargetSRTestRegressor, package_name = SymbolicRegression, ... )
+ (name = NeuralNetworkBinaryClassifier, package_name = MLJFlux, ... )
+ (name = NeuralNetworkClassifier, package_name = BetaML, ... )
+ (name = NeuralNetworkClassifier, package_name = MLJFlux, ... )
+ (name = NeuralNetworkRegressor, package_name = BetaML, ... )
+ (name = NeuralNetworkRegressor, package_name = MLJFlux, ... )
+ (name = NuSVC, package_name = LIBSVM, ... )
+ (name = NuSVR, package_name = LIBSVM, ... )
+ (name = OCSVMDetector, package_name = OutlierDetectionPython, ... )
+ (name = OPTICS, package_name = MLJScikitLearnInterface, ... )
+ (name = OneClassSVM, package_name = LIBSVM, ... )
+ (name = OneHotEncoder, package_name = MLJTransforms, ... )
+ (name = OneRuleClassifier, package_name = OneRule, ... )
+ (name = OrdinalEncoder, package_name = MLJTransforms, ... )
+ (name = OrthogonalMatchingPursuitCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = OrthogonalMatchingPursuitRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = PCA, package_name = MultivariateStats, ... )
+ (name = PCADetector, package_name = OutlierDetectionPython, ... )
+ (name = PPCA, package_name = MultivariateStats, ... )
+ (name = PartLS, package_name = PartitionedLS, ... )
+ (name = PassiveAggressiveClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = PassiveAggressiveRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = PegasosClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticNuSVC, package_name = LIBSVM, ... )
+ (name = ProbabilisticSGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticSVC, package_name = LIBSVM, ... )
+ (name = QuantileRegressor, package_name = MLJLinearModels, ... )
+ (name = RANSACRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = RODDetector, package_name = OutlierDetectionPython, ... )
+ (name = ROSE, package_name = Imbalance, ... )
+ (name = RandomForestClassifier, package_name = BetaML, ... )
+ (name = RandomForestClassifier, package_name = DecisionTree, ... )
+ (name = RandomForestClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RandomForestImputer, package_name = BetaML, ... )
+ (name = RandomForestRegressor, package_name = BetaML, ... )
+ (name = RandomForestRegressor, package_name = DecisionTree, ... )
+ (name = RandomForestRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = RandomOversampler, package_name = Imbalance, ... )
+ (name = RandomUndersampler, package_name = Imbalance, ... )
+ (name = RandomWalkOversampler, package_name = Imbalance, ... )
+ (name = RidgeCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeCVRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeRegressor, package_name = MLJLinearModels, ... )
+ (name = RidgeRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeRegressor, package_name = MultivariateStats, ... )
+ (name = RobustRegressor, package_name = MLJLinearModels, ... )
+ (name = SGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SGDRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = SMOTE, package_name = Imbalance, ... )
+ (name = SMOTEN, package_name = Imbalance, ... )
+ (name = SMOTENC, package_name = Imbalance, ... )
+ (name = SODDetector, package_name = OutlierDetectionPython, ... )
+ (name = SOSDetector, package_name = OutlierDetectionPython, ... )
+ (name = SRRegressor, package_name = SymbolicRegression, ... )
+ (name = SRTestRegressor, package_name = SymbolicRegression, ... )
+ (name = SVC, package_name = LIBSVM, ... )
+ (name = SVMClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMLinearClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMLinearRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMNuClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMNuRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = SelfOrganizingMap, package_name = SelfOrganizingMaps, ... )
+ (name = SimpleImputer, package_name = BetaML, ... )
+ (name = SpectralClustering, package_name = MLJScikitLearnInterface, ... )
+ (name = StableForestClassifier, package_name = SIRUS, ... )
+ (name = StableForestRegressor, package_name = SIRUS, ... )
+ (name = StableRulesClassifier, package_name = SIRUS, ... )
+ (name = StableRulesRegressor, package_name = SIRUS, ... )
+ (name = Standardizer, package_name = MLJTransforms, ... )
+ (name = SubspaceLDA, package_name = MultivariateStats, ... )
+ (name = TSVDTransformer, package_name = TSVD, ... )
+ (name = TargetEncoder, package_name = MLJTransforms, ... )
+ (name = TfidfTransformer, package_name = MLJText, ... )
+ (name = TheilSenRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = TomekUndersampler, package_name = Imbalance, ... )
+ (name = UnivariateBoxCoxTransformer, package_name = MLJTransforms, ... )
+ (name = UnivariateDiscretizer, package_name = MLJTransforms, ... )
+ (name = UnivariateFillImputer, package_name = MLJTransforms, ... )
+ (name = UnivariateStandardizer, package_name = MLJTransforms, ... )
+ (name = UnivariateTimeTypeToContinuous, package_name = MLJTransforms, ... )
+ (name = XGBoostClassifier, package_name = XGBoost, ... )
+ (name = XGBoostCount, package_name = XGBoost, ... )
+ (name = XGBoostRegressor, package_name = XGBoost, ... )</code></pre><p>If you already have an idea about the name of the model, you could search by string or regex:</p><pre><code class="language- hljs">some_models = models(&quot;LinearRegressor&quot;)</code></pre><pre><code class="nohighlight hljs">11-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :constructor, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :tags, :target_in_fit, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = EvoLinearRegressor, package_name = EvoLinear, ... )
+ (name = LinearBinaryClassifier, package_name = GLM, ... )
+ (name = LinearCountRegressor, package_name = GLM, ... )
+ (name = LinearRegressor, package_name = GLM, ... )
+ (name = LinearRegressor, package_name = MLJLinearModels, ... )
+ (name = LinearRegressor, package_name = MLJScikitLearnInterface, ... )
+ (name = LinearRegressor, package_name = MultivariateStats, ... )
+ (name = MultitargetLinearRegressor, package_name = MultivariateStats, ... )
+ (name = MultitargetRidgeRegressor, package_name = MultivariateStats, ... )
+ (name = RidgeRegressor, package_name = MultivariateStats, ... )
+ (name = SVMLinearRegressor, package_name = MLJScikitLearnInterface, ... )</code></pre><p>Each entry contains metadata for a model whose defining code is not yet loaded:</p><pre><code class="language- hljs">meta = some_models[1]</code></pre><pre><code class="nohighlight hljs">(name = &quot;EvoLinearRegressor&quot;,
+ package_name = &quot;EvoLinear&quot;,
+ is_supervised = true,
+ abstract_type = MLJModelInterface.Deterministic,
+ constructor = nothing,
+ deep_properties = (),
+ docstring = &quot;```julia\nEvoLinearRegressor(; kwargs...)\n```\n\nA mo...&quot;,
+ fit_data_scitype =
+     Union{Tuple{ScientificTypesBase.Table{&lt;:Union{AbstractVector{&lt;:ScientificTypesBase.Continuous}, AbstractVector{&lt;:ScientificTypesBase.Count}, AbstractVector{&lt;:ScientificTypesBase.OrderedFactor}}}, AbstractVector{&lt;:ScientificTypesBase.Continuous}}, Tuple{ScientificTypesBase.Table{&lt;:Union{AbstractVector{&lt;:ScientificTypesBase.Continuous}, AbstractVector{&lt;:ScientificTypesBase.Count}, AbstractVector{&lt;:ScientificTypesBase.OrderedFactor}}}, AbstractVector{&lt;:ScientificTypesBase.Continuous}, AbstractVector{&lt;:Union{ScientificTypesBase.Continuous, ScientificTypesBase.Count}}}},
+ human_name = &quot;evo linear regressor&quot;,
+ hyperparameter_ranges = (nothing,
+                          nothing,
+                          nothing,
+                          nothing,
+                          nothing,
+                          nothing,
+                          nothing,
+                          nothing,
+                          nothing),
+ hyperparameter_types = (&quot;Symbol&quot;,
+                         &quot;Symbol&quot;,
+                         &quot;Symbol&quot;,
+                         &quot;Int64&quot;,
+                         &quot;Float32&quot;,
+                         &quot;Float32&quot;,
+                         &quot;Float32&quot;,
+                         &quot;Int64&quot;,
+                         &quot;Int64&quot;),
+ hyperparameters = (:loss,
+                    :metric,
+                    :updater,
+                    :nrounds,
+                    :eta,
+                    :L1,
+                    :L2,
+                    :early_stopping_rounds,
+                    :seed),
+ implemented_methods = [:fit, :predict, :update],
+ inverse_transform_scitype = ScientificTypesBase.Unknown,
+ is_pure_julia = true,
+ is_wrapper = false,
+ iteration_parameter = :nrounds,
+ load_path = &quot;EvoLinear.EvoLinearRegressor&quot;,
+ package_license = &quot;MIT&quot;,
+ package_url = &quot;https://github.com/jeremiedb/EvoLinear.jl&quot;,
+ package_uuid = &quot;ab853011-1780-437f-b4b5-5de6f4777246&quot;,
+ predict_scitype = AbstractVector{&lt;:ScientificTypesBase.Continuous},
+ prediction_type = :deterministic,
+ reporting_operations = (),
+ reports_feature_importances = false,
+ supports_class_weights = false,
+ supports_online = false,
+ supports_training_losses = false,
+ supports_weights = true,
+ tags = [],
+ target_in_fit = true,
+ transform_scitype = ScientificTypesBase.Unknown,
+ input_scitype =
+     ScientificTypesBase.Table{&lt;:Union{AbstractVector{&lt;:ScientificTypesBase.Continuous}, AbstractVector{&lt;:ScientificTypesBase.Count}, AbstractVector{&lt;:ScientificTypesBase.OrderedFactor}}},
+ target_scitype = AbstractVector{&lt;:ScientificTypesBase.Continuous},
+ output_scitype = ScientificTypesBase.Unknown)</code></pre><pre><code class="language- hljs">targetscitype = meta.target_scitype</code></pre><pre><code class="nohighlight hljs">AbstractVector{&lt;:Continuous} (alias for AbstractArray{&lt;:ScientificTypesBase.Continuous, 1})</code></pre><pre><code class="language- hljs">scitype(y) &lt;: targetscitype</code></pre><pre><code class="nohighlight hljs">false</code></pre><p>So this model won&#39;t do. Let&#39;s find all pure julia classifiers:</p><pre><code class="language- hljs">filter_julia_classifiers(meta) =
+    AbstractVector{Finite} &lt;: meta.target_scitype &amp;&amp;
+    meta.is_pure_julia
+
+models(filter_julia_classifiers)</code></pre><pre><code class="nohighlight hljs">25-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :constructor, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :tags, :target_in_fit, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = AdaBoostStumpClassifier, package_name = DecisionTree, ... )
+ (name = BayesianLDA, package_name = MultivariateStats, ... )
+ (name = BayesianSubspaceLDA, package_name = MultivariateStats, ... )
+ (name = ConstantClassifier, package_name = MLJModels, ... )
+ (name = DecisionTreeClassifier, package_name = BetaML, ... )
+ (name = DecisionTreeClassifier, package_name = DecisionTree, ... )
+ (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
+ (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = GaussianNBClassifier, package_name = NaiveBayes, ... )
+ (name = KNNClassifier, package_name = NearestNeighborModels, ... )
+ (name = KernelPerceptronClassifier, package_name = BetaML, ... )
+ (name = LDA, package_name = MultivariateStats, ... )
+ (name = LogisticClassifier, package_name = MLJLinearModels, ... )
+ (name = MultinomialClassifier, package_name = MLJLinearModels, ... )
+ (name = MultinomialNBClassifier, package_name = NaiveBayes, ... )
+ (name = NeuralNetworkClassifier, package_name = BetaML, ... )
+ (name = NeuralNetworkClassifier, package_name = MLJFlux, ... )
+ (name = OneRuleClassifier, package_name = OneRule, ... )
+ (name = PegasosClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = BetaML, ... )
+ (name = RandomForestClassifier, package_name = BetaML, ... )
+ (name = RandomForestClassifier, package_name = DecisionTree, ... )
+ (name = StableForestClassifier, package_name = SIRUS, ... )
+ (name = StableRulesClassifier, package_name = SIRUS, ... )
+ (name = SubspaceLDA, package_name = MultivariateStats, ... )</code></pre><p>Find all (supervised) models that match my data!</p><pre><code class="language- hljs">models(matching(X, y))</code></pre><pre><code class="nohighlight hljs">54-element Vector{NamedTuple{(:name, :package_name, :is_supervised, :abstract_type, :constructor, :deep_properties, :docstring, :fit_data_scitype, :human_name, :hyperparameter_ranges, :hyperparameter_types, :hyperparameters, :implemented_methods, :inverse_transform_scitype, :is_pure_julia, :is_wrapper, :iteration_parameter, :load_path, :package_license, :package_url, :package_uuid, :predict_scitype, :prediction_type, :reporting_operations, :reports_feature_importances, :supports_class_weights, :supports_online, :supports_training_losses, :supports_weights, :tags, :target_in_fit, :transform_scitype, :input_scitype, :target_scitype, :output_scitype)}}:
+ (name = AdaBoostClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = AdaBoostStumpClassifier, package_name = DecisionTree, ... )
+ (name = BaggingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianLDA, package_name = MultivariateStats, ... )
+ (name = BayesianQDA, package_name = MLJScikitLearnInterface, ... )
+ (name = BayesianSubspaceLDA, package_name = MultivariateStats, ... )
+ (name = CatBoostClassifier, package_name = CatBoost, ... )
+ (name = ConstantClassifier, package_name = MLJModels, ... )
+ (name = DecisionTreeClassifier, package_name = BetaML, ... )
+ (name = DecisionTreeClassifier, package_name = DecisionTree, ... )
+ (name = DeterministicConstantClassifier, package_name = MLJModels, ... )
+ (name = DummyClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = EvoTreeClassifier, package_name = EvoTrees, ... )
+ (name = ExtraTreesClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianNBClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GaussianNBClassifier, package_name = NaiveBayes, ... )
+ (name = GaussianProcessClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = GradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = HistGradientBoostingClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = KNNClassifier, package_name = NearestNeighborModels, ... )
+ (name = KNeighborsClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = KernelPerceptronClassifier, package_name = BetaML, ... )
+ (name = LDA, package_name = MultivariateStats, ... )
+ (name = LGBMClassifier, package_name = LightGBM, ... )
+ (name = LinearSVC, package_name = LIBSVM, ... )
+ (name = LogisticCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = LogisticClassifier, package_name = MLJLinearModels, ... )
+ (name = LogisticClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = MultinomialClassifier, package_name = MLJLinearModels, ... )
+ (name = NeuralNetworkClassifier, package_name = BetaML, ... )
+ (name = NeuralNetworkClassifier, package_name = MLJFlux, ... )
+ (name = NuSVC, package_name = LIBSVM, ... )
+ (name = PassiveAggressiveClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = PegasosClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = BetaML, ... )
+ (name = PerceptronClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticNuSVC, package_name = LIBSVM, ... )
+ (name = ProbabilisticSGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = ProbabilisticSVC, package_name = LIBSVM, ... )
+ (name = RandomForestClassifier, package_name = BetaML, ... )
+ (name = RandomForestClassifier, package_name = DecisionTree, ... )
+ (name = RandomForestClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeCVClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = RidgeClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SGDClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVC, package_name = LIBSVM, ... )
+ (name = SVMClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMLinearClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = SVMNuClassifier, package_name = MLJScikitLearnInterface, ... )
+ (name = StableForestClassifier, package_name = SIRUS, ... )
+ (name = StableRulesClassifier, package_name = SIRUS, ... )
+ (name = SubspaceLDA, package_name = MultivariateStats, ... )
+ (name = XGBoostClassifier, package_name = XGBoost, ... )</code></pre><h3 id="Step-3.-Select-and-instantiate-a-model"><a class="docs-heading-anchor" href="#Step-3.-Select-and-instantiate-a-model">Step 3. Select and instantiate a model</a><a id="Step-3.-Select-and-instantiate-a-model-1"></a><a class="docs-heading-anchor-permalink" href="#Step-3.-Select-and-instantiate-a-model" title="Permalink"></a></h3><p>To load the code defining a new model type we use the <code>@load</code> macro:</p><pre><code class="language- hljs">NeuralNetworkClassifier = @load NeuralNetworkClassifier pkg=MLJFlux</code></pre><pre><code class="nohighlight hljs">MLJFlux.NeuralNetworkClassifier</code></pre><p>Other ways to load model code are described <a href="https://juliaai.github.io/MLJ.jl/dev/loading_model_code/#Loading-Model-Code">here</a>.</p><p>We&#39;ll instantiate this type with default values for the hyperparameters:</p><pre><code class="language- hljs">model = NeuralNetworkClassifier()</code></pre><pre><code class="nohighlight hljs">NeuralNetworkClassifier(
+  builder = Short(
+        n_hidden = 0, 
+        dropout = 0.5, 
+        σ = NNlib.σ), 
+  finaliser = NNlib.softmax, 
+  optimiser = Optimisers.Adam(eta=0.001, beta=(0.9, 0.999), epsilon=1.0e-8), 
+  loss = Flux.Losses.crossentropy, 
+  epochs = 10, 
+  batch_size = 1, 
+  lambda = 0.0, 
+  alpha = 0.0, 
+  rng = Random.TaskLocalRNG(), 
+  optimiser_changes_trigger_retraining = false, 
+  acceleration = ComputationalResources.CPU1{Nothing}(nothing), 
+  embedding_dims = Dict{Symbol, Real}())</code></pre><p>In MLJ a <em>model</em> is just a struct containing hyperparameters, and that&#39;s all. A model does not store <em>learned</em> parameters. Models are mutable:</p><pre><code class="language- hljs">model.epochs = 12</code></pre><pre><code class="nohighlight hljs">12</code></pre><p>And all models have a key-word constructor that works once <code>@load</code> has been performed:</p><pre><code class="language- hljs">NeuralNetworkClassifier(epochs=12) == model</code></pre><pre><code class="nohighlight hljs">true</code></pre><h3 id="On-fitting,-predicting,-and-inspecting-models"><a class="docs-heading-anchor" href="#On-fitting,-predicting,-and-inspecting-models">On fitting, predicting, and inspecting models</a><a id="On-fitting,-predicting,-and-inspecting-models-1"></a><a class="docs-heading-anchor-permalink" href="#On-fitting,-predicting,-and-inspecting-models" title="Permalink"></a></h3><p>In MLJ a model and training/validation data are typically bound together in a machine:</p><pre><code class="language- hljs">mach = machine(model, X, y)</code></pre><pre><code class="nohighlight hljs">untrained Machine; caches model-specific representations of data
+  model: NeuralNetworkClassifier(builder = Short(n_hidden = 0, …), …)
+  args: 
+    1:	Source @909 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @399 ⏎ AbstractVector{ScientificTypesBase.Multiclass{3}}
+</code></pre><p>A machine stores <em>learned</em> parameters, among other things. We&#39;ll train this machine on 70% of the data and evaluate on a 30% holdout set. Let&#39;s start by dividing all row indices into <code>train</code> and <code>test</code> subsets:</p><pre><code class="language- hljs">train, test = partition(1:length(y), 0.7)</code></pre><pre><code class="nohighlight hljs">([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105], [106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150])</code></pre><p>Now we can <code>fit!</code>...</p><pre><code class="language- hljs">fit!(mach, rows=train, verbosity=2);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(NeuralNetworkClassifier(builder = Short(n_hidden = 0, …), …), …).
+[ Info: MLJFlux: converting input data to Float32
+[ Info: Loss is 2.023
+[ Info: Loss is 1.592
+[ Info: Loss is 1.491
+[ Info: Loss is 1.205
+[ Info: Loss is 1.227
+[ Info: Loss is 1.177
+[ Info: Loss is 1.19
+[ Info: Loss is 1.128
+[ Info: Loss is 1.09
+[ Info: Loss is 1.058
+[ Info: Loss is 1.059
+[ Info: Loss is 1.056
+</code></pre><p>... and <code>predict</code>:</p><pre><code class="language- hljs">yhat = predict(mach, rows=test);  # or `predict(mach, Xnew)`
+yhat[1:3]</code></pre><pre><code class="nohighlight hljs">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float32}:
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.38, Iris-versicolor=&gt;0.293, Iris-virginica=&gt;0.327)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.449, Iris-versicolor=&gt;0.271, Iris-virginica=&gt;0.281)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.454, Iris-versicolor=&gt;0.27, Iris-virginica=&gt;0.276)</code></pre><p>We&#39;ll have more to say on the form of this prediction shortly.</p><p>After training, one can inspect the learned parameters:</p><pre><code class="language- hljs">fitted_params(mach)</code></pre><pre><code class="nohighlight hljs">(chain = Chain(Chain(Dense(4 =&gt; 3, σ), Dropout(0.5), Dense(3 =&gt; 3)), softmax),)</code></pre><p>Everything else the user might be interested in is accessed from the training <em>report</em>:</p><pre><code class="language- hljs">report(mach)</code></pre><pre><code class="nohighlight hljs">(training_losses = Float32[1.7850709, 2.023422, 1.5918993, 1.4905419, 1.2054352, 1.2269526, 1.1768, 1.1895036, 1.128155, 1.0898077, 1.0582713, 1.0594574, 1.056259],)</code></pre><p>You save a machine like this:</p><pre><code class="language- hljs">MLJ.save(&quot;neural_net.jls&quot;, mach)</code></pre><p>And retrieve it like this:</p><pre><code class="language- hljs">mach2 = machine(&quot;neural_net.jls&quot;)
+yhat = predict(mach2, X);
+yhat[1:3]</code></pre><pre><code class="nohighlight hljs">3-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float32}:
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.379, Iris-versicolor=&gt;0.304, Iris-virginica=&gt;0.317)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.454, Iris-versicolor=&gt;0.269, Iris-virginica=&gt;0.277)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.377, Iris-versicolor=&gt;0.292, Iris-virginica=&gt;0.331)</code></pre><p>Machines remember the last set of hyperparameters used during fit, which, in the case of iterative models, allows for a warm restart of computations in the case that only the iteration parameter is increased:</p><pre><code class="language- hljs">model.epochs = model.epochs + 4
+fit!(mach, rows=train, verbosity=2);</code></pre><pre><code class="nohighlight hljs">[ Info: Updating machine(NeuralNetworkClassifier(builder = Short(n_hidden = 0, …), …), …) (with warm restart if possible).
+[ Info: Loss is 1.067
+[ Info: Loss is 1.038
+[ Info: Loss is 1.034
+[ Info: Loss is 1.038
+</code></pre><p>For this particular model we can also increase <code>:learning_rate</code> without triggering a cold restart:</p><pre><code class="language- hljs">model.epochs = model.epochs + 4
+model.optimiser</code></pre><pre><code class="nohighlight hljs">Optimisers.Adam(eta=0.001, beta=(0.9, 0.999), epsilon=1.0e-8)</code></pre><pre><code class="language- hljs">import Optimisers
+model.optimiser = Optimisers.Adam(0.01)</code></pre><pre><code class="nohighlight hljs">Optimisers.Adam(eta=0.01, beta=(0.9, 0.999), epsilon=1.0e-8)</code></pre><pre><code class="language- hljs">fit!(mach, rows=train, verbosity=2);</code></pre><pre><code class="nohighlight hljs">[ Info: Updating machine(NeuralNetworkClassifier(builder = Short(n_hidden = 0, …), …), …) (with warm restart if possible).
+[ Info: Loss is 0.9739
+[ Info: Loss is 0.9423
+[ Info: Loss is 0.9133
+[ Info: Loss is 0.8122
+</code></pre><p>However, change any other parameter and training will restart from scratch:</p><pre><code class="language- hljs">model.lambda = 0.001
+fit!(mach, rows=train, verbosity=2);</code></pre><pre><code class="nohighlight hljs">[ Info: Updating machine(NeuralNetworkClassifier(builder = Short(n_hidden = 0, …), …), …) (with warm restart if possible).
+[ Info: MLJFlux: converting input data to Float32
+[ Info: Loss is 1.285
+[ Info: Loss is 0.9493
+[ Info: Loss is 0.9647
+[ Info: Loss is 0.8598
+[ Info: Loss is 0.8699
+[ Info: Loss is 0.859
+[ Info: Loss is 0.843
+[ Info: Loss is 0.8556
+[ Info: Loss is 0.8016
+[ Info: Loss is 0.7762
+[ Info: Loss is 0.7672
+[ Info: Loss is 0.6868
+[ Info: Loss is 0.7414
+[ Info: Loss is 0.7573
+[ Info: Loss is 0.7062
+[ Info: Loss is 0.7683
+[ Info: Loss is 0.725
+[ Info: Loss is 0.8516
+[ Info: Loss is 0.7587
+[ Info: Loss is 0.7132
+</code></pre><p>Iterative models that implement warm-restart for training can be controlled externally (eg, using an out-of-sample stopping criterion). See <a href="https://juliaai.github.io/MLJ.jl/dev/controlling_iterative_models/">here</a> for details.</p><p>Let&#39;s train silently for a total of 50 epochs, and look at a prediction:</p><pre><code class="language- hljs">model.epochs = 50
+fit!(mach, rows=train)
+yhat = predict(mach, X[test,:]); # or predict(mach, rows=test)
+yhat[1]</code></pre><pre><code class="nohighlight hljs">UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.156, Iris-versicolor=&gt;0.519, Iris-virginica=&gt;0.326)</code></pre><p>What&#39;s going on here?</p><pre><code class="language- hljs">info(model).prediction_type</code></pre><pre><code class="nohighlight hljs">:probabilistic</code></pre><p><strong>Important</strong>:</p><ul><li><p>In MLJ, a model that can predict probabilities (and not just point values) will do so by default.</p></li><li><p>For most probabilistic predictors, the predicted object is a <code>Distributions.Distribution</code> object or a <code>CategoricalDistributions.UnivariateFinite</code> object (the case here) which all support the following methods: <code>rand</code>, <code>pdf</code>, <code>logpdf</code>; and, where appropriate: <code>mode</code>, <code>median</code> and <code>mean</code>.</p></li></ul><p>So, to obtain the probability of &quot;Iris-virginica&quot; in the first test prediction, we do</p><pre><code class="language- hljs">pdf(yhat[1], &quot;Iris-virginica&quot;)</code></pre><pre><code class="nohighlight hljs">0.32571402f0</code></pre><p>To get the most likely observation, we do</p><pre><code class="language- hljs">mode(yhat[1])</code></pre><pre><code class="nohighlight hljs">CategoricalArrays.CategoricalValue{String, UInt32} &quot;Iris-versicolor&quot;</code></pre><p>These can be broadcast over multiple predictions in the usual way:</p><pre><code class="language- hljs">broadcast(pdf, yhat[1:4], &quot;Iris-versicolor&quot;)</code></pre><pre><code class="nohighlight hljs">4-element Vector{Float32}:
+ 0.5187301
+ 0.0025167037
+ 0.00241053
+ 0.0027305766</code></pre><pre><code class="language- hljs">mode.(yhat[1:4])</code></pre><pre><code class="nohighlight hljs">4-element CategoricalArrays.CategoricalArray{String,1,UInt32}:
+ &quot;Iris-versicolor&quot;
+ &quot;Iris-setosa&quot;
+ &quot;Iris-setosa&quot;
+ &quot;Iris-setosa&quot;</code></pre><p>Or, alternatively, you can use the <code>predict_mode</code> operation instead of <code>predict</code>:</p><pre><code class="language- hljs">predict_mode(mach, X[test,:])[1:4] # or predict_mode(mach, rows=test)[1:4]</code></pre><pre><code class="nohighlight hljs">4-element CategoricalArrays.CategoricalArray{String,1,UInt32}:
+ &quot;Iris-versicolor&quot;
+ &quot;Iris-setosa&quot;
+ &quot;Iris-setosa&quot;
+ &quot;Iris-setosa&quot;</code></pre><p>For a more conventional matrix of probabilities you can do this:</p><pre><code class="language- hljs">L = levels(y)
+pdf(yhat, L)[1:4, :]</code></pre><pre><code class="nohighlight hljs">4×3 Matrix{Float32}:
+ 0.155556  0.51873     0.325714
+ 0.997162  0.0025167   0.000321372
+ 0.997287  0.00241053  0.000302146
+ 0.996915  0.00273058  0.000354911</code></pre><p>However, in a typical MLJ workflow, this is not as useful as you might imagine. In particular, all probabilistic performance measures in MLJ expect distribution objects in their first slot:</p><pre><code class="language- hljs">log_loss(yhat, y[test])</code></pre><pre><code class="nohighlight hljs">0.41664216811287624</code></pre><p>To apply a deterministic measure, we first need to obtain point-estimates:</p><pre><code class="language- hljs">misclassification_rate(mode.(yhat), y[test])</code></pre><pre><code class="nohighlight hljs">0.08888888888888889</code></pre><p>For more on metrics provided by MLJ, see the <a href="https://juliaai.github.io/StatisticalMeasures.jl/stable/">StatisticalMeasures.jl documentation</a>. To list all measures run <code>measures()</code>.</p><h3 id="Step-4.-Evaluate-the-model-performance"><a class="docs-heading-anchor" href="#Step-4.-Evaluate-the-model-performance">Step 4. Evaluate the model performance</a><a id="Step-4.-Evaluate-the-model-performance-1"></a><a class="docs-heading-anchor-permalink" href="#Step-4.-Evaluate-the-model-performance" title="Permalink"></a></h3><p>Naturally, MLJ provides boilerplate code for carrying out a model evaluation with a lot less fuss. Let&#39;s repeat the performance evaluation above and add an extra measure, <code>brier_score</code>:</p><pre><code class="language- hljs">evaluate!(
+    mach,
+    resampling=Holdout(fraction_train=0.7),
+    measures=[log_loss, misclassification_rate, brier_score],
+)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: NeuralNetworkClassifier-433
+Extract:
+┌─────────────────────────┬──────────────┬─────────────┐
+│ measure                 │ operation    │ measurement │
+├─────────────────────────┼──────────────┼─────────────┤
+│ LogLoss(                │ predict      │ 0.417       │
+│   tol = 2.22045e-16)    │              │             │
+│ MisclassificationRate() │ predict_mode │ 0.0889      │
+│ BrierScore()            │ predict      │ -0.236      │
+└─────────────────────────┴──────────────┴─────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Or applying cross-validation instead:</p><pre><code class="language- hljs">evaluate!(
+    mach,
+    resampling=CV(nfolds=6),
+    measures=[log_loss, misclassification_rate, brier_score],
+)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: NeuralNetworkClassifier-136
+Extract:
+┌───┬─────────────────────────┬──────────────┬─────────────┬─────────┐
+│   │ measure                 │ operation    │ measurement │ 1.96*SE │
+├───┼─────────────────────────┼──────────────┼─────────────┼─────────┤
+│ A │ LogLoss(                │ predict      │ 0.276       │ 0.035   │
+│   │   tol = 2.22045e-16)    │              │             │         │
+│ B │ MisclassificationRate() │ predict_mode │ 0.04        │ 0.022   │
+│ C │ BrierScore()            │ predict      │ -0.143      │ 0.026   │
+└───┴─────────────────────────┴──────────────┴─────────────┴─────────┘
+┌───┬──────────────────────────────────────────────────────────┐
+│   │ per_fold                                                 │
+├───┼──────────────────────────────────────────────────────────┤
+│ A │ [0.312, 0.256, 0.219, 0.263, 0.277, 0.33]                │
+│ B │ [0.04, 0.04, 0.0, 0.04, 0.08, 0.04]                      │
+│ C │ Float32[-0.181, -0.127, -0.0987, -0.137, -0.142, -0.172] │
+└───┴──────────────────────────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Or, Monte Carlo cross-validation (cross-validation with repeated randomized folds)</p><pre><code class="language- hljs">e = evaluate!(
+    mach,
+    resampling=CV(nfolds=6, rng=123),
+    repeats=3,
+    measures=[log_loss, misclassification_rate, brier_score],
+)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: NeuralNetworkClassifier-762
+Extract:
+┌───┬─────────────────────────┬──────────────┬─────────────┬─────────┐
+│   │ measure                 │ operation    │ measurement │ 1.96*SE │
+├───┼─────────────────────────┼──────────────┼─────────────┼─────────┤
+│ A │ LogLoss(                │ predict      │ 0.318       │ 0.035   │
+│   │   tol = 2.22045e-16)    │              │             │         │
+│ B │ MisclassificationRate() │ predict_mode │ 0.042       │ 0.023   │
+│ C │ BrierScore()            │ predict      │ -0.171      │ 0.023   │
+└───┴─────────────────────────┴──────────────┴─────────────┴─────────┘
+┌───┬───────────────────────────────────────────────────────────────────────────
+│   │ per_fold                                                                 ⋯
+├───┼───────────────────────────────────────────────────────────────────────────
+│ A │ [0.263, 0.309, 0.294, 0.313, 0.317, 0.216, 0.388, 0.297, 0.427, 0.275, 0 ⋯
+│ B │ [0.0, 0.04, 0.04, 0.0, 0.04, 0.04, 0.2, 0.0, 0.0, 0.04, 0.04, 0.08, 0.08 ⋯
+│ C │ Float32[-0.133, -0.164, -0.153, -0.156, -0.175, -0.117, -0.246, -0.158,  ⋯
+└───┴───────────────────────────────────────────────────────────────────────────
+                                                                1 column omitted
+Apply `describe` to this result for a named tuple summary.</code></pre><p>We finally note that you can restrict the rows of observations from which train and test folds are drawn, by specifying <code>rows=...</code>. For example, imagining the last 30% of target observations are <code>missing</code> you might have a workflow like this:</p><pre><code class="language- hljs">train, test = partition(eachindex(y), 0.7)
+mach = machine(model, X, y)
+evaluate!(
+    mach,
+    resampling=CV(nfolds=6),
+    measures=[log_loss, brier_score],
+    rows=train,     # cv estimate, resampling from `train`
+)
+
+fit!(mach, rows=train)    # re-train using all of `train` observations
+predict(mach, rows=test) # and predict missing targets</code></pre><pre><code class="nohighlight hljs">45-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, String, UInt32, Float32}:
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.0903, Iris-versicolor=&gt;0.528, Iris-virginica=&gt;0.382)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.979, Iris-versicolor=&gt;0.0153, Iris-virginica=&gt;0.00547)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.978, Iris-versicolor=&gt;0.0163, Iris-virginica=&gt;0.00586)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.975, Iris-versicolor=&gt;0.0185, Iris-virginica=&gt;0.00674)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.134, Iris-versicolor=&gt;0.524, Iris-virginica=&gt;0.342)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;8.56e-5, Iris-versicolor=&gt;0.228, Iris-virginica=&gt;0.772)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.983, Iris-versicolor=&gt;0.0127, Iris-virginica=&gt;0.00446)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.98, Iris-versicolor=&gt;0.0149, Iris-virginica=&gt;0.00533)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.00347, Iris-versicolor=&gt;0.395, Iris-virginica=&gt;0.602)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.135, Iris-versicolor=&gt;0.521, Iris-virginica=&gt;0.343)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;2.86e-5, Iris-versicolor=&gt;0.19, Iris-virginica=&gt;0.81)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;9.2e-5, Iris-versicolor=&gt;0.231, Iris-virginica=&gt;0.769)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;3.58e-5, Iris-versicolor=&gt;0.198, Iris-virginica=&gt;0.802)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.0527, Iris-versicolor=&gt;0.52, Iris-virginica=&gt;0.427)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.978, Iris-versicolor=&gt;0.0164, Iris-virginica=&gt;0.0059)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.144, Iris-versicolor=&gt;0.518, Iris-virginica=&gt;0.338)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;8.25e-5, Iris-versicolor=&gt;0.227, Iris-virginica=&gt;0.773)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.000144, Iris-versicolor=&gt;0.248, Iris-virginica=&gt;0.752)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.00414, Iris-versicolor=&gt;0.404, Iris-virginica=&gt;0.592)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.0957, Iris-versicolor=&gt;0.528, Iris-virginica=&gt;0.376)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.215, Iris-versicolor=&gt;0.494, Iris-virginica=&gt;0.291)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.045, Iris-versicolor=&gt;0.515, Iris-virginica=&gt;0.44)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.0742, Iris-versicolor=&gt;0.526, Iris-virginica=&gt;0.4)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;5.45e-5, Iris-versicolor=&gt;0.212, Iris-virginica=&gt;0.788)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.964, Iris-versicolor=&gt;0.0261, Iris-virginica=&gt;0.0098)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;4.02e-5, Iris-versicolor=&gt;0.202, Iris-virginica=&gt;0.798)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.131, Iris-versicolor=&gt;0.523, Iris-virginica=&gt;0.346)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.00176, Iris-versicolor=&gt;0.361, Iris-virginica=&gt;0.637)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.000152, Iris-versicolor=&gt;0.25, Iris-virginica=&gt;0.749)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.000158, Iris-versicolor=&gt;0.252, Iris-virginica=&gt;0.748)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.0393, Iris-versicolor=&gt;0.51, Iris-virginica=&gt;0.451)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.969, Iris-versicolor=&gt;0.023, Iris-virginica=&gt;0.00853)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.0425, Iris-versicolor=&gt;0.513, Iris-virginica=&gt;0.445)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.097, Iris-versicolor=&gt;0.527, Iris-virginica=&gt;0.376)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;4.55e-5, Iris-versicolor=&gt;0.206, Iris-virginica=&gt;0.794)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.00276, Iris-versicolor=&gt;0.383, Iris-virginica=&gt;0.614)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;9.93e-5, Iris-versicolor=&gt;0.234, Iris-virginica=&gt;0.766)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.138, Iris-versicolor=&gt;0.521, Iris-virginica=&gt;0.341)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.977, Iris-versicolor=&gt;0.0165, Iris-virginica=&gt;0.00596)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.977, Iris-versicolor=&gt;0.0171, Iris-virginica=&gt;0.00619)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.000143, Iris-versicolor=&gt;0.248, Iris-virginica=&gt;0.752)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.97, Iris-versicolor=&gt;0.0217, Iris-virginica=&gt;0.00804)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.00164, Iris-versicolor=&gt;0.357, Iris-virginica=&gt;0.641)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.124, Iris-versicolor=&gt;0.525, Iris-virginica=&gt;0.351)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(Iris-setosa=&gt;0.00131, Iris-versicolor=&gt;0.346, Iris-virginica=&gt;0.652)</code></pre><h3 id="On-learning-curves"><a class="docs-heading-anchor" href="#On-learning-curves">On learning curves</a><a id="On-learning-curves-1"></a><a class="docs-heading-anchor-permalink" href="#On-learning-curves" title="Permalink"></a></h3><p>Since our model is an iterative one, we might want to inspect the out-of-sample performance as a function of the iteration parameter. For this we can use the <code>learning_curve</code> function (which, incidentally can be applied to any model hyperparameter). This starts by defining a one-dimensional range object for the parameter (more on this when we discuss tuning in Tutorial 4):</p><pre><code class="language- hljs">r = range(model, :epochs, lower=1, upper=1000, scale=:log10)</code></pre><pre><code class="nohighlight hljs">NumericRange(1 ≤ epochs ≤ 1000; origin=500.5, unit=499.5; on log10 scale)</code></pre><pre><code class="language- hljs">curve = learning_curve(
+    mach,
+    range=r,
+    resampling=Holdout(fraction_train=0.7), # (default)
+    measure=log_loss,
+)</code></pre><pre><code class="nohighlight hljs">(parameter_name = &quot;epochs&quot;, parameter_scale = :log10, parameter_values = [1, 2, 3, 4, 5, 7, 9, 11, 14, 17, 22, 28, 36, 45, 57, 73, 92, 117, 149, 189, 240, 304, 386, 489, 621, 788, 1000], measurements = [0.9792367389813159, 0.861137424251525, 0.795194663958999, 0.7178450923341597, 0.6672852524240639, 0.6298719732484978, 0.5722341032114211, 0.5468304476118365, 0.5176573197034343, 0.49085053804968687, 0.4656446207911134, 0.4495242488591051, 0.4099614796325163, 0.42257271926898354, 0.31717065032020536, 0.3321625563432286, 0.2845664781923225, 0.22536592494730678, 0.1853560701976897, 0.24943364437705945, 0.24673236950764432, 0.20234975793565377, 0.20691858169733499, 0.20911653361243762, 0.22259957311318937, 0.21965174517509872, 0.21279597941067163])</code></pre><pre><code class="language- hljs">using Plots
+gr(size=(490,300))
+plt=plot(curve.parameter_values, curve.measurements, xscale=:log10)
+xlabel!(plt, &quot;epochs&quot;)
+ylabel!(plt, &quot;log loss on holdout set&quot;)
+savefig(&quot;learning_curve.png&quot;)</code></pre><pre><code class="nohighlight hljs">&quot;/home/runner/work/MLJTutorial.jl/MLJTutorial.jl/docs/src/notebooks/MLJTutorial/02_models/learning_curve.png&quot;</code></pre><p><img src="../learning_curve.png" alt/></p><p>We will return to learning curves when we look at tuning in Tutorial 4.</p><h3 id="Tutorial-2-Resources"><a class="docs-heading-anchor" href="#Tutorial-2-Resources">Tutorial 2 Resources</a><a id="Tutorial-2-Resources-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-2-Resources" title="Permalink"></a></h3><ul><li>From the MLJ manual:<ul><li><a href="https://juliaai.github.io/MLJ.jl/dev/getting_started/">Getting Started</a></li><li><a href="https://juliaai.github.io/MLJ.jl/dev/model_search/">Model Search</a></li><li><a href="https://juliaai.github.io/MLJ.jl/dev/evaluating_model_performance/">Evaluating Performance</a> (using <code>evaluate!</code>)</li><li><a href="https://juliaai.github.io/MLJ.jl/dev/learning_curves/">Learning Curves</a></li><li><a href="https://juliaai.github.io/MLJ.jl/dev/performance_measures/">Performance Measures</a> (loss functions, scores, etc)</li></ul></li><li>From Data Science Tutorials:<ul><li><a href="https://juliaai.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/">Choosing and evaluating a model</a></li><li><a href="https://juliaai.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/">Fit, predict, transform</a></li></ul></li></ul><h3 id="Tutorial-2-Exercises"><a class="docs-heading-anchor" href="#Tutorial-2-Exercises">Tutorial 2 Exercises</a><a id="Tutorial-2-Exercises-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-2-Exercises" title="Permalink"></a></h3><h4 id="Exercise-4"><a class="docs-heading-anchor" href="#Exercise-4">Exercise 4</a><a id="Exercise-4-1"></a><a class="docs-heading-anchor-permalink" href="#Exercise-4" title="Permalink"></a></h4><p>(a) Identify all supervised MLJ models that can be applied (without type coercion or one-hot encoding) to a supervised learning problem with input features <code>X4</code> and target <code>y4</code> defined below:</p><pre><code class="language- hljs">import Distributions
+poisson = Distributions.Poisson
+
+age = 18 .+ 60*rand(10);
+salary = coerce(rand([&quot;small&quot;, &quot;big&quot;, &quot;huge&quot;], 10), OrderedFactor);
+levels!(salary, [&quot;small&quot;, &quot;big&quot;, &quot;huge&quot;]);
+small = salary[1]</code></pre><pre><code class="nohighlight hljs">CategoricalArrays.CategoricalValue{String, UInt32} &quot;small&quot; (1/3)</code></pre><pre><code class="language- hljs">X4 = DataFrames.DataFrame(age=age, salary=salary)
+
+n_devices(salary) = salary &gt; small ? rand(poisson(1.3)) : rand(poisson(2.9))
+y4 = [n_devices(row.salary) for row in eachrow(X4)]</code></pre><pre><code class="nohighlight hljs">10-element Vector{Int64}:
+ 3
+ 1
+ 3
+ 0
+ 2
+ 6
+ 0
+ 0
+ 2
+ 1</code></pre><p>(b) What models can be applied if you coerce the salary to a <code>Continuous</code> scitype?</p><h4 id="Exercise-5-(unpack)"><a class="docs-heading-anchor" href="#Exercise-5-(unpack)">Exercise 5 (unpack)</a><a id="Exercise-5-(unpack)-1"></a><a class="docs-heading-anchor-permalink" href="#Exercise-5-(unpack)" title="Permalink"></a></h4><p>After evaluating the following ...</p><pre><code class="language- hljs">data = (
+    a = [1, 2, 3, 4],
+    b = rand(4),
+    c = rand(4),
+    d = coerce([&quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;], OrderedFactor),
+);
+pretty(data)</code></pre><pre><code class="nohighlight hljs">┌───────┬────────────┬────────────┬──────────────────────────────────┐
+│ a     │ b          │ c          │ d                                │
+│ Int64 │ Float64    │ Float64    │ CategoricalValue{String, UInt32} │
+│ Count │ Continuous │ Continuous │ OrderedFactor{2}                 │
+├───────┼────────────┼────────────┼──────────────────────────────────┤
+│ 1     │ 0.754755   │ 0.208445   │ male                             │
+│ 2     │ 0.874161   │ 0.399919   │ female                           │
+│ 3     │ 0.906202   │ 0.19441    │ female                           │
+│ 4     │ 0.718781   │ 0.818259   │ male                             │
+└───────┴────────────┴────────────┴──────────────────────────────────┘
+</code></pre><pre><code class="language- hljs">using Tables
+
+y, X, w = unpack(
+    data,
+    ==(:a),
+    name -&gt; elscitype(Tables.getcolumn(data, name)) == Continuous,
+);</code></pre><p>...attempt to guess the evaluations of the following:</p><pre><code class="language- hljs">y;</code></pre><pre><code class="language- hljs">X;</code></pre><pre><code class="language- hljs">w;</code></pre><h4 id="Exercise-6-(first-steps-in-modeling-Horse-Colic)"><a class="docs-heading-anchor" href="#Exercise-6-(first-steps-in-modeling-Horse-Colic)">Exercise 6 (first steps in modeling Horse Colic)</a><a id="Exercise-6-(first-steps-in-modeling-Horse-Colic)-1"></a><a class="docs-heading-anchor-permalink" href="#Exercise-6-(first-steps-in-modeling-Horse-Colic)" title="Permalink"></a></h4><p>Here is the Horse Colic data introduced in Tutorial 1, together with the type coercions we performed there:</p><pre><code class="language- hljs">import Downloads
+import CSV
+url = &quot;https://raw.githubusercontent.com/ablaom/&quot;*
+    &quot;MachineLearningInJulia2020/&quot;*
+    &quot;for-MLJ-version-0.16/data/horse.csv&quot;
+csv_file = Downloads.download(url)
+horse = CSV.read(csv_file, DataFrames.DataFrame)
+coerce!(horse, autotype(horse));
+coerce!(horse, Count =&gt; Continuous);
+coerce!(
+    horse,
+    :surgery               =&gt; Multiclass,
+    :age                   =&gt; Multiclass,
+    :mucous_membranes      =&gt; Multiclass,
+    :capillary_refill_time =&gt; Multiclass,
+    :outcome               =&gt; Multiclass,
+    :cp_data               =&gt; Multiclass,
+);
+schema(horse)</code></pre><pre><code class="nohighlight hljs">┌─────────────────────────┬──────────────────┬─────────────────────────────────┐
+│ names                   │ scitypes         │ types                           │
+├─────────────────────────┼──────────────────┼─────────────────────────────────┤
+│ surgery                 │ Multiclass{2}    │ CategoricalValue{Int64, UInt32} │
+│ age                     │ Multiclass{2}    │ CategoricalValue{Int64, UInt32} │
+│ rectal_temperature      │ Continuous       │ Float64                         │
+│ pulse                   │ Continuous       │ Float64                         │
+│ respiratory_rate        │ Continuous       │ Float64                         │
+│ temperature_extremities │ OrderedFactor{4} │ CategoricalValue{Int64, UInt32} │
+│ mucous_membranes        │ Multiclass{6}    │ CategoricalValue{Int64, UInt32} │
+│ capillary_refill_time   │ Multiclass{3}    │ CategoricalValue{Int64, UInt32} │
+│ pain                    │ OrderedFactor{5} │ CategoricalValue{Int64, UInt32} │
+│ peristalsis             │ OrderedFactor{4} │ CategoricalValue{Int64, UInt32} │
+│ abdominal_distension    │ OrderedFactor{4} │ CategoricalValue{Int64, UInt32} │
+│ packed_cell_volume      │ Continuous       │ Float64                         │
+│ total_protein           │ Continuous       │ Float64                         │
+│ outcome                 │ Multiclass{3}    │ CategoricalValue{Int64, UInt32} │
+│ surgical_lesion         │ OrderedFactor{2} │ CategoricalValue{Int64, UInt32} │
+│ cp_data                 │ Multiclass{2}    │ CategoricalValue{Int64, UInt32} │
+└─────────────────────────┴──────────────────┴─────────────────────────────────┘
+</code></pre><p>(a) Suppose we want to predict the <code>:outcome</code> variable, based on the remaining variables that are <code>Continuous</code> (one-hot encoding categorical variables is discussed later in Tutorial 3) <em>while ignoring the others</em>.  Extract from the <code>horse</code> data set (defined in Tutorial 1) appropriate input features <code>X</code> and target variable <code>y</code>. (Do not, however, randomize the observations.)</p><p>(b) Create a 70:30 <code>train</code>/<code>test</code> split of the data and train a <code>LogisticClassifier</code> model, from the <code>MLJLinearModels</code> package, on the <code>train</code> rows. Use <code>lambda=100</code> and default values for the other hyperparameters. (Although one would normally standardize (whiten) the continuous features for this model, do not do so here.)  After training:</p><ul><li><p>(i) Recalling that a logistic classifier (aka logistic regressor) is a linear-based model learning a <em>vector</em> of coefficients for each feature (one coefficient for each target class), use the <code>fitted_params</code> method to find this vector of coefficients in the case of the <code>:pulse</code> feature. (You can convert a vector of pairs <code>v = [x1 =&gt; y1, x2 =&gt; y2, ...]</code> into a dictionary with <code>Dict(v)</code>.)</p></li><li><p>(ii) Evaluate the <code>log_loss</code> performance on the <code>test</code> observations.</p></li><li><p>(iii) In how many <code>test</code> observations does the predicted probability of the observed class exceed 50%?</p></li><li><p>(iv) Find the <code>misclassification_rate</code> in the <code>test</code> set. (<em>Hint.</em> As this measure is deterministic, you will either need to broadcast <code>mode</code> or use <code>predict_mode</code> instead of <code>predict</code>.)</p></li></ul><p>(c) Instead use a <code>RandomForestClassifier</code> model from the <code>DecisionTree</code> package and:</p><ul><li><p>(i) Generate an appropriate learning curve to convince yourself that out-of-sample estimates of the <code>log_loss</code> loss do not substantially improve for <code>n_trees &gt; 50</code>. Use default values for all other hyperparameters, and use all available data to generate the curve.</p></li><li><p>(ii) Fix <code>n_trees=90</code> and use <code>evaluate!</code> to obtain a 9-fold cross-validation estimate of the <code>log_loss</code>, restricting sub-sampling to the <code>train</code> observations.</p></li><li><p>(iii) Now use <em>all</em> available data but set <code>resampling=Holdout(fraction_train=0.7)</code> to obtain a score you can compare with the <code>KNNClassifier</code> in part (b)(iii). Which model seems better?</p></li></ul><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../01_data_representation/notebook/">« 1. Data Representation</a><a class="docs-footer-nextpage" href="../../03_pipelines/notebook/">3. Pipelines »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 01:33">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
