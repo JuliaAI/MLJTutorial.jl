@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>3. Model Tuning · MLJTutorial.jl</title><meta name="title" content="3. Model Tuning · MLJTutorial.jl"/><meta property="og:title" content="3. Model Tuning · MLJTutorial.jl"/><meta property="twitter:title" content="3. Model Tuning · MLJTutorial.jl"/><meta name="description" content="Documentation for MLJTutorial.jl."/><meta property="og:description" content="Documentation for MLJTutorial.jl."/><meta property="twitter:description" content="Documentation for MLJTutorial.jl."/><script data-outdated-warner src="../../../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../../assets/documenter.js"></script><script src="../../../../search_index.js"></script><script src="../../../../siteinfo.js"></script><script src="../../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../../assets/themeswap.js"></script><link href="../../../../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../../../"><img src="../../../../assets/logo.svg" alt="MLJTutorial.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../../../">MLJTutorial.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../../../">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox" checked/><label class="tocitem" for="menuitem-2"><span class="docs-label">Using MLJ (video series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../01_basics/notebook/">1. Basics</a></li><li><a class="tocitem" href="../../02_model_composition/notebook/">2. Model Composition</a></li><li class="is-active"><a class="tocitem" href>3. Model Tuning</a><ul class="internal"><li><a class="tocitem" href="#Part-I.-Learning-Curves"><span>Part I. Learning Curves</span></a></li><li><a class="tocitem" href="#Part-II.-The-TunedModel-Wrapper"><span>Part II. The <code>TunedModel</code> Wrapper</span></a></li></ul></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox"/><label class="tocitem" for="menuitem-3"><span class="docs-label">MLJTutorial (original series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../../MLJTutorial/01_data_representation/notebook/">1. Data Representation</a></li><li><a class="tocitem" href="../../../MLJTutorial/02_models/notebook/">2. Models</a></li><li><a class="tocitem" href="../../../MLJTutorial/03_pipelines/notebook/">3. Pipelines</a></li><li><a class="tocitem" href="../../../MLJTutorial/04_tuning/notebook/">4. Tuning</a></li><li><a class="tocitem" href="../../../MLJTutorial/05_composition/notebook/">5. Composition</a></li><li><a class="tocitem" href="../../../MLJTutorial/99_solution_to_exercises/notebook/">Solutions to Exercises</a></li></ul></li><li><a class="tocitem" href="../../../lightning_tour/notebook/">Lightning Tour of MLJ</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Using MLJ (video series)</a></li><li class="is-active"><a href>3. Model Tuning</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>3. Model Tuning</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl/blob/dev/docs/src/notebooks/UsingMLJ/03_model_tuning/notebook.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Lesson-3.-Model-Tuning"><a class="docs-heading-anchor" href="#Lesson-3.-Model-Tuning">Lesson 3. Model Tuning</a><a id="Lesson-3.-Model-Tuning-1"></a><a class="docs-heading-anchor-permalink" href="#Lesson-3.-Model-Tuning" title="Permalink"></a></h1><p>Notebook supporting the video series &quot;Using MLJ&quot;.</p><p><a href="../slides.pdf">Slides</a> from the video.</p><p>To run the code in this tutorial in a live Julia session, first follow the instructions given <a href="../../../../#instructions">here</a>.</p><h3 id="Video-Timings"><a class="docs-heading-anchor" href="#Video-Timings">Video Timings</a><a id="Video-Timings-1"></a><a class="docs-heading-anchor-permalink" href="#Video-Timings" title="Permalink"></a></h3><ul><li>00:00 Introduction</li><li>00:06 Goals</li><li>01:12 Prerequisites and Getting Help</li><li>01:27 Live Coding: Learning Curves</li><li>13:27 Tuning as Model Wrapper</li><li>18:45 Live Coding: Grid Search</li><li>26:17 Live Coding: Random Search</li><li>30:48 Nested Resampling</li><li>33:11 Final Observations</li><li>36:59 End</li></ul><h2 id="Part-I.-Learning-Curves"><a class="docs-heading-anchor" href="#Part-I.-Learning-Curves">Part I. Learning Curves</a><a id="Part-I.-Learning-Curves-1"></a><a class="docs-heading-anchor-permalink" href="#Part-I.-Learning-Curves" title="Permalink"></a></h2><pre><code class="language- hljs">using MLJ, Plots
+RandomForestRegressor = @load RandomForestRegressor pkg=DecisionTree
+
+X, price = @load_reduced_ames;
+schema(X)</code></pre><pre><code class="nohighlight hljs">┌──────────────┬───────────────────┬──────────────────────────────────┐
+│ names        │ scitypes          │ types                            │
+├──────────────┼───────────────────┼──────────────────────────────────┤
+│ OverallQual  │ OrderedFactor{10} │ CategoricalValue{Int64, UInt32}  │
+│ GrLivArea    │ Continuous        │ Float64                          │
+│ Neighborhood │ Multiclass{25}    │ CategoricalValue{String, UInt32} │
+│ x1stFlrSF    │ Continuous        │ Float64                          │
+│ TotalBsmtSF  │ Continuous        │ Float64                          │
+│ BsmtFinSF1   │ Continuous        │ Float64                          │
+│ LotArea      │ Continuous        │ Float64                          │
+│ GarageCars   │ Count             │ Int64                            │
+│ MSSubClass   │ Multiclass{15}    │ CategoricalValue{String, UInt32} │
+│ GarageArea   │ Continuous        │ Float64                          │
+│ YearRemodAdd │ Count             │ Int64                            │
+│ YearBuilt    │ Count             │ Int64                            │
+└──────────────┴───────────────────┴──────────────────────────────────┘
+</code></pre><pre><code class="language- hljs">y = price/100_000; # price in multiples of $100,000
+first(y, 5)</code></pre><pre><code class="nohighlight hljs">5-element Vector{Float64}:
+ 1.38
+ 3.699
+ 1.8
+ 2.075
+ 1.47</code></pre><p>Define a model and a &quot;dummy&quot; model for baseline comparison:</p><pre><code class="language- hljs">model = RandomForestRegressor(
+    rng=123,
+    n_subfeatures=1,
+)
+pipe =  ContinuousEncoder() |&gt; model
+baseline = ContinuousEncoder() |&gt;  ConstantRegressor();</code></pre><p>Get a performance baseline:</p><pre><code class="language- hljs">options = (; resampling=CV(nfolds=3), measure = mae, acceleration=CPUThreads())
+e0 = evaluate(pipe, X, y; options...)
+ebase = evaluate(baseline, X, y; options...)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: ProbabilisticPipeline-489
+Extract:
+┌──────────┬──────────────┬─────────────┬─────────┐
+│ measure  │ operation    │ measurement │ 1.96*SE │
+├──────────┼──────────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict_mean │ 0.568       │ 0.033   │
+│   p = 1) │              │             │         │
+└──────────┴──────────────┴─────────────┴─────────┘
+┌──────────────────────┐
+│ per_fold             │
+├──────────────────────┤
+│ [0.544, 0.57, 0.592] │
+└──────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Inspect hyper-parameters:</p><pre><code class="language- hljs">pipe</code></pre><pre><code class="nohighlight hljs">DeterministicPipeline(
+  continuous_encoder = ContinuousEncoder(
+        drop_last = false, 
+        one_hot_ordered_factors = false), 
+  random_forest_regressor = RandomForestRegressor(
+        max_depth = -1, 
+        min_samples_leaf = 1, 
+        min_samples_split = 2, 
+        min_purity_increase = 0.0, 
+        n_subfeatures = 1, 
+        n_trees = 100, 
+        sampling_fraction = 0.7, 
+        feature_importance = :impurity, 
+        rng = 123), 
+  cache = true)</code></pre><p>Define a 1D hyper-parameter range:</p><pre><code class="language- hljs">r = range(pipe, :(random_forest_regressor.n_trees), lower=10, upper=500)</code></pre><pre><code class="nohighlight hljs">NumericRange(10 ≤ random_forest_regressor.n_trees ≤ 500; origin=255.0, unit=245.0)</code></pre><p>A <code>learning_curve</code> has the same arguments as <code>evaluate</code> except but with extra <code>range</code> option:</p><pre><code class="language- hljs">curve = learning_curve(
+    pipe, X, y;
+    range=r,
+    resampling=Holdout(fraction_train=0.8),
+    measure=mae,
+)
+plt = plot(curve.parameter_values, curve.measurements)
+savefig(&quot;learning_curve.svg&quot;);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …).
+[ Info: Attempting to evaluate 30 models.
+Evaluating over 30 metamodels:   0%[&gt;                        ]  ETA: N/A[KEvaluating over 30 metamodels:   3%[&gt;                        ]  ETA: 0:00:00[KEvaluating over 30 metamodels:   7%[=&gt;                       ]  ETA: 0:00:00[KEvaluating over 30 metamodels:  10%[==&gt;                      ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  13%[===&gt;                     ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  17%[====&gt;                    ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  20%[=====&gt;                   ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  23%[=====&gt;                   ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  27%[======&gt;                  ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  30%[=======&gt;                 ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  33%[========&gt;                ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  37%[=========&gt;               ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  40%[==========&gt;              ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  43%[==========&gt;              ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  47%[===========&gt;             ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  50%[============&gt;            ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  53%[=============&gt;           ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  57%[==============&gt;          ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  60%[===============&gt;         ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  63%[===============&gt;         ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  67%[================&gt;        ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  70%[=================&gt;       ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  73%[==================&gt;      ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  77%[===================&gt;     ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  80%[====================&gt;    ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  83%[====================&gt;    ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  87%[=====================&gt;   ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  90%[======================&gt;  ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  93%[=======================&gt; ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  97%[========================&gt;]  ETA: 0:00:01[KEvaluating over 30 metamodels: 100%[=========================] Time: 0:00:35[K
+</code></pre><p><img src="../learning_curve.svg" alt/></p><p>Let&#39;s set <code>n_trees</code> to a a value that looks sufficient to get convergence:</p><pre><code class="language- hljs">pipe.random_forest_regressor.n_trees = 250;</code></pre><h2 id="Part-II.-The-TunedModel-Wrapper"><a class="docs-heading-anchor" href="#Part-II.-The-TunedModel-Wrapper">Part II. The <code>TunedModel</code> Wrapper</a><a id="Part-II.-The-TunedModel-Wrapper-1"></a><a class="docs-heading-anchor-permalink" href="#Part-II.-The-TunedModel-Wrapper" title="Permalink"></a></h2><pre><code class="language- hljs">r1 = range(pipe, :(random_forest_regressor.n_subfeatures), lower=1, upper=12)
+r2 = range(pipe, :(random_forest_regressor.min_samples_split), lower=2, upper=10)</code></pre><pre><code class="nohighlight hljs">NumericRange(2 ≤ random_forest_regressor.min_samples_split ≤ 10; origin=6.0, unit=4.0)</code></pre><p>Here&#39;s how we wrap our pipeline model in grid search optimization of the parameters specified by the above ranges:</p><pre><code class="language- hljs">tuned_pipe = TunedModel(
+    pipe,
+    range=[r1, r2],
+    tuning=Grid(goal=40),
+    resampling=CV(nfolds=4),
+    measures=mae,
+)</code></pre><pre><code class="nohighlight hljs">DeterministicTunedModel(
+  model = DeterministicPipeline(
+        continuous_encoder = ContinuousEncoder(drop_last = false, …), 
+        random_forest_regressor = RandomForestRegressor(max_depth = -1, …), 
+        cache = true), 
+  tuning = Grid(
+        goal = 40, 
+        resolution = 10, 
+        shuffle = true, 
+        rng = Random.TaskLocalRNG()), 
+  resampling = CV(
+        nfolds = 4, 
+        shuffle = false, 
+        rng = Random.TaskLocalRNG()), 
+  measure = LPLoss(p = 1), 
+  weights = nothing, 
+  class_weights = nothing, 
+  operation = nothing, 
+  range = MLJBase.NumericRange{Int64, MLJBase.Bounded, Symbol}[NumericRange(1 ≤ random_forest_regressor.n_subfeatures ≤ 12; origin=6.5, unit=5.5), NumericRange(2 ≤ random_forest_regressor.min_samples_split ≤ 10; origin=6.0, unit=4.0)], 
+  selection_heuristic = MLJTuning.NaiveSelection(nothing), 
+  train_best = true, 
+  repeats = 1, 
+  n = nothing, 
+  acceleration = CPU1{Nothing}(nothing), 
+  acceleration_resampling = CPU1{Nothing}(nothing), 
+  check_measure = true, 
+  cache = true, 
+  compact_history = true, 
+  logger = nothing)</code></pre><pre><code class="language- hljs">mach = machine(tuned_pipe, X, y) |&gt; fit!
+plt = plot(mach)
+savefig(&quot;tuned_model_grid.svg&quot;);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …).
+[ Info: Attempting to evaluate 36 models.
+Evaluating over 36 metamodels:   6%[=&gt;                       ]  ETA: 0:00:55[KEvaluating over 36 metamodels:   8%[==&gt;                      ]  ETA: 0:00:51[KEvaluating over 36 metamodels:  11%[==&gt;                      ]  ETA: 0:00:43[KEvaluating over 36 metamodels:  14%[===&gt;                     ]  ETA: 0:00:37[KEvaluating over 36 metamodels:  17%[====&gt;                    ]  ETA: 0:00:34[KEvaluating over 36 metamodels:  19%[====&gt;                    ]  ETA: 0:00:36[KEvaluating over 36 metamodels:  22%[=====&gt;                   ]  ETA: 0:00:35[KEvaluating over 36 metamodels:  25%[======&gt;                  ]  ETA: 0:00:34[KEvaluating over 36 metamodels:  28%[======&gt;                  ]  ETA: 0:00:35[KEvaluating over 36 metamodels:  31%[=======&gt;                 ]  ETA: 0:00:34[KEvaluating over 36 metamodels:  33%[========&gt;                ]  ETA: 0:00:32[KEvaluating over 36 metamodels:  36%[=========&gt;               ]  ETA: 0:00:31[KEvaluating over 36 metamodels:  39%[=========&gt;               ]  ETA: 0:00:29[KEvaluating over 36 metamodels:  42%[==========&gt;              ]  ETA: 0:00:27[KEvaluating over 36 metamodels:  44%[===========&gt;             ]  ETA: 0:00:25[KEvaluating over 36 metamodels:  47%[===========&gt;             ]  ETA: 0:00:24[KEvaluating over 36 metamodels:  50%[============&gt;            ]  ETA: 0:00:22[KEvaluating over 36 metamodels:  53%[=============&gt;           ]  ETA: 0:00:22[KEvaluating over 36 metamodels:  56%[=============&gt;           ]  ETA: 0:00:20[KEvaluating over 36 metamodels:  58%[==============&gt;          ]  ETA: 0:00:19[KEvaluating over 36 metamodels:  61%[===============&gt;         ]  ETA: 0:00:17[KEvaluating over 36 metamodels:  64%[===============&gt;         ]  ETA: 0:00:17[KEvaluating over 36 metamodels:  67%[================&gt;        ]  ETA: 0:00:15[KEvaluating over 36 metamodels:  69%[=================&gt;       ]  ETA: 0:00:14[KEvaluating over 36 metamodels:  72%[==================&gt;      ]  ETA: 0:00:12[KEvaluating over 36 metamodels:  75%[==================&gt;      ]  ETA: 0:00:11[KEvaluating over 36 metamodels:  78%[===================&gt;     ]  ETA: 0:00:10[KEvaluating over 36 metamodels:  81%[====================&gt;    ]  ETA: 0:00:09[KEvaluating over 36 metamodels:  83%[====================&gt;    ]  ETA: 0:00:07[KEvaluating over 36 metamodels:  86%[=====================&gt;   ]  ETA: 0:00:06[KEvaluating over 36 metamodels:  89%[======================&gt;  ]  ETA: 0:00:05[KEvaluating over 36 metamodels:  92%[======================&gt;  ]  ETA: 0:00:04[KEvaluating over 36 metamodels:  94%[=======================&gt; ]  ETA: 0:00:02[KEvaluating over 36 metamodels:  97%[========================&gt;]  ETA: 0:00:01[KEvaluating over 36 metamodels: 100%[=========================] Time: 0:00:42[K
+</code></pre><p><img src="../tuned_model_grid.svg" alt/></p><pre><code class="language- hljs">keys(report(mach))</code></pre><pre><code class="nohighlight hljs">(:best_model, :best_history_entry, :history, :best_report, :plotting)</code></pre><pre><code class="language- hljs">report(mach).best_model</code></pre><pre><code class="nohighlight hljs">DeterministicPipeline(
+  continuous_encoder = ContinuousEncoder(
+        drop_last = false, 
+        one_hot_ordered_factors = false), 
+  random_forest_regressor = RandomForestRegressor(
+        max_depth = -1, 
+        min_samples_leaf = 1, 
+        min_samples_split = 5, 
+        min_purity_increase = 0.0, 
+        n_subfeatures = 10, 
+        n_trees = 250, 
+        sampling_fraction = 0.7, 
+        feature_importance = :impurity, 
+        rng = 123), 
+  cache = true)</code></pre><pre><code class="language- hljs">report(mach).best_history_entry.evaluation</code></pre><pre><code class="nohighlight hljs">CompactPerformanceEvaluation object with these fields:
+  model, measure, operation,
+  measurement, per_fold, per_observation,
+  resampling, repeats
+Tag: 
+Extract:
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 0.171       │ 0.018   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌─────────────────────────────┐
+│ per_fold                    │
+├─────────────────────────────┤
+│ [0.174, 0.16, 0.156, 0.192] │
+└─────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Instead we can use a random search strategy:</p><pre><code class="language- hljs">tuned_pipe = TunedModel(
+    pipe,
+    range=[r1, r2],
+    tuning=RandomSearch(rng=123),
+    resampling=CV(nfolds=4),
+    measures=mae,
+    n=40,
+)
+
+mach = machine(tuned_pipe, X, y) |&gt; fit!
+plt = plot(mach)
+
+savefig(&quot;tuned_model_random.svg&quot;);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …), …).
+[ Info: Attempting to evaluate 40 models.
+Evaluating over 40 metamodels:   0%[&gt;                        ]  ETA: N/A[KEvaluating over 40 metamodels:   2%[&gt;                        ]  ETA: 0:00:52[KEvaluating over 40 metamodels:   5%[=&gt;                       ]  ETA: 0:00:50[KEvaluating over 40 metamodels:   8%[=&gt;                       ]  ETA: 0:00:43[KEvaluating over 40 metamodels:  10%[==&gt;                      ]  ETA: 0:00:42[KEvaluating over 40 metamodels:  12%[===&gt;                     ]  ETA: 0:00:42[KEvaluating over 40 metamodels:  15%[===&gt;                     ]  ETA: 0:00:43[KEvaluating over 40 metamodels:  18%[====&gt;                    ]  ETA: 0:00:41[KEvaluating over 40 metamodels:  20%[=====&gt;                   ]  ETA: 0:00:40[KEvaluating over 40 metamodels:  22%[=====&gt;                   ]  ETA: 0:00:37[KEvaluating over 40 metamodels:  25%[======&gt;                  ]  ETA: 0:00:39[KEvaluating over 40 metamodels:  28%[======&gt;                  ]  ETA: 0:00:36[KEvaluating over 40 metamodels:  30%[=======&gt;                 ]  ETA: 0:00:35[KEvaluating over 40 metamodels:  32%[========&gt;                ]  ETA: 0:00:33[KEvaluating over 40 metamodels:  35%[========&gt;                ]  ETA: 0:00:32[KEvaluating over 40 metamodels:  38%[=========&gt;               ]  ETA: 0:00:32[KEvaluating over 40 metamodels:  40%[==========&gt;              ]  ETA: 0:00:30[KEvaluating over 40 metamodels:  42%[==========&gt;              ]  ETA: 0:00:30[KEvaluating over 40 metamodels:  45%[===========&gt;             ]  ETA: 0:00:28[KEvaluating over 40 metamodels:  48%[===========&gt;             ]  ETA: 0:00:26[KEvaluating over 40 metamodels:  50%[============&gt;            ]  ETA: 0:00:26[KEvaluating over 40 metamodels:  52%[=============&gt;           ]  ETA: 0:00:24[KEvaluating over 40 metamodels:  55%[=============&gt;           ]  ETA: 0:00:23[KEvaluating over 40 metamodels:  58%[==============&gt;          ]  ETA: 0:00:22[KEvaluating over 40 metamodels:  60%[===============&gt;         ]  ETA: 0:00:20[KEvaluating over 40 metamodels:  62%[===============&gt;         ]  ETA: 0:00:20[KEvaluating over 40 metamodels:  65%[================&gt;        ]  ETA: 0:00:18[KEvaluating over 40 metamodels:  68%[================&gt;        ]  ETA: 0:00:17[KEvaluating over 40 metamodels:  70%[=================&gt;       ]  ETA: 0:00:15[KEvaluating over 40 metamodels:  72%[==================&gt;      ]  ETA: 0:00:14[KEvaluating over 40 metamodels:  75%[==================&gt;      ]  ETA: 0:00:13[KEvaluating over 40 metamodels:  78%[===================&gt;     ]  ETA: 0:00:11[KEvaluating over 40 metamodels:  80%[====================&gt;    ]  ETA: 0:00:10[KEvaluating over 40 metamodels:  82%[====================&gt;    ]  ETA: 0:00:09[KEvaluating over 40 metamodels:  85%[=====================&gt;   ]  ETA: 0:00:08[KEvaluating over 40 metamodels:  88%[=====================&gt;   ]  ETA: 0:00:06[KEvaluating over 40 metamodels:  90%[======================&gt;  ]  ETA: 0:00:05[KEvaluating over 40 metamodels:  92%[=======================&gt; ]  ETA: 0:00:04[KEvaluating over 40 metamodels:  95%[=======================&gt; ]  ETA: 0:00:02[KEvaluating over 40 metamodels:  98%[========================&gt;]  ETA: 0:00:01[KEvaluating over 40 metamodels: 100%[=========================] Time: 0:00:50[K
+</code></pre><p><img src="../tuned_model_random.svg" alt/></p><p>In-sample predictions based on optimized parameters and retraining on <em>all</em> data:</p><pre><code class="language- hljs">predict(mach, X)[1:5]</code></pre><pre><code class="nohighlight hljs">5-element Vector{Float64}:
+ 1.3710151999999998
+ 3.627463819999999
+ 1.8085951933333335
+ 1.9762690599999997
+ 1.3529714200000003</code></pre><p>Evaluate the &quot;self-tuning&quot; pipeline:</p><pre><code class="language- hljs">e1 = evaluate(tuned_pipe, X, y; options...)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: DeterministicTunedModel-587
+Extract:
+┌──────────┬───────────┬─────────────┬─────────┐
+│ measure  │ operation │ measurement │ 1.96*SE │
+├──────────┼───────────┼─────────────┼─────────┤
+│ LPLoss(  │ predict   │ 0.175       │ 0.021   │
+│   p = 1) │           │             │         │
+└──────────┴───────────┴─────────────┴─────────┘
+┌───────────────────────┐
+│ per_fold              │
+├───────────────────────┤
+│ [0.166, 0.166, 0.192] │
+└───────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Comparing with the baseline computed earlier:</p><pre><code class="language- hljs">@show ebase e0 e1;</code></pre><pre><code class="nohighlight hljs">ebase = PerformanceEvaluation(&quot;ProbabilisticPipeline-489&quot;, 0.568 ± 0.033)
+e0 = PerformanceEvaluation(&quot;DeterministicPipeline-381&quot;, 0.184 ± 0.028)
+e1 = PerformanceEvaluation(&quot;DeterministicTunedModel-587&quot;, 0.175 ± 0.021)
+</code></pre><p>Or, we can do this (needs MLJBase 1.13.0 or higher):</p><pre><code class="language- hljs">describe.([e0, e1]) |&gt; pretty</code></pre><pre><code class="nohighlight hljs">┌─────────────────────────────┬──────────────────────┐
+│ tag                         │ LPLoss               │
+│ String                      │ Measurement{Float64} │
+│ Textual                     │ Continuous           │
+├─────────────────────────────┼──────────────────────┤
+│ DeterministicPipeline-381   │ 0.184±0.028          │
+│ DeterministicTunedModel-587 │ 0.175±0.021          │
+└─────────────────────────────┴──────────────────────┘
+</code></pre><p>We can also use <code>TunedModel</code> to compare models of different types:</p><pre><code class="language- hljs">tuned_model = TunedModel(models=[pipe, baseline], resampling=CV(nfolds=4), measure=l1)
+mach = machine(tuned_model, X, y) |&gt; fit!
+report(mach).best_model</code></pre><pre><code class="nohighlight hljs">DeterministicPipeline(
+  continuous_encoder = ContinuousEncoder(
+        drop_last = false, 
+        one_hot_ordered_factors = false), 
+  random_forest_regressor = RandomForestRegressor(
+        max_depth = -1, 
+        min_samples_leaf = 1, 
+        min_samples_split = 2, 
+        min_purity_increase = 0.0, 
+        n_subfeatures = 1, 
+        n_trees = 250, 
+        sampling_fraction = 0.7, 
+        feature_importance = :impurity, 
+        rng = 123), 
+  cache = true)</code></pre><p>Here <code>tuned_model</code> will behave just like <code>pipe</code>, because this is the best performer.</p><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../02_model_composition/notebook/">« 2. Model Composition</a><a class="docs-footer-nextpage" href="../../../MLJTutorial/01_data_representation/notebook/">1. Data Representation »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 01:11">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

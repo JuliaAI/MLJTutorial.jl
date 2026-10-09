@@ -1,0 +1,7 @@
+[deps]
+MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
+MLJLinearModels = "6ee0df7b-362f-4a72-a706-9e79364fb692"
+
+[compat]
+MLJ = "0.23.3"
+MLJLinearModels = "0.10.3"
