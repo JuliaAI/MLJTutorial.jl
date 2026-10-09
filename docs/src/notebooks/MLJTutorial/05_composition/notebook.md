@@ -64,11 +64,11 @@ pretty(X)
 │ Float64    │ Float64    │ Float64    │
 │ Continuous │ Continuous │ Continuous │
 ├────────────┼────────────┼────────────┤
-│ 14.9681    │ -1.47137   │ 12.1949    │
-│ -3.26626   │ -0.710617  │ 7.36507    │
-│ -4.17429   │ -0.0882215 │ 9.87907    │
-│ 6.00034    │ -2.41859   │ 14.9897    │
-│ -4.38537   │ -0.187352  │ 7.22233    │
+│ -9.85801   │ 0.948133   │ 1.5543     │
+│ -9.05017   │ 0.116089   │ 0.3031     │
+│ 13.9369    │ -0.530196  │ -2.03829   │
+│ -0.617015  │ 2.30274    │ -1.08639   │
+│ -8.65166   │ 2.36956    │ 1.34361    │
 └────────────┴────────────┴────────────┘
 
 ````
@@ -91,11 +91,11 @@ yhat = predict(mach2, Xstand)
 
 ````
 5-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.993, 2=>0.00372, 3=>0.00319)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.000405, 2=>0.000195, 3=>0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.000309, 2=>0.000249, 3=>0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00752, 2=>0.992, 3=>0.000947)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00012, 2=>1.96e-5, 3=>1.0)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>8.09e-5, 2=>8.48e-5, 3=>1.0)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00351, 2=>0.000732, 3=>0.996)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.995, 2=>0.00474, 3=>0.00011)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00327, 2=>0.989, 3=>0.00818)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>6.88e-5, 2=>0.00843, 3=>0.991)
 ````
 
 **Step 1** - Edit your code as follows:
@@ -119,15 +119,15 @@ yhat = predict(mach2, Xstand)
 ````
 
 ````
-Node @440 → LogisticClassifier(…)
+Node @623 → LogisticClassifier(…)
   args:
-    1:	Node @909 → Standardizer(…)
+    1:	Node @703 → Standardizer(…)
   formula:
     predict(
       machine(LogisticClassifier(lambda = 0.001, …), …), 
       transform(
         machine(Standardizer(features = Symbol[], …), …), 
-        Source @128,
+        Source @747,
       ),
     )
 ````
@@ -150,11 +150,11 @@ Xstand() |> pretty
 │ Float64    │ Float64    │ Float64    │
 │ Continuous │ Continuous │ Continuous │
 ├────────────┼────────────┼────────────┤
-│ 1.54143    │ -0.508564  │ 0.563239   │
-│ -0.597675  │ 0.271238   │ -0.895631  │
-│ -0.704197  │ 0.909215   │ -0.136268  │
-│ 0.489404   │ -1.47949   │ 1.40741    │
-│ -0.728959  │ 0.807603   │ -0.938747  │
+│ -0.694096  │ -0.0720163 │ 0.991034   │
+│ -0.614108  │ -0.715398  │ 0.185347   │
+│ 1.66195    │ -1.21514   │ -1.32235   │
+│ 0.220901   │ 0.975443   │ -0.709393  │
+│ -0.574649  │ 1.02711    │ 0.855364   │
 └────────────┴────────────┴────────────┘
 
 ````
@@ -178,11 +178,11 @@ yhat()
 
 ````
 5-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.993, 2=>0.00372, 3=>0.00319)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.000405, 2=>0.000195, 3=>0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.000309, 2=>0.000249, 3=>0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00752, 2=>0.992, 3=>0.000947)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00012, 2=>1.96e-5, 3=>1.0)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>8.09e-5, 2=>8.48e-5, 3=>1.0)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00351, 2=>0.000732, 3=>0.996)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.995, 2=>0.00474, 3=>0.00011)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.00327, 2=>0.989, 3=>0.00818)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>6.88e-5, 2=>0.00843, 3=>0.991)
 ````
 
 The node `yhat` is the "descendant" (in an associated DAG we have
@@ -194,7 +194,7 @@ origins(yhat)
 
 ````
 1-element Vector{MLJBase.Source}:
- Source @128 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
+ Source @747 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`
 ````
 
 The data at the source node is replaced by `Xnew` to obtain a
@@ -207,8 +207,8 @@ yhat(Xnew)
 
 ````
 2-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>1.13e-8, 2=>1.0, 3=>6.09e-8)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>2.89e-16, 2=>1.0, 3=>4.36e-13)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>0.0461, 2=>0.954, 3=>1.47e-10)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=>1.0, 2=>8.32e-5, 3=>1.38e-9)
 ````
 
 **Step 2** - Export the learning network as a new stand-alone model type
@@ -238,15 +238,15 @@ yhat = predict(mach2, Xstand)
 ````
 
 ````
-Node @530 → :classifier
+Node @708 → :classifier
   args:
-    1:	Node @804 → :standardizer
+    1:	Node @363 → :standardizer
   formula:
     predict(
       machine(:classifier, …), 
       transform(
         machine(:standardizer, …), 
-        Source @128,
+        Source @747,
       ),
     )
 ````
@@ -380,7 +380,7 @@ y = source(y)
 ````
 
 ````
-Source @555 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
+Source @704 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`
 ````
 
 **First layer and target transformation:**
@@ -396,13 +396,13 @@ z = MLJ.transform(mach2, y)
 ````
 
 ````
-Node @022 → UnivariateBoxCoxTransformer(…)
+Node @116 → UnivariateBoxCoxTransformer(…)
   args:
-    1:	Source @555
+    1:	Source @704
   formula:
     transform(
       machine(UnivariateBoxCoxTransformer(n = 171, …), …), 
-      Source @555,
+      Source @704,
     )
 ````
 
@@ -419,10 +419,10 @@ zhat = 0.5*predict(mach3, W) + 0.5*predict(mach4, W)
 ````
 
 ````
-Node @135
+Node @464
   args:
-    1:	Node @083
-    2:	Node @797
+    1:	Node @919
+    2:	Node @316
   formula:
     +(
      var"#*##0#*##1"(
@@ -430,7 +430,7 @@ Node @135
          machine(RidgeRegressor(lambda = 0.1, …), …), 
          transform(
            machine(Standardizer(features = Symbol[], …), …), 
-           Source @100,
+           Source @991,
          ),
        ),
      ),
@@ -439,7 +439,7 @@ Node @135
          machine(RandomForestRegressor(max_depth = -1, …), …), 
          transform(
            machine(Standardizer(features = Symbol[], …), …), 
-           Source @100,
+           Source @991,
          ),
        ),
      ),
@@ -453,9 +453,9 @@ yhat = inverse_transform(mach2, zhat)
 ````
 
 ````
-Node @539 → UnivariateBoxCoxTransformer(…)
+Node @061 → UnivariateBoxCoxTransformer(…)
   args:
-    1:	Node @135
+    1:	Node @464
   formula:
     inverse_transform(
       machine(UnivariateBoxCoxTransformer(n = 171, …), …), 
@@ -465,7 +465,7 @@ Node @539 → UnivariateBoxCoxTransformer(…)
            machine(RidgeRegressor(lambda = 0.1, …), …), 
            transform(
              machine(Standardizer(features = Symbol[], …), …), 
-             Source @100,
+             Source @991,
            ),
          ),
        ),
@@ -474,7 +474,7 @@ Node @539 → UnivariateBoxCoxTransformer(…)
            machine(RandomForestRegressor(max_depth = -1, …), …), 
            transform(
              machine(Standardizer(features = Symbol[], …), …), 
-             Source @100,
+             Source @991,
            ),
          ),
        ),
@@ -491,9 +491,9 @@ yhat(rows=1:3)
 
 ````
 3-element Vector{Float64}:
- 4.1049434111127105
- 4.674958202525163
- 4.112097582032496
+ 1.5198312953553146
+ 0.8824006167264453
+ 1.57930874294795
 ````
 
 Now for the new model type:
@@ -547,20 +547,20 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: CompositeModel-983
+Tag: CompositeModel-665
 Extract:
 ┌───┬────────────────────────┬───────────┬─────────────┬─────────┐
 │   │ measure                │ operation │ measurement │ 1.96*SE │
 ├───┼────────────────────────┼───────────┼─────────────┼─────────┤
-│ A │ RootMeanSquaredError() │ predict   │ 3.87        │ 0.46    │
-│ B │ LPLoss(                │ predict   │ 2.454       │ 0.04    │
+│ A │ RootMeanSquaredError() │ predict   │ 3.95        │ 0.68    │
+│ B │ LPLoss(                │ predict   │ 2.49        │ 0.26    │
 │   │   p = 1)               │           │             │         │
 └───┴────────────────────────┴───────────┴─────────────┴─────────┘
 ┌───┬──────────────────────────────────────┐
 │   │ per_fold                             │
 ├───┼──────────────────────────────────────┤
-│ A │ [4.45, 4.28, 3.41, 3.3, 4.21, 3.37]  │
-│ B │ [2.45, 2.46, 2.46, 2.38, 2.53, 2.45] │
+│ A │ [3.09, 5.37, 3.61, 3.81, 3.63, 3.82] │
+│ B │ [2.17, 2.98, 2.62, 2.24, 2.35, 2.57] │
 └───┴──────────────────────────────────────┘
 Apply `describe` to this result for a named tuple summary.
 ````

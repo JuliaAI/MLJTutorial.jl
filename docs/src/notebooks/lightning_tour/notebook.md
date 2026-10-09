@@ -246,8 +246,8 @@ mach = machine(self_tuning_pipe, X, y)
 untrained Machine; does not cache data
   model: DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …)
   args: 
-    1:	Source @634 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @471 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @585 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @899 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 
 ````
 
@@ -261,9 +261,9 @@ first(yhat, 3)
 
 ````
 3-element Vector{Float32}:
- -2.8776388
- -0.45805833
- -0.8760577
+ -1.4080157
+ -0.40302494
+ -1.5811985
 ````
 
 Evaluating the "self-tuning" pipeline model's performance using all data and 5-fold
@@ -285,21 +285,21 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicTunedModel-157
+Tag: DeterministicTunedModel-336
 Extract:
 ┌───┬────────────┬───────────┬─────────────┬─────────┐
 │   │ measure    │ operation │ measurement │ 1.96*SE │
 ├───┼────────────┼───────────┼─────────────┼─────────┤
-│ A │ LPLoss(    │ predict   │ 0.17        │ 0.023   │
+│ A │ LPLoss(    │ predict   │ 0.138       │ 0.043   │
 │   │   p = 1)   │           │             │         │
-│ B │ RSquared() │ predict   │ 0.9699      │ 0.009   │
+│ B │ RSquared() │ predict   │ 0.89        │ 0.071   │
 └───┴────────────┴───────────┴─────────────┴─────────┘
-┌───┬────────────────────────────────────┐
-│   │ per_fold                           │
-├───┼────────────────────────────────────┤
-│ A │ [0.155, 0.159, 0.2, 0.19, 0.146]   │
-│ B │ [0.96, 0.981, 0.962, 0.969, 0.977] │
-└───┴────────────────────────────────────┘
+┌───┬─────────────────────────────────────┐
+│   │ per_fold                            │
+├───┼─────────────────────────────────────┤
+│ A │ [0.175, 0.179, 0.144, 0.0735, 0.12] │
+│ B │ [0.85, 0.788, 0.897, 0.971, 0.942]  │
+└───┴─────────────────────────────────────┘
 Apply `describe` to this result for a named tuple summary.
 ````
 
@@ -320,7 +320,7 @@ describe.(evaluations) |> pretty
 
 ````
 [ Info: Performing evaluations using 1 thread.
-Evaluating over 5 folds:  40%[==========>              ]  ETA: 0:00:11[KEvaluating over 5 folds:  60%[===============>         ]  ETA: 0:00:07[KEvaluating over 5 folds:  80%[====================>    ]  ETA: 0:00:04[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:18[K
+Evaluating over 5 folds:  40%[==========>              ]  ETA: 0:00:07[KEvaluating over 5 folds:  60%[===============>         ]  ETA: 0:00:06[KEvaluating over 5 folds:  80%[====================>    ]  ETA: 0:00:03[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:16[K
 [ Info: Performing evaluations using 1 thread.
 Evaluating over 5 folds:  40%[==========>              ]  ETA: 0:00:01[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:00[K
 ┌─────────┬──────────────────────┬──────────────────────┐
@@ -328,8 +328,8 @@ describe.(evaluations) |> pretty
 │ String  │ Measurement{Float64} │ Measurement{Float64} │
 │ Textual │ Continuous           │ Continuous           │
 ├─────────┼──────────────────────┼──────────────────────┤
-│ booster │ 0.17±0.023           │ 0.9699±0.009         │
-│ dummy   │ 1.13±0.15            │ -0.0044±0.0051       │
+│ booster │ 0.138±0.043          │ 0.89±0.071           │
+│ dummy   │ 0.497±0.068          │ -0.093±0.14          │
 └─────────┴──────────────────────┴──────────────────────┘
 
 ````
