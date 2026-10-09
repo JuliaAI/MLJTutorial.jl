@@ -61,6 +61,6 @@ makedocs(
 
 deploydocs(
     devbranch="dev", # deployment to gh-pages only happens when this is the target
-    push_preview=false,
+    push_preview=true,
     repo="github.com/JuliaAI/$REPO_NAME.git",
 )
