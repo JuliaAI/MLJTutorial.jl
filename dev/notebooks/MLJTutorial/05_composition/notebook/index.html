@@ -6,11 +6,11 @@ pretty(X)</code></pre><pre><code class="nohighlight hljs">┌──────�
 │ Float64    │ Float64    │ Float64    │
 │ Continuous │ Continuous │ Continuous │
 ├────────────┼────────────┼────────────┤
-│ 14.9681    │ -1.47137   │ 12.1949    │
-│ -3.26626   │ -0.710617  │ 7.36507    │
-│ -4.17429   │ -0.0882215 │ 9.87907    │
-│ 6.00034    │ -2.41859   │ 14.9897    │
-│ -4.38537   │ -0.187352  │ 7.22233    │
+│ -9.85801   │ 0.948133   │ 1.5543     │
+│ -9.05017   │ 0.116089   │ 0.3031     │
+│ 13.9369    │ -0.530196  │ -2.03829   │
+│ -0.617015  │ 2.30274    │ -1.08639   │
+│ -8.65166   │ 2.36956    │ 1.34361    │
 └────────────┴────────────┴────────────┘
 </code></pre><p><strong>Step 0</strong> - Proceed as if you were combining the models &quot;by hand&quot;, using all the data available for training, transformation and prediction:</p><pre><code class="language- hljs">standardizer = Standardizer();
 linear = LogisticClassifier(lambda=0.001);
@@ -22,11 +22,11 @@ Xstand = transform(mach1, X);
 mach2 = machine(linear, Xstand, y);
 fit!(mach2);
 yhat = predict(mach2, Xstand)</code></pre><pre><code class="nohighlight hljs">5-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.993, 2=&gt;0.00372, 3=&gt;0.00319)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.000405, 2=&gt;0.000195, 3=&gt;0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.000309, 2=&gt;0.000249, 3=&gt;0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00752, 2=&gt;0.992, 3=&gt;0.000947)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00012, 2=&gt;1.96e-5, 3=&gt;1.0)</code></pre><p><strong>Step 1</strong> - Edit your code as follows:</p><ul><li><p>wrap the data in <code>Source</code> nodes</p></li><li><p>delete the <code>fit!</code> calls</p></li></ul><pre><code class="language- hljs">X = source(X)  # or X = source() if not testing
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;8.09e-5, 2=&gt;8.48e-5, 3=&gt;1.0)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00351, 2=&gt;0.000732, 3=&gt;0.996)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.995, 2=&gt;0.00474, 3=&gt;0.00011)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00327, 2=&gt;0.989, 3=&gt;0.00818)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;6.88e-5, 2=&gt;0.00843, 3=&gt;0.991)</code></pre><p><strong>Step 1</strong> - Edit your code as follows:</p><ul><li><p>wrap the data in <code>Source</code> nodes</p></li><li><p>delete the <code>fit!</code> calls</p></li></ul><pre><code class="language- hljs">X = source(X)  # or X = source() if not testing
 y = source(y)  # or y = source()
 
 standardizer = Standardizer();
@@ -36,15 +36,15 @@ mach1 = machine(standardizer, X);
 Xstand = transform(mach1, X);
 
 mach2 = machine(linear, Xstand, y);
-yhat = predict(mach2, Xstand)</code></pre><pre><code class="nohighlight hljs">Node @440 → LogisticClassifier(…)
+yhat = predict(mach2, Xstand)</code></pre><pre><code class="nohighlight hljs">Node @623 → LogisticClassifier(…)
   args:
-    1:	Node @909 → Standardizer(…)
+    1:	Node @703 → Standardizer(…)
   formula:
     predict(
       machine(LogisticClassifier(lambda = 0.001, …), …), 
       transform(
         machine(Standardizer(features = Symbol[], …), …), 
-        Source @128,
+        Source @747,
       ),
     )</code></pre><p>Now <code>X</code>, <code>y</code>, <code>Xstand</code> and <code>yhat</code> are <em>nodes</em> (&quot;variables&quot; or &quot;dynamic data&quot;) instead of data. All training, predicting and transforming is now executed lazily, whenever we <code>fit!</code> one of these nodes. We <em>call</em> a node to retrieve the data it represents in the original manual workflow.</p><pre><code class="language- hljs">fit!(Xstand)
 Xstand() |&gt; pretty</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(Standardizer(features = Symbol[], …), …).
@@ -53,11 +53,11 @@ Xstand() |&gt; pretty</code></pre><pre><code class="nohighlight hljs">[ Info: Tr
 │ Float64    │ Float64    │ Float64    │
 │ Continuous │ Continuous │ Continuous │
 ├────────────┼────────────┼────────────┤
-│ 1.54143    │ -0.508564  │ 0.563239   │
-│ -0.597675  │ 0.271238   │ -0.895631  │
-│ -0.704197  │ 0.909215   │ -0.136268  │
-│ 0.489404   │ -1.47949   │ 1.40741    │
-│ -0.728959  │ 0.807603   │ -0.938747  │
+│ -0.694096  │ -0.0720163 │ 0.991034   │
+│ -0.614108  │ -0.715398  │ 0.185347   │
+│ 1.66195    │ -1.21514   │ -1.32235   │
+│ 0.220901   │ 0.975443   │ -0.709393  │
+│ -0.574649  │ 1.02711    │ 0.855364   │
 └────────────┴────────────┴────────────┘
 </code></pre><pre><code class="language- hljs">fit!(yhat); # training is smart and so `Standardizer` is not retrained</code></pre><pre><code class="nohighlight hljs">[ Info: Not retraining machine(Standardizer(features = Symbol[], …), …). Use `force=true` to force.
 [ Info: Training machine(LogisticClassifier(lambda = 0.001, …), …).
@@ -65,30 +65,30 @@ Xstand() |&gt; pretty</code></pre><pre><code class="nohighlight hljs">[ Info: Tr
 │   optim_options: Optim.Options{Float64, Nothing}
 └   lbfgs_options: @NamedTuple{} NamedTuple()
 </code></pre><pre><code class="language- hljs">yhat()</code></pre><pre><code class="nohighlight hljs">5-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.993, 2=&gt;0.00372, 3=&gt;0.00319)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.000405, 2=&gt;0.000195, 3=&gt;0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.000309, 2=&gt;0.000249, 3=&gt;0.999)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00752, 2=&gt;0.992, 3=&gt;0.000947)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00012, 2=&gt;1.96e-5, 3=&gt;1.0)</code></pre><p>The node <code>yhat</code> is the &quot;descendant&quot; (in an associated DAG we have defined) of a unique source node:</p><pre><code class="language- hljs">origins(yhat)</code></pre><pre><code class="nohighlight hljs">1-element Vector{MLJBase.Source}:
- Source @128 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`</code></pre><p>The data at the source node is replaced by <code>Xnew</code> to obtain a new prediction when we call <code>yhat</code> like this:</p><pre><code class="language- hljs">Xnew, _ = make_blobs(2, 3);
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;8.09e-5, 2=&gt;8.48e-5, 3=&gt;1.0)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00351, 2=&gt;0.000732, 3=&gt;0.996)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.995, 2=&gt;0.00474, 3=&gt;0.00011)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.00327, 2=&gt;0.989, 3=&gt;0.00818)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;6.88e-5, 2=&gt;0.00843, 3=&gt;0.991)</code></pre><p>The node <code>yhat</code> is the &quot;descendant&quot; (in an associated DAG we have defined) of a unique source node:</p><pre><code class="language- hljs">origins(yhat)</code></pre><pre><code class="nohighlight hljs">1-element Vector{MLJBase.Source}:
+ Source @747 ⏎ `ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}`</code></pre><p>The data at the source node is replaced by <code>Xnew</code> to obtain a new prediction when we call <code>yhat</code> like this:</p><pre><code class="language- hljs">Xnew, _ = make_blobs(2, 3);
 yhat(Xnew)</code></pre><pre><code class="nohighlight hljs">2-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;1.13e-8, 2=&gt;1.0, 3=&gt;6.09e-8)
- UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;2.89e-16, 2=&gt;1.0, 3=&gt;4.36e-13)</code></pre><p><strong>Step 2</strong> - Export the learning network as a new stand-alone model type</p><p>We start by defining a new model type for our composite. We subtype <code>ProbabilisticNetworkComposite</code> because our composite is to be a probabilistic predictor. If it were a deterministic predictor, we would use <code>DeterministicNetworkComposite</code> instead. There is also a <code>UnsupervisedNetworkComposite</code> for transformers.</p><pre><code class="language- hljs">mutable struct YourPipe &lt;: ProbabilisticNetworkComposite
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;0.0461, 2=&gt;0.954, 3=&gt;1.47e-10)
+ UnivariateFinite{ScientificTypesBase.Multiclass{3}}(1=&gt;1.0, 2=&gt;8.32e-5, 3=&gt;1.38e-9)</code></pre><p><strong>Step 2</strong> - Export the learning network as a new stand-alone model type</p><p>We start by defining a new model type for our composite. We subtype <code>ProbabilisticNetworkComposite</code> because our composite is to be a probabilistic predictor. If it were a deterministic predictor, we would use <code>DeterministicNetworkComposite</code> instead. There is also a <code>UnsupervisedNetworkComposite</code> for transformers.</p><pre><code class="language- hljs">mutable struct YourPipe &lt;: ProbabilisticNetworkComposite
     standardizer
     classifier
 end</code></pre><p>Next, we make our learning network above generic by substituting each model instance with the corresponding symbol representing a property (field) of the new model struct:</p><pre><code class="language- hljs">mach1 = machine(:standardizer, X);
 Xstand = transform(mach1, X);
 
 mach2 = machine(:classifier, Xstand, y);
-yhat = predict(mach2, Xstand)</code></pre><pre><code class="nohighlight hljs">Node @530 → :classifier
+yhat = predict(mach2, Xstand)</code></pre><pre><code class="nohighlight hljs">Node @708 → :classifier
   args:
-    1:	Node @804 → :standardizer
+    1:	Node @363 → :standardizer
   formula:
     predict(
       machine(:classifier, …), 
       transform(
         machine(:standardizer, …), 
-        Source @128,
+        Source @747,
       ),
     )</code></pre><p>Incidentally, this network can be used as before except we must provide an instance of <code>YourPipe</code> in our <code>fit!</code> calls, to indicate which models replace the symbols:</p><pre><code class="language- hljs">your_pipe = YourPipe(standardizer, linear)
 fit!(yhat, composite=your_pipe);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(:standardizer, …).
@@ -130,29 +130,29 @@ fitted_params(mach).classifier.target_distribution</code></pre><pre><code class=
 RidgeRegressor = @load RidgeRegressor pkg=MLJLinearModels</code></pre><pre><code class="nohighlight hljs">MLJLinearModels.RidgeRegressor</code></pre><p><strong>Input layer with dummy data:</strong></p><pre><code class="language- hljs">X, y = make_regression()
 y = abs.(y)
 X = source(X)
-y = source(y)</code></pre><pre><code class="nohighlight hljs">Source @555 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre><p><strong>First layer and target transformation:</strong></p><pre><code class="language- hljs">standardizer = Standardizer()
+y = source(y)</code></pre><pre><code class="nohighlight hljs">Source @704 ⏎ `AbstractVector{ScientificTypesBase.Continuous}`</code></pre><p><strong>First layer and target transformation:</strong></p><pre><code class="language- hljs">standardizer = Standardizer()
 mach1 = machine(standardizer, X)
 W = MLJ.transform(mach1, X)
 
 box_model = UnivariateBoxCoxTransformer()
 mach2 = machine(box_model, y)
-z = MLJ.transform(mach2, y)</code></pre><pre><code class="nohighlight hljs">Node @022 → UnivariateBoxCoxTransformer(…)
+z = MLJ.transform(mach2, y)</code></pre><pre><code class="nohighlight hljs">Node @116 → UnivariateBoxCoxTransformer(…)
   args:
-    1:	Source @555
+    1:	Source @704
   formula:
     transform(
       machine(UnivariateBoxCoxTransformer(n = 171, …), …), 
-      Source @555,
+      Source @704,
     )</code></pre><p><strong>Second layer:</strong></p><pre><code class="language- hljs">regressor1 = RidgeRegressor(lambda=0.1)
 mach3 = machine(regressor1, W, z)
 
 regressor2 = RandomForestRegressor(n_trees=50)
 mach4 = machine(regressor2, W, z)
 
-zhat = 0.5*predict(mach3, W) + 0.5*predict(mach4, W)</code></pre><pre><code class="nohighlight hljs">Node @135
+zhat = 0.5*predict(mach3, W) + 0.5*predict(mach4, W)</code></pre><pre><code class="nohighlight hljs">Node @464
   args:
-    1:	Node @083
-    2:	Node @797
+    1:	Node @919
+    2:	Node @316
   formula:
     +(
      var&quot;#*##0#*##1&quot;(
@@ -160,7 +160,7 @@ zhat = 0.5*predict(mach3, W) + 0.5*predict(mach4, W)</code></pre><pre><code clas
          machine(RidgeRegressor(lambda = 0.1, …), …), 
          transform(
            machine(Standardizer(features = Symbol[], …), …), 
-           Source @100,
+           Source @991,
          ),
        ),
      ),
@@ -169,13 +169,13 @@ zhat = 0.5*predict(mach3, W) + 0.5*predict(mach4, W)</code></pre><pre><code clas
          machine(RandomForestRegressor(max_depth = -1, …), …), 
          transform(
            machine(Standardizer(features = Symbol[], …), …), 
-           Source @100,
+           Source @991,
          ),
        ),
      ),
-    )</code></pre><p><strong>Output:</strong></p><pre><code class="language- hljs">yhat = inverse_transform(mach2, zhat)</code></pre><pre><code class="nohighlight hljs">Node @539 → UnivariateBoxCoxTransformer(…)
+    )</code></pre><p><strong>Output:</strong></p><pre><code class="language- hljs">yhat = inverse_transform(mach2, zhat)</code></pre><pre><code class="nohighlight hljs">Node @061 → UnivariateBoxCoxTransformer(…)
   args:
-    1:	Node @135
+    1:	Node @464
   formula:
     inverse_transform(
       machine(UnivariateBoxCoxTransformer(n = 171, …), …), 
@@ -185,7 +185,7 @@ zhat = 0.5*predict(mach3, W) + 0.5*predict(mach4, W)</code></pre><pre><code clas
            machine(RidgeRegressor(lambda = 0.1, …), …), 
            transform(
              machine(Standardizer(features = Symbol[], …), …), 
-             Source @100,
+             Source @991,
            ),
          ),
        ),
@@ -194,16 +194,16 @@ zhat = 0.5*predict(mach3, W) + 0.5*predict(mach4, W)</code></pre><pre><code clas
            machine(RandomForestRegressor(max_depth = -1, …), …), 
            transform(
              machine(Standardizer(features = Symbol[], …), …), 
-             Source @100,
+             Source @991,
            ),
          ),
        ),
       ),
     )</code></pre><p>Let&#39;s test this learning network (always a good idea!):</p><pre><code class="language- hljs">fit!(yhat)
 yhat(rows=1:3)</code></pre><pre><code class="nohighlight hljs">3-element Vector{Float64}:
- 4.1049434111127105
- 4.674958202525163
- 4.112097582032496</code></pre><p>Now for the new model type:</p><pre><code class="language- hljs">mutable struct CompositeModel &lt;: DeterministicNetworkComposite
+ 1.5198312953553146
+ 0.8824006167264453
+ 1.57930874294795</code></pre><p>Now for the new model type:</p><pre><code class="language- hljs">mutable struct CompositeModel &lt;: DeterministicNetworkComposite
     standardizer
     box_cox
     regressor1
@@ -235,19 +235,19 @@ evaluate(composite, X, y; resampling=CV(nfolds=6, shuffle=true), measures=[rms, 
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: CompositeModel-983
+Tag: CompositeModel-665
 Extract:
 ┌───┬────────────────────────┬───────────┬─────────────┬─────────┐
 │   │ measure                │ operation │ measurement │ 1.96*SE │
 ├───┼────────────────────────┼───────────┼─────────────┼─────────┤
-│ A │ RootMeanSquaredError() │ predict   │ 3.87        │ 0.46    │
-│ B │ LPLoss(                │ predict   │ 2.454       │ 0.04    │
+│ A │ RootMeanSquaredError() │ predict   │ 3.95        │ 0.68    │
+│ B │ LPLoss(                │ predict   │ 2.49        │ 0.26    │
 │   │   p = 1)               │           │             │         │
 └───┴────────────────────────┴───────────┴─────────────┴─────────┘
 ┌───┬──────────────────────────────────────┐
 │   │ per_fold                             │
 ├───┼──────────────────────────────────────┤
-│ A │ [4.45, 4.28, 3.41, 3.3, 4.21, 3.37]  │
-│ B │ [2.45, 2.46, 2.46, 2.38, 2.53, 2.45] │
+│ A │ [3.09, 5.37, 3.61, 3.81, 3.63, 3.82] │
+│ B │ [2.17, 2.98, 2.62, 2.24, 2.35, 2.57] │
 └───┴──────────────────────────────────────┘
-Apply `describe` to this result for a named tuple summary.</code></pre><h3 id="Tutorial-5-Resources"><a class="docs-heading-anchor" href="#Tutorial-5-Resources">Tutorial 5 Resources</a><a id="Tutorial-5-Resources-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-5-Resources" title="Permalink"></a></h3><ul><li>From the MLJ manual:<ul><li><a href="https://juliaai.github.io/MLJ.jl/stable/composing_models/#Learning-Networks-1">Learning Networks</a></li></ul></li><li>From Data Science Tutorials:<ul><li><a href="https://juliaai.github.io/DataScienceTutorials.jl/advanced/ensembles-3/">Model ensembles via learning networks</a></li><li><a href="https://juliaai.github.io/DataScienceTutorials.jl/advanced/stacking/">Model stacking via learning networks</a></li></ul></li></ul><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../04_tuning/notebook/">« 4. Tuning</a><a class="docs-footer-nextpage" href="../../99_solution_to_exercises/notebook/">Solutions to Exercises »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 04:40">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+Apply `describe` to this result for a named tuple summary.</code></pre><h3 id="Tutorial-5-Resources"><a class="docs-heading-anchor" href="#Tutorial-5-Resources">Tutorial 5 Resources</a><a id="Tutorial-5-Resources-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-5-Resources" title="Permalink"></a></h3><ul><li>From the MLJ manual:<ul><li><a href="https://juliaai.github.io/MLJ.jl/stable/composing_models/#Learning-Networks-1">Learning Networks</a></li></ul></li><li>From Data Science Tutorials:<ul><li><a href="https://juliaai.github.io/DataScienceTutorials.jl/advanced/ensembles-3/">Model ensembles via learning networks</a></li><li><a href="https://juliaai.github.io/DataScienceTutorials.jl/advanced/stacking/">Model stacking via learning networks</a></li></ul></li></ul><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../04_tuning/notebook/">« 4. Tuning</a><a class="docs-footer-nextpage" href="../../99_solution_to_exercises/notebook/">Solutions to Exercises »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 05:04">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -148,14 +148,14 @@ booster</code></pre><pre><code class="nohighlight hljs">EvoTreeRegressor(
   logger = nothing)</code></pre><h3 id="Binding-to-data-and-evaluating-performance"><a class="docs-heading-anchor" href="#Binding-to-data-and-evaluating-performance">Binding to data and evaluating performance</a><a id="Binding-to-data-and-evaluating-performance-1"></a><a class="docs-heading-anchor-permalink" href="#Binding-to-data-and-evaluating-performance" title="Permalink"></a></h3><p>Generating some synthetic data:</p><pre><code class="language- hljs">X, y = make_regression();</code></pre><p>Binding the &quot;self-tuning&quot; pipeline model to data in a <em>machine</em> (which will additionally store <em>learned</em> parameters):</p><pre><code class="language- hljs">mach = machine(self_tuning_pipe, X, y)</code></pre><pre><code class="nohighlight hljs">untrained Machine; does not cache data
   model: DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …)
   args: 
-    1:	Source @634 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
-    2:	Source @471 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+    1:	Source @585 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @899 ⏎ AbstractVector{ScientificTypesBase.Continuous}
 </code></pre><p>Fit and predict:</p><pre><code class="language- hljs">fit!(mach, rows=1:60)
 yhat = predict(mach, rows=61:100)
 first(yhat, 3)</code></pre><pre><code class="nohighlight hljs">3-element Vector{Float32}:
- -2.8776388
- -0.45805833
- -0.8760577</code></pre><p>Evaluating the &quot;self-tuning&quot; pipeline model&#39;s performance using all data and 5-fold cross-validation (implies multiple layers of nested resampling):</p><pre><code class="language- hljs">evaluate!(
+ -1.4080157
+ -0.40302494
+ -1.5811985</code></pre><p>Evaluating the &quot;self-tuning&quot; pipeline model&#39;s performance using all data and 5-fold cross-validation (implies multiple layers of nested resampling):</p><pre><code class="language- hljs">evaluate!(
     mach,
     measures=[l1, rsquared],
     resampling=CV(nfolds=5, rng=123),
@@ -166,21 +166,21 @@ first(yhat, 3)</code></pre><pre><code class="nohighlight hljs">3-element Vector{
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicTunedModel-157
+Tag: DeterministicTunedModel-336
 Extract:
 ┌───┬────────────┬───────────┬─────────────┬─────────┐
 │   │ measure    │ operation │ measurement │ 1.96*SE │
 ├───┼────────────┼───────────┼─────────────┼─────────┤
-│ A │ LPLoss(    │ predict   │ 0.17        │ 0.023   │
+│ A │ LPLoss(    │ predict   │ 0.138       │ 0.043   │
 │   │   p = 1)   │           │             │         │
-│ B │ RSquared() │ predict   │ 0.9699      │ 0.009   │
+│ B │ RSquared() │ predict   │ 0.89        │ 0.071   │
 └───┴────────────┴───────────┴─────────────┴─────────┘
-┌───┬────────────────────────────────────┐
-│   │ per_fold                           │
-├───┼────────────────────────────────────┤
-│ A │ [0.155, 0.159, 0.2, 0.19, 0.146]   │
-│ B │ [0.96, 0.981, 0.962, 0.969, 0.977] │
-└───┴────────────────────────────────────┘
+┌───┬─────────────────────────────────────┐
+│   │ per_fold                            │
+├───┼─────────────────────────────────────┤
+│ A │ [0.175, 0.179, 0.144, 0.0735, 0.12] │
+│ B │ [0.85, 0.788, 0.897, 0.971, 0.942]  │
+└───┴─────────────────────────────────────┘
 Apply `describe` to this result for a named tuple summary.</code></pre><p>Compare to a dummy model:</p><pre><code class="language- hljs">evaluations = evaluate(
     [&quot;booster&quot; =&gt; self_tuning_pipe, &quot;dummy&quot; =&gt; ConstantRegressor()],
     X,
@@ -191,7 +191,7 @@ Apply `describe` to this result for a named tuple summary.</code></pre><p>Compar
 )
 
 describe.(evaluations) |&gt; pretty</code></pre><pre><code class="nohighlight hljs">[ Info: Performing evaluations using 1 thread.
-Evaluating over 5 folds:  40%[==========&gt;              ]  ETA: 0:00:11[KEvaluating over 5 folds:  60%[===============&gt;         ]  ETA: 0:00:07[KEvaluating over 5 folds:  80%[====================&gt;    ]  ETA: 0:00:04[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:18[K
+Evaluating over 5 folds:  40%[==========&gt;              ]  ETA: 0:00:07[KEvaluating over 5 folds:  60%[===============&gt;         ]  ETA: 0:00:06[KEvaluating over 5 folds:  80%[====================&gt;    ]  ETA: 0:00:03[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:16[K
 [ Info: Performing evaluations using 1 thread.
 Evaluating over 5 folds:  40%[==========&gt;              ]  ETA: 0:00:01[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:00[K
 ┌─────────┬──────────────────────┬──────────────────────┐
@@ -199,7 +199,7 @@ Evaluating over 5 folds:  40%[==========&gt;              ]  ETA: 0:00:01[KEval
 │ String  │ Measurement{Float64} │ Measurement{Float64} │
 │ Textual │ Continuous           │ Continuous           │
 ├─────────┼──────────────────────┼──────────────────────┤
-│ booster │ 0.17±0.023           │ 0.9699±0.009         │
-│ dummy   │ 1.13±0.15            │ -0.0044±0.0051       │
+│ booster │ 0.138±0.043          │ 0.89±0.071           │
+│ dummy   │ 0.497±0.068          │ -0.093±0.14          │
 └─────────┴──────────────────────┴──────────────────────┘
-</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../MLJTutorial/99_solution_to_exercises/notebook/">« Solutions to Exercises</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 04:40">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../MLJTutorial/99_solution_to_exercises/notebook/">« Solutions to Exercises</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 05:04">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
