@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Lightning Tour of MLJ · MLJTutorial.jl</title><meta name="title" content="Lightning Tour of MLJ · MLJTutorial.jl"/><meta property="og:title" content="Lightning Tour of MLJ · MLJTutorial.jl"/><meta property="twitter:title" content="Lightning Tour of MLJ · MLJTutorial.jl"/><meta name="description" content="Documentation for MLJTutorial.jl."/><meta property="og:description" content="Documentation for MLJTutorial.jl."/><meta property="twitter:description" content="Documentation for MLJTutorial.jl."/><script data-outdated-warner src="../../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../assets/documenter.js"></script><script src="../../../search_index.js"></script><script src="../../../siteinfo.js"></script><script src="../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../assets/themeswap.js"></script><link href="../../../assets/favicon.ico" rel="icon" type="image/x-icon"/><link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../../"><img src="../../../assets/logo.svg" alt="MLJTutorial.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../../">MLJTutorial.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../../">Home</a></li><li><input class="collapse-toggle" id="menuitem-2" type="checkbox"/><label class="tocitem" for="menuitem-2"><span class="docs-label">Using MLJ (video series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../UsingMLJ/01_basics/notebook/">1. Basics</a></li><li><a class="tocitem" href="../../UsingMLJ/02_model_composition/notebook/">2. Model Composition</a></li><li><a class="tocitem" href="../../UsingMLJ/03_model_tuning/notebook/">3. Model Tuning</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-3" type="checkbox"/><label class="tocitem" for="menuitem-3"><span class="docs-label">MLJTutorial (original series)</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../MLJTutorial/01_data_representation/notebook/">1. Data Representation</a></li><li><a class="tocitem" href="../../MLJTutorial/02_models/notebook/">2. Models</a></li><li><a class="tocitem" href="../../MLJTutorial/03_pipelines/notebook/">3. Pipelines</a></li><li><a class="tocitem" href="../../MLJTutorial/04_tuning/notebook/">4. Tuning</a></li><li><a class="tocitem" href="../../MLJTutorial/05_composition/notebook/">5. Composition</a></li><li><a class="tocitem" href="../../MLJTutorial/99_solution_to_exercises/notebook/">Solutions to Exercises</a></li></ul></li><li class="is-active"><a class="tocitem" href>Lightning Tour of MLJ</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Lightning Tour of MLJ</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Lightning Tour of MLJ</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaAI/MLJTutorial.jl/blob/dev/docs/src/notebooks/lightning_tour/notebook.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Lightning-Tour-of-MLJ"><a class="docs-heading-anchor" href="#Lightning-Tour-of-MLJ">Lightning Tour of MLJ</a><a id="Lightning-Tour-of-MLJ-1"></a><a class="docs-heading-anchor-permalink" href="#Lightning-Tour-of-MLJ" title="Permalink"></a></h1><p>To run the code in this tutorial in a live Julia session, first follow the instructions given <a href="../../../#instructions">here</a>.</p><p>In MLJ a <em>model</em> is just a container for hyper-parameters, and that&#39;s all. Here we will apply several kinds of model composition before binding the resulting &quot;meta-model&quot; to data in a <em>machine</em> for evaluation, using cross-validation.</p><p>Loading and instantiating a gradient tree-boosting model:</p><pre><code class="language- hljs">using MLJ
+
+Booster = @load EvoTreeRegressor # loads code defining a model type
+booster = Booster(max_depth=2)   # specify hyper-parameter at construction</code></pre><pre><code class="nohighlight hljs">EvoTreeRegressor(
+  loss = :mse, 
+  metric = :mse, 
+  nrounds = 100, 
+  bagging_size = 1, 
+  early_stopping_rounds = 9223372036854775807, 
+  early_stopping_tolerance = 0.0, 
+  L2 = 1.0, 
+  lambda = 0.0, 
+  gamma = 0.0, 
+  eta = 0.1, 
+  max_depth = 2, 
+  min_weight = 1.0, 
+  rowsample = 1.0, 
+  colsample = 1.0, 
+  nbins = 64, 
+  alpha = 0.5, 
+  alphas = [0.1, 0.5, 0.9], 
+  monotone_constraints = Dict{Int64, Int64}(), 
+  tree_type = :binary, 
+  seed = 123, 
+  device = :cpu)</code></pre><pre><code class="language- hljs">booster.nrounds=50               # or mutate post facto
+booster</code></pre><pre><code class="nohighlight hljs">EvoTreeRegressor(
+  loss = :mse, 
+  metric = :mse, 
+  nrounds = 50, 
+  bagging_size = 1, 
+  early_stopping_rounds = 9223372036854775807, 
+  early_stopping_tolerance = 0.0, 
+  L2 = 1.0, 
+  lambda = 0.0, 
+  gamma = 0.0, 
+  eta = 0.1, 
+  max_depth = 2, 
+  min_weight = 1.0, 
+  rowsample = 1.0, 
+  colsample = 1.0, 
+  nbins = 64, 
+  alpha = 0.5, 
+  alphas = [0.1, 0.5, 0.9], 
+  monotone_constraints = Dict{Int64, Int64}(), 
+  tree_type = :binary, 
+  seed = 123, 
+  device = :cpu)</code></pre><p>This model is an example of an iterative model. As is stands, the number of iterations <code>nrounds</code> is fixed.</p><h3 id="Composition-1:-Wrapping-the-model-to-make-it-&quot;self-iterating&quot;"><a class="docs-heading-anchor" href="#Composition-1:-Wrapping-the-model-to-make-it-&quot;self-iterating&quot;">Composition 1: Wrapping the model to make it &quot;self-iterating&quot;</a><a id="Composition-1:-Wrapping-the-model-to-make-it-&quot;self-iterating&quot;-1"></a><a class="docs-heading-anchor-permalink" href="#Composition-1:-Wrapping-the-model-to-make-it-&quot;self-iterating&quot;" title="Permalink"></a></h3><p>Let&#39;s create a new model that automatically learns the number of iterations, using the <code>NumberSinceBest(3)</code> criterion, as applied to an out-of-sample <code>l1</code> loss:</p><pre><code class="language- hljs">iterated_booster = IteratedModel(
+    model=booster,
+    resampling=Holdout(fraction_train=0.8),
+    controls=[Step(2), NumberSinceBest(3), NumberLimit(300)],
+    measure=l1,
+    retrain=true,
+)</code></pre><pre><code class="nohighlight hljs">DeterministicIteratedModel(
+  model = EvoTreeRegressor(
+        loss = :mse, 
+        metric = :mse, 
+        nrounds = 50, 
+        bagging_size = 1, 
+        early_stopping_rounds = 9223372036854775807, 
+        early_stopping_tolerance = 0.0, 
+        L2 = 1.0, 
+        lambda = 0.0, 
+        gamma = 0.0, 
+        eta = 0.1, 
+        max_depth = 2, 
+        min_weight = 1.0, 
+        rowsample = 1.0, 
+        colsample = 1.0, 
+        nbins = 64, 
+        alpha = 0.5, 
+        alphas = [0.1, 0.5, 0.9], 
+        monotone_constraints = Dict{Int64, Int64}(), 
+        tree_type = :binary, 
+        seed = 123, 
+        device = :cpu), 
+  controls = Any[IterationControl.Step(2), EarlyStopping.NumberSinceBest(3), EarlyStopping.NumberLimit(300)], 
+  resampling = Holdout(
+        fraction_train = 0.8, 
+        shuffle = false, 
+        rng = Random.TaskLocalRNG()), 
+  measure = LPLoss(p = 1), 
+  weights = nothing, 
+  class_weights = nothing, 
+  operation = nothing, 
+  retrain = true, 
+  check_measure = true, 
+  iteration_parameter = nothing, 
+  cache = true, 
+  logger = nothing)</code></pre><h3 id="Composition-2:-Preprocess-the-input-features"><a class="docs-heading-anchor" href="#Composition-2:-Preprocess-the-input-features">Composition 2: Preprocess the input features</a><a id="Composition-2:-Preprocess-the-input-features-1"></a><a class="docs-heading-anchor-permalink" href="#Composition-2:-Preprocess-the-input-features" title="Permalink"></a></h3><p>Combining the model with categorical feature encoding:</p><pre><code class="language- hljs">pipe = ContinuousEncoder |&gt; iterated_booster</code></pre><pre><code class="nohighlight hljs">DeterministicPipeline(
+  continuous_encoder = ContinuousEncoder(
+        drop_last = false, 
+        one_hot_ordered_factors = false), 
+  deterministic_iterated_model = DeterministicIteratedModel(
+        model = EvoTreeRegressor(loss = mse, …), 
+        controls = Any[IterationControl.Step(2), EarlyStopping.NumberSinceBest(3), EarlyStopping.NumberLimit(300)], 
+        resampling = Holdout(fraction_train = 0.8, …), 
+        measure = LPLoss(p = 1), 
+        weights = nothing, 
+        class_weights = nothing, 
+        operation = nothing, 
+        retrain = true, 
+        check_measure = true, 
+        iteration_parameter = nothing, 
+        cache = true, 
+        logger = nothing), 
+  cache = true)</code></pre><h3 id="Composition-3:-Wrapping-the-model-to-make-it-&quot;self-tuning&quot;"><a class="docs-heading-anchor" href="#Composition-3:-Wrapping-the-model-to-make-it-&quot;self-tuning&quot;">Composition 3: Wrapping the model to make it &quot;self-tuning&quot;</a><a id="Composition-3:-Wrapping-the-model-to-make-it-&quot;self-tuning&quot;-1"></a><a class="docs-heading-anchor-permalink" href="#Composition-3:-Wrapping-the-model-to-make-it-&quot;self-tuning&quot;" title="Permalink"></a></h3><p>First, we define a hyper-parameter range for optimization of a (nested) hyper-parameter:</p><pre><code class="language- hljs">max_depth_range = range(
+    pipe,
+    :(deterministic_iterated_model.model.max_depth),
+    lower = 1,
+    upper = 10,
+)</code></pre><pre><code class="nohighlight hljs">NumericRange(1 ≤ deterministic_iterated_model.model.max_depth ≤ 10; origin=5.5, unit=4.5)</code></pre><p>Now we can wrap the pipeline model in an optimization strategy to make it &quot;self-tuning&quot;:</p><pre><code class="language- hljs">self_tuning_pipe = TunedModel(
+    model=pipe,
+    tuning=RandomSearch(),
+    ranges = max_depth_range,
+    resampling=CV(nfolds=3, rng=456),
+    measure=l1,
+    acceleration=CPUThreads(),
+    n=50,
+)</code></pre><pre><code class="nohighlight hljs">DeterministicTunedModel(
+  model = DeterministicPipeline(
+        continuous_encoder = ContinuousEncoder(drop_last = false, …), 
+        deterministic_iterated_model = DeterministicIteratedModel(model = EvoTreeRegressor(loss = mse, …), …), 
+        cache = true), 
+  tuning = RandomSearch(
+        bounded = Distributions.Uniform, 
+        positive_unbounded = Distributions.Gamma, 
+        other = Distributions.Normal, 
+        rng = Random.TaskLocalRNG()), 
+  resampling = CV(
+        nfolds = 3, 
+        shuffle = true, 
+        rng = Random.MersenneTwister(456)), 
+  measure = LPLoss(p = 1), 
+  weights = nothing, 
+  class_weights = nothing, 
+  operation = nothing, 
+  range = NumericRange(1 ≤ deterministic_iterated_model.model.max_depth ≤ 10; origin=5.5, unit=4.5), 
+  selection_heuristic = MLJTuning.NaiveSelection(nothing), 
+  train_best = true, 
+  repeats = 1, 
+  n = 50, 
+  acceleration = ComputationalResources.CPUThreads{Int64}(1), 
+  acceleration_resampling = ComputationalResources.CPU1{Nothing}(nothing), 
+  check_measure = true, 
+  cache = true, 
+  compact_history = true, 
+  logger = nothing)</code></pre><h3 id="Binding-to-data-and-evaluating-performance"><a class="docs-heading-anchor" href="#Binding-to-data-and-evaluating-performance">Binding to data and evaluating performance</a><a id="Binding-to-data-and-evaluating-performance-1"></a><a class="docs-heading-anchor-permalink" href="#Binding-to-data-and-evaluating-performance" title="Permalink"></a></h3><p>Generating some synthetic data:</p><pre><code class="language- hljs">X, y = make_regression();</code></pre><p>Binding the &quot;self-tuning&quot; pipeline model to data in a <em>machine</em> (which will additionally store <em>learned</em> parameters):</p><pre><code class="language- hljs">mach = machine(self_tuning_pipe, X, y)</code></pre><pre><code class="nohighlight hljs">untrained Machine; does not cache data
+  model: DeterministicTunedModel(model = DeterministicPipeline(continuous_encoder = ContinuousEncoder(drop_last = false, …), …), …)
+  args: 
+    1:	Source @634 ⏎ ScientificTypesBase.Table{AbstractVector{ScientificTypesBase.Continuous}}
+    2:	Source @471 ⏎ AbstractVector{ScientificTypesBase.Continuous}
+</code></pre><p>Fit and predict:</p><pre><code class="language- hljs">fit!(mach, rows=1:60)
+yhat = predict(mach, rows=61:100)
+first(yhat, 3)</code></pre><pre><code class="nohighlight hljs">3-element Vector{Float32}:
+ -2.8776388
+ -0.45805833
+ -0.8760577</code></pre><p>Evaluating the &quot;self-tuning&quot; pipeline model&#39;s performance using all data and 5-fold cross-validation (implies multiple layers of nested resampling):</p><pre><code class="language- hljs">evaluate!(
+    mach,
+    measures=[l1, rsquared],
+    resampling=CV(nfolds=5, rng=123),
+    acceleration=CPUThreads(),
+)</code></pre><pre><code class="nohighlight hljs">PerformanceEvaluation object with these fields:
+  model, tag, measure, operation,
+  measurement (per-fold aggregate), uncertainty_radius_95 (1.96*SE),
+  per_fold, per_observation,
+  fitted_params_per_fold, report_per_fold,
+  train_test_rows, resampling, repeats
+Tag: DeterministicTunedModel-157
+Extract:
+┌───┬────────────┬───────────┬─────────────┬─────────┐
+│   │ measure    │ operation │ measurement │ 1.96*SE │
+├───┼────────────┼───────────┼─────────────┼─────────┤
+│ A │ LPLoss(    │ predict   │ 0.17        │ 0.023   │
+│   │   p = 1)   │           │             │         │
+│ B │ RSquared() │ predict   │ 0.9699      │ 0.009   │
+└───┴────────────┴───────────┴─────────────┴─────────┘
+┌───┬────────────────────────────────────┐
+│   │ per_fold                           │
+├───┼────────────────────────────────────┤
+│ A │ [0.155, 0.159, 0.2, 0.19, 0.146]   │
+│ B │ [0.96, 0.981, 0.962, 0.969, 0.977] │
+└───┴────────────────────────────────────┘
+Apply `describe` to this result for a named tuple summary.</code></pre><p>Compare to a dummy model:</p><pre><code class="language- hljs">evaluations = evaluate(
+    [&quot;booster&quot; =&gt; self_tuning_pipe, &quot;dummy&quot; =&gt; ConstantRegressor()],
+    X,
+    y;
+    measures=[l1, rsquared],
+    resampling=CV(nfolds=5, rng=123),
+    acceleration=CPUThreads(),
+)
+
+describe.(evaluations) |&gt; pretty</code></pre><pre><code class="nohighlight hljs">[ Info: Performing evaluations using 1 thread.
+Evaluating over 5 folds:  40%[==========&gt;              ]  ETA: 0:00:11[KEvaluating over 5 folds:  60%[===============&gt;         ]  ETA: 0:00:07[KEvaluating over 5 folds:  80%[====================&gt;    ]  ETA: 0:00:04[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:18[K
+[ Info: Performing evaluations using 1 thread.
+Evaluating over 5 folds:  40%[==========&gt;              ]  ETA: 0:00:01[KEvaluating over 5 folds: 100%[=========================] Time: 0:00:00[K
+┌─────────┬──────────────────────┬──────────────────────┐
+│ tag     │ LPLoss               │ RSquared             │
+│ String  │ Measurement{Float64} │ Measurement{Float64} │
+│ Textual │ Continuous           │ Continuous           │
+├─────────┼──────────────────────┼──────────────────────┤
+│ booster │ 0.17±0.023           │ 0.9699±0.009         │
+│ dummy   │ 1.13±0.15            │ -0.0044±0.0051       │
+└─────────┴──────────────────────┴──────────────────────┘
+</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../MLJTutorial/99_solution_to_exercises/notebook/">« Solutions to Exercises</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Friday 9 October 2026 02:52">Friday 9 October 2026</span>. Using Julia version 1.13.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
