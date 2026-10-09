@@ -14,16 +14,15 @@ given [here](@ref instructions).
 ### Video Timings
 
 - 00:00 Introduction
-- 00:08 Goals
-- 01:19 Prerequisites and Getting Help
-- 02:00 Composite Models Defined
-- 04:13 Model Pipelines
-- 05:59 Data Leakage
-- 08:37 Target Transformations
-- 12:43 Live Coding: Pipelines
-- 18:42 Live Coding: Target Transformations
-- 20:35 Other Model Wrappers
-- 25:02 End
+- 00:13 Goals
+- 01:28 Prerequisites and Getting Help
+- 02:12 Composite Models Defined
+- 04:28 Model Pipelines
+- 06:07 Data Leakage
+- 09:00 Target Transformations
+- 13:10 **Live Coding:** Pipelines
+- 19:11 **Live Coding:** Target Transformations
+- 21:01 Other Model Wrappers
 
 ````@julia
 using MLJ
@@ -160,7 +159,7 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: DeterministicPipeline-500
+Tag: DeterministicPipeline-776
 Extract:
 ┌──────────┬───────────┬─────────────┬─────────┐
 │ measure  │ operation │ measurement │ 1.96*SE │
@@ -225,7 +224,7 @@ PerformanceEvaluation object with these fields:
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: TransformedTargetModelDeterministic-470
+Tag: TransformedTargetModelDeterministic-712
 Extract:
 ┌──────────┬───────────┬─────────────┬─────────┐
 │ measure  │ operation │ measurement │ 1.96*SE │
