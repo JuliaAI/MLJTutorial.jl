@@ -5,8 +5,8 @@ Learning in Julia)
 
 Two collections of tutorials are hosted here:
 
-- [*Using MLJ* (video series)](@ref) created 2025. 
-- [*MLJTutorial* (original series)](@ref) created around 2020, updated August 2026.
+- [*Using MLJ* (video series)](@ref video) created 2025.
+- [*MLJTutorial* (original series)](@ref original) created around 2020, updated August 2026.
 
 For other MLJ learning resources see
 [here](https://juliaai.github.io/MLJ.jl/dev/learning_mlj/). For experienced data
@@ -16,7 +16,7 @@ Hours](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/telco/).
 
 Also hosted here is a [Lightning Tour of MLJ](@ref).
 
-## *Using MLJ* (video series)
+## [*Using MLJ* (video series)](@id video)
 
 Tutorials for use with the *Using MLJ* series of instructional videos. 
 
@@ -25,7 +25,7 @@ Tutorials for use with the *Using MLJ* series of instructional videos.
 - [Lesson 3. Model Tuning](@ref)
 
 
-## *MLJTutorial* (original series)
+## [*MLJTutorial* (original series)](@id original)
 
 Tutorials based on a 3.5 hour [online
   workshop](https://github.com/ablaom/MachineLearningInJulia2020) delivered in 2020,
