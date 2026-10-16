@@ -110,7 +110,8 @@ jobs:
             **Attention**
             
             A notebook or Project.toml file has changed and new notebook 
-            markdown has been generated. You can close this pull request, review \#${{ steps.spawn_pr.outputs.pull-request-number }}
-            to commit the changes and update the documentation on gh-pages, as this will
-            need to be regenerated.
+            markdown has been generated. Review \#${{ steps.spawn_pr.outputs.pull-request-number }}
+            to commit the changes and
+            update the documentation on gh-pages, as this will need to be regenerated.
+            This PR can be **closed** at any time.
 
