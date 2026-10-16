@@ -2,6 +2,7 @@
 
 # Notebook supporting the video series "Using MLJ".
 
+# [Video](https://www.youtube.com/watch?v=6ILPGhuse4o&list=PLHwT4lR4GIv8&index=1).
 # [Slides](slides.pdf) from the video.
 
 # To run the code in this tutorial in a live Julia session, first follow the instructions
