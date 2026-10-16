@@ -1,6 +1,6 @@
 # # Lesson 1. Basics
 
-# Notebook supporting the video series "Using MLJ".
+# Notebook supporting the video series "Using MLJ". 
 
 # - [Video](https://www.youtube.com/watch?v=6ILPGhuse4o&list=PLHwT4lR4GIv8&index=1)
 # - [Slides](slides.pdf) from the video
