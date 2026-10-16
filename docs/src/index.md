@@ -18,7 +18,8 @@ Also hosted here is a [Lightning Tour of MLJ](@ref).
 
 ## [*Using MLJ* (video series)](@id video)
 
-Tutorials for use with the *Using MLJ* series of instructional videos. 
+Tutorials for use with the [*Using
+MLJ*](https://www.youtube.com/playlist?list=PLHwT4lR4GIv8) series of instructional videos.
 
 - [Lesson 1. Basics](@ref)
 - [Lesson 2. Model Composition](@ref)
