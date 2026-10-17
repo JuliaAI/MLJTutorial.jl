@@ -73,6 +73,28 @@ jobs:
                   "$markdown_files "
           end 
 
+      - name: Compose the pull request body
+        shell: bash
+        run: |
+          cat > "${{ runner.temp }}/pr-body.md" <<'EOF'
+          This pull request replaces \#${{ github.event.pull_request.number }} as it additionally commits new or regenerated notebook markdown files, plot SVG's, etc.
+
+          **Instructions**
+
+          **Accept the invitation to run pending workflows.** If none are apparent, then
+          close and immediately re-open this pull request. When CI finishes running, you can preview
+          the new documentation [here](https://JuliaAI.github.io/MLJTutorial.jl/previews/PR__SPAWNED_PR_NUMBER__).
+
+          If happy with the preview, merge this pull request
+          to trigger deployment of the new docs to gh-pages.
+
+          You can check repository "Actions" to check when deployment is complete.
+          You should see: ✅ **pages build and deployment**
+
+          This pull request will automatically update if additional commits are successfully
+          added to the parent pull request, \#${{ github.event.pull_request.number }}.
+          EOF
+
       - name: Create pull request for adding new notebook markdown
         id: spawn_pr
         uses: peter-evans/create-pull-request@v8
@@ -82,25 +104,21 @@ jobs:
           branch: auto-update-notebooks
           base: ${{ github.base_ref }}
           title: "Commit Notebook Markdown Changes"
-          body: |
-            This pull request replaces \#${{ github.event.pull_request.number }} as it additionally commits new or regenerated notebook markdown files, plot SVG's, etc.
-
-            **Instructions**
-
-            **Accept the invitation to run pending workflows.** If none are apparent, then
-            close and immediately re-open this pull request. When CI finishes running, you can preview
-            the new documentation [here](https://JuliaAI.github.io/MLJTutorial.jl/previews/PR${{ steps.spawn_pr.outputs.pull-request-number }}.
-
-            If happy with the preview, merge this pull request
-            to trigger deployment of the new docs to gh-pages.
-
-            You can check repository "Actions" to check when deployment is complete.
-            You should see: ✅ **pages build and deployment**
-
-            This pull request will automatically update if additional commits are successfully
-            added to the parent pull request, \#${{ github.event.pull_request.number }}.
-
+          body-path: ${{ runner.temp }}/pr-body.md
           delete-branch: true
+
+      # The body above cannot reference the spawned pull request's own number, because
+      # `steps.spawn_pr.outputs.*` is not set until after that step completes. So we
+      # substitute the real number into the body here instead.
+      - name: Insert preview link into the pull request body
+        if: steps.spawn_pr.outputs.pull-request-number != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.spawn_pr.outputs.pull-request-number }}
+        run: |
+          sed -i "s/__SPAWNED_PR_NUMBER__/${PR_NUMBER}/g" "${{ runner.temp }}/pr-body.md"
+          gh pr edit "$PR_NUMBER" --body-file "${{ runner.temp }}/pr-body.md"
 
       - name: Post comment flagging further action required
         if: steps.spawn_pr.outputs.pull-request-operation == 'created'
