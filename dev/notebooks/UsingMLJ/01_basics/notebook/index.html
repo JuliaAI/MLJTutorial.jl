@@ -82,11 +82,11 @@ model = Regressor()</code></pre><pre><code class="nohighlight hljs">RandomForest
 fit!(mach, rows=train);</code></pre><pre><code class="nohighlight hljs">[ Info: Training machine(RandomForestRegressor(max_depth = -1, …), …).
 </code></pre><p>Inspect the trained machine:</p><pre><code class="language- hljs">fitted_params(mach)</code></pre><pre><code class="nohighlight hljs">(forest = Ensemble of Decision Trees
 Trees:      100
-Avg Leaves: 146.66
-Avg Depth:  14.83,)</code></pre><pre><code class="language- hljs">report(mach)</code></pre><pre><code class="nohighlight hljs">(features = [:Crim, :Zn, :Indus, :Chas, :NOx, :Rm, :Age, :Dis, :Rad, :Tax, :PTRatio, :Black, :LStat],)</code></pre><p>Predict on some &quot;new&quot; data</p><pre><code class="language- hljs">predict(mach, X)[1:3]</code></pre><pre><code class="nohighlight hljs">3-element Vector{Float64}:
- 26.535999999999998
- 22.762999999999998
- 34.841</code></pre><p>Predict in the <code>test</code> rows:</p><pre><code class="language- hljs">ypred = predict(mach, rows=test);</code></pre><p>Get the mean absolute error:</p><pre><code class="language- hljs">mae(ypred, y[test])</code></pre><pre><code class="nohighlight hljs">4.457232673267327</code></pre><p><code>mae</code> is actually just an alias:</p><pre><code class="language- hljs">mae</code></pre><pre><code class="nohighlight hljs">LPLoss(
+Avg Leaves: 146.89
+Avg Depth:  14.44,)</code></pre><pre><code class="language- hljs">report(mach)</code></pre><pre><code class="nohighlight hljs">(features = [:Crim, :Zn, :Indus, :Chas, :NOx, :Rm, :Age, :Dis, :Rad, :Tax, :PTRatio, :Black, :LStat],)</code></pre><p>Predict on some &quot;new&quot; data</p><pre><code class="language- hljs">predict(mach, X)[1:3]</code></pre><pre><code class="nohighlight hljs">3-element Vector{Float64}:
+ 26.087
+ 23.107999999999997
+ 34.562</code></pre><p>Predict in the <code>test</code> rows:</p><pre><code class="language- hljs">ypred = predict(mach, rows=test);</code></pre><p>Get the mean absolute error:</p><pre><code class="language- hljs">mae(ypred, y[test])</code></pre><pre><code class="nohighlight hljs">4.429029702970296</code></pre><p><code>mae</code> is actually just an alias:</p><pre><code class="language- hljs">mae</code></pre><pre><code class="nohighlight hljs">LPLoss(
   p = 1)</code></pre><p>List other pertinent metrics:</p><pre><code class="language- hljs">measures(ypred, y)</code></pre><pre><code class="nohighlight hljs">OrderedCollections.LittleDict{Any, Any, Vector{Any}, Vector{Any}} with 10 entries:
   LPLoss =&gt; (aliases = (&quot;l1&quot;, &quot;l2&quot;, &quot;mae&quot;, &quot;mav&quot;, &quot;mean_absolute_error&quot;, &quot;mean_absolute_value&quot;), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Point(), observation_scitype = Union{Missing, Infinite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Loss(), external_aggregation_mode = Mean(), human_name = &quot;``L^p`` loss&quot;)
   LPSumLoss =&gt; (aliases = (&quot;l1_sum&quot;, &quot;l2_sum&quot;), consumes_multiple_observations = true, can_report_unaggregated = true, kind_of_proxy = Point(), observation_scitype = Union{Missing, Infinite}, can_consume_tables = false, supports_weights = true, supports_class_weights = true, orientation = Loss(), external_aggregation_mode = Sum(), human_name = &quot;``L^p`` sum loss&quot;)
@@ -103,14 +103,14 @@ Avg Depth:  14.83,)</code></pre><pre><code class="language- hljs">report(mach)</
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-797
+Tag: RandomForestRegressor-530
 Extract:
 ┌────────────┬───────────┬─────────────┐
 │ measure    │ operation │ measurement │
 ├────────────┼───────────┼─────────────┤
-│ LPLoss(    │ predict   │ 4.46        │
+│ LPLoss(    │ predict   │ 4.43        │
 │   p = 1)   │           │             │
-│ RSquared() │ predict   │ 0.344       │
+│ RSquared() │ predict   │ 0.351       │
 └────────────┴───────────┴─────────────┘
 Apply `describe` to this result for a named tuple summary.</code></pre><p>Something fancier:</p><pre><code class="language- hljs">evaluate(
     model, X, y;
@@ -122,20 +122,20 @@ Apply `describe` to this result for a named tuple summary.</code></pre><p>Someth
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-427
+Tag: RandomForestRegressor-360
 Extract:
 ┌───┬────────────┬───────────┬─────────────┬─────────┐
 │   │ measure    │ operation │ measurement │ 1.96*SE │
 ├───┼────────────┼───────────┼─────────────┼─────────┤
-│ A │ LPLoss(    │ predict   │ 2.99        │ 0.87    │
+│ A │ LPLoss(    │ predict   │ 2.99        │ 0.85    │
 │   │   p = 1)   │           │             │         │
 │ B │ RSquared() │ predict   │ 0.66        │ 0.16    │
 └───┴────────────┴───────────┴─────────────┴─────────┘
 ┌───┬────────────────────────────────────────────┐
 │   │ per_fold                                   │
 ├───┼────────────────────────────────────────────┤
-│ A │ [2.24, 2.23, 3.34, 2.43, 4.81, 2.92]       │
-│ B │ [0.721, 0.839, 0.722, 0.828, 0.448, 0.408] │
+│ A │ [2.2, 2.28, 3.27, 2.54, 4.81, 2.87]        │
+│ B │ [0.735, 0.832, 0.731, 0.794, 0.461, 0.385] │
 └───┴────────────────────────────────────────────┘
 Apply `describe` to this result for a named tuple summary.</code></pre><p>Dietterich&#39;s 5 x 2 test:</p><pre><code class="language- hljs">e = evaluate(
     model, X, y;
@@ -149,24 +149,24 @@ Apply `describe` to this result for a named tuple summary.</code></pre><p>Diette
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestRegressor-298
+Tag: RandomForestRegressor-398
 Extract:
 ┌───┬────────────┬───────────┬─────────────┬─────────┐
 │   │ measure    │ operation │ measurement │ 1.96*SE │
 ├───┼────────────┼───────────┼─────────────┼─────────┤
-│ A │ LPLoss(    │ predict   │ 2.46        │ 0.11    │
+│ A │ LPLoss(    │ predict   │ 2.42        │ 0.13    │
 │   │   p = 1)   │           │             │         │
-│ B │ RSquared() │ predict   │ 0.821       │ 0.027   │
+│ B │ RSquared() │ predict   │ 0.844       │ 0.02    │
 └───┴────────────┴───────────┴─────────────┴─────────┘
 ┌───┬────────────────────────────────────────────────────────────────────────┐
 │   │ per_fold                                                               │
 ├───┼────────────────────────────────────────────────────────────────────────┤
-│ A │ [2.46, 2.51, 2.61, 2.23, 2.5, 2.42, 2.7, 2.3, 2.22, 2.67]              │
-│ B │ [0.757, 0.859, 0.808, 0.863, 0.775, 0.854, 0.789, 0.842, 0.869, 0.791] │
+│ A │ [2.29, 2.77, 2.38, 2.27, 2.25, 2.57, 2.28, 2.6, 2.57, 2.22]            │
+│ B │ [0.851, 0.799, 0.859, 0.867, 0.827, 0.847, 0.889, 0.791, 0.836, 0.872] │
 └───┴────────────────────────────────────────────────────────────────────────┘
 Apply `describe` to this result for a named tuple summary.</code></pre><pre><code class="language- hljs">e.uncertainty_radius_95</code></pre><pre><code class="nohighlight hljs">2-element Vector{Float64}:
- 0.11330666259443022
- 0.02705219873485344</code></pre><h1 id="Interlude-on-scientific-types"><a class="docs-heading-anchor" href="#Interlude-on-scientific-types">Interlude on scientific types</a><a id="Interlude-on-scientific-types-1"></a><a class="docs-heading-anchor-permalink" href="#Interlude-on-scientific-types" title="Permalink"></a></h1><pre><code class="language- hljs">typeof(3.14)</code></pre><pre><code class="nohighlight hljs">Float64</code></pre><pre><code class="language- hljs">scitype(3.14)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype(3.143f0)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype([&quot;cat&quot;, &quot;mouse&quot;, &quot;dog&quot;])</code></pre><pre><code class="nohighlight hljs">AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})</code></pre><h2 id="Part-II.-Classification"><a class="docs-heading-anchor" href="#Part-II.-Classification">Part II. Classification</a><a id="Part-II.-Classification-1"></a><a class="docs-heading-anchor-permalink" href="#Part-II.-Classification" title="Permalink"></a></h2><p>New data set for classification, the Adult Dataset (census data):</p><pre><code class="language- hljs">using Downloads, CSV
+ 0.1253300607195079
+ 0.020432947940809142</code></pre><h1 id="Interlude-on-scientific-types"><a class="docs-heading-anchor" href="#Interlude-on-scientific-types">Interlude on scientific types</a><a id="Interlude-on-scientific-types-1"></a><a class="docs-heading-anchor-permalink" href="#Interlude-on-scientific-types" title="Permalink"></a></h1><pre><code class="language- hljs">typeof(3.14)</code></pre><pre><code class="nohighlight hljs">Float64</code></pre><pre><code class="language- hljs">scitype(3.14)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype(3.143f0)</code></pre><pre><code class="nohighlight hljs">ScientificTypesBase.Continuous</code></pre><pre><code class="language- hljs">scitype([&quot;cat&quot;, &quot;mouse&quot;, &quot;dog&quot;])</code></pre><pre><code class="nohighlight hljs">AbstractVector{Textual} (alias for AbstractArray{ScientificTypesBase.Textual, 1})</code></pre><h2 id="Part-II.-Classification"><a class="docs-heading-anchor" href="#Part-II.-Classification">Part II. Classification</a><a id="Part-II.-Classification-1"></a><a class="docs-heading-anchor-permalink" href="#Part-II.-Classification" title="Permalink"></a></h2><p>New data set for classification, the Adult Dataset (census data):</p><pre><code class="language- hljs">using Downloads, CSV
 url = &quot;https://raw.githubusercontent.com/&quot;*
     &quot;saravrajavelu/Adult-Income-Analysis/refs/heads/master/&quot;*
     &quot;adult.csv&quot;
@@ -278,15 +278,15 @@ yprob = predict(mach, rows=test);
 first(yprob, 5)</code></pre><pre><code class="nohighlight hljs">5-element CategoricalDistributions.UnivariateFiniteVector{ScientificTypesBase.Multiclass{2}, InlineStrings.String7, UInt32, Float64}:
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;1.0, &gt;50K=&gt;0.0)
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;1.0, &gt;50K=&gt;0.0)
- UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.9, &gt;50K=&gt;0.1)
- UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.29, &gt;50K=&gt;0.71)
+ UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.94, &gt;50K=&gt;0.06)
+ UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;0.33, &gt;50K=&gt;0.67)
  UnivariateFinite{ScientificTypesBase.Multiclass{2}}(&lt;=50K=&gt;1.0, &gt;50K=&gt;0.0)</code></pre><pre><code class="language- hljs">yprob[3]</code></pre><pre><code class="nohighlight hljs">         UnivariateFinite{ScientificTypesBase.Multiclass{2}} 
          ┌                                        ┐ 
-   &lt;=50K ┤■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 0.9   
-    &gt;50K ┤■■■■ 0.1                                  
+   &lt;=50K ┤■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 0.94   
+    &gt;50K ┤■■ 0.06                                   
          └                                        ┘ </code></pre><pre><code class="language- hljs">ypoint = mode.(yprob)
 ypoint = predict_mode(mach, rows=test) # same thing
-accuracy(ypoint, y[test])</code></pre><pre><code class="nohighlight hljs">0.7819521932743001</code></pre><pre><code class="language- hljs">log_loss(yprob, y[test])</code></pre><pre><code class="nohighlight hljs">1.5469870467696316</code></pre><p>Evaluate with one command:</p><pre><code class="language- hljs">evaluate(
+accuracy(ypoint, y[test])</code></pre><pre><code class="nohighlight hljs">0.7830270768285816</code></pre><pre><code class="language- hljs">log_loss(yprob, y[test])</code></pre><pre><code class="nohighlight hljs">1.6401273020819653</code></pre><p>Evaluate with one command:</p><pre><code class="language- hljs">evaluate(
     model, Xhot, y;
     resampling=Holdout(fraction_train=0.6),
     measures = [accuracy, log_loss],
@@ -296,13 +296,13 @@ accuracy(ypoint, y[test])</code></pre><pre><code class="nohighlight hljs">0.7819
   per_fold, per_observation,
   fitted_params_per_fold, report_per_fold,
   train_test_rows, resampling, repeats
-Tag: RandomForestClassifier-165
+Tag: RandomForestClassifier-818
 Extract:
 ┌──────────────────────┬──────────────┬─────────────┐
 │ measure              │ operation    │ measurement │
 ├──────────────────────┼──────────────┼─────────────┤
-│ Accuracy()           │ predict_mode │ 0.78        │
-│ LogLoss(             │ predict      │ 1.54        │
+│ Accuracy()           │ predict_mode │ 0.781       │
+│ LogLoss(             │ predict      │ 1.56        │
 │   tol = 2.22045e-16) │              │             │
 └──────────────────────┴──────────────┴─────────────┘
 Apply `describe` to this result for a named tuple summary.</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../../../">« Home</a><a class="docs-footer-nextpage" href="../../02_model_composition/notebook/">2. Model Composition »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Saturday 17 October 2026 07:46">Saturday 17 October 2026</span>. Using Julia version 1.13.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
