@@ -77,22 +77,17 @@ jobs:
         shell: bash
         run: |
           cat > "${{ runner.temp }}/pr-body.md" <<'EOF'
-          This pull request replaces \#${{ github.event.pull_request.number }} as it additionally commits new or regenerated notebook markdown files, plot SVG's, etc.
+          This pull request **REPLACES** \#${{ github.event.pull_request.number }} as it additionally commits new or regenerated notebook markdown files, plot SVG's, etc.
 
           **Instructions**
 
-          **Accept the invitation to run pending workflows.** If none are apparent, then
-          close and immediately re-open this pull request. When CI finishes running, you can preview
-          the new documentation [here](https://JuliaAI.github.io/MLJTutorial.jl/previews/PR__SPAWNED_PR_NUMBER__).
+          **Accept the invitation to run pending workflows.** If none are apparent, then close and immediately re-open this pull request. When CI finishes running, you can preview the new documentation [here](https://JuliaAI.github.io/MLJTutorial.jl/previews/PR__SPAWNED_PR_NUMBER__).
 
-          If happy with the preview, merge this pull request
-          to trigger deployment of the new docs to gh-pages.
+          If happy with the preview, merge this pull request to trigger deployment of the new docs to gh-pages.
 
-          You can check repository "Actions" to check when deployment is complete.
-          You should see: ✅ **pages build and deployment**
+          You can check repository "Actions" to check when deployment is complete. You should see: ✅ **pages build and deployment**
 
-          This pull request will automatically update if additional commits are successfully
-          added to the parent pull request, \#${{ github.event.pull_request.number }}.
+          This pull request will automatically update if additional commits are successfully added to the parent pull request, \#${{ github.event.pull_request.number }}.
           EOF
 
       - name: Create pull request for adding new notebook markdown
@@ -127,9 +122,6 @@ jobs:
           message: |
             **Attention**
             
-            A notebook or Project.toml file has changed and new notebook 
-            markdown has been generated. Review \#${{ steps.spawn_pr.outputs.pull-request-number }}
-            to commit the changes and
-            update the documentation on gh-pages, as this will need to be regenerated.
-            This PR can be **closed** at any time.
+            A notebook or Project.toml file has changed and new notebook markdown has been generated. **Review** \#${{ steps.spawn_pr.outputs.pull-request-number }}, which **replaces** the current PR, to commit the changes and update the documentation on gh-pages.
+            This PR can be **CLOSED** at any time.
 
