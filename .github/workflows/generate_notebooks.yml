@@ -84,7 +84,7 @@ jobs:
 
           **Instructions**
 
-          **Accept the invitation to run pending workflows.** If none are apparent, then close and immediately re-open this pull request. When CI finishes running, you can preview the new documentation [here](https://JuliaAI.github.io/MLJTutorial.jl/previews/PR__SPAWNED_PR_NUMBER__).
+
 
           If happy with the preview, merge this pull request to trigger deployment of the new docs to gh-pages.
 
