@@ -12,6 +12,9 @@ jobs:
       (github.event_name == 'pull_request' && !startsWith(github.head_ref, 'auto-update-notebooks')) ||
       (github.event_name == 'push' && !startsWith(github.ref_name, 'auto-update-notebooks'))
     runs-on: ubuntu-latest
+    permissions:
+      contents: write        # to push the auto-update-notebooks branch
+      pull-requests: write   # to create/edit the replacement pull request
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -90,38 +93,71 @@ jobs:
           This pull request will automatically update if additional commits are successfully added to the parent pull request, \#${{ github.event.pull_request.number }}.
           EOF
 
-      - name: Create pull request for adding new notebook markdown
+      # We deliberately do NOT use peter-evans/create-pull-request here. When its
+      # `base` input names a branch other than the checked-out ref, that action
+      # rebases *only the changes made during the workflow* onto the base, which
+      # discards the parent pull request's own commits. We want the spawned pull
+      # request to be a drop-in replacement for the parent, so we branch directly
+      # from the checked-out HEAD instead. For a `pull_request` event that HEAD is
+      # the merge commit (the parent's branch merged into its base), so the branch
+      # diffs against the base as "parent's changes + newly generated files".
+      - name: Create or update the replacement pull request
         id: spawn_pr
-        uses: peter-evans/create-pull-request@v8
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "update notebook markdown"
-          branch: auto-update-notebooks
-          base: ${{ github.base_ref }}
-          title: "Commit Notebook Markdown Changes"
-          body-path: ${{ runner.temp }}/pr-body.md
-          delete-branch: true
-
-      # The body above cannot reference the spawned pull request's own number, because
-      # `steps.spawn_pr.outputs.*` is not set until after that step completes. So we
-      # substitute the real number into the body here instead.
-      - name: Insert preview link into the pull request body
-        if: steps.spawn_pr.outputs.pull-request-number != ''
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ steps.spawn_pr.outputs.pull-request-number }}
+          BASE: ${{ github.base_ref }}
+          BRANCH: auto-update-notebooks
+          BODY_FILE: ${{ runner.temp }}/pr-body.md
         run: |
-          sed -i "s/__SPAWNED_PR_NUMBER__/${PR_NUMBER}/g" "${{ runner.temp }}/pr-body.md"
-          gh pr edit "$PR_NUMBER" --body-file "${{ runner.temp }}/pr-body.md"
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -B "$BRANCH"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No regenerated notebook files to commit; nothing to do."
+            exit 0
+          fi
+          git commit -m "update notebook markdown"
+          git push --force origin "$BRANCH"
+
+          number=$(gh pr list --head "$BRANCH" --base "$BASE" --state open \
+                     --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            echo "operation=updated" >> "$GITHUB_OUTPUT"
+          else
+            url=$(gh pr create --head "$BRANCH" --base "$BASE" \
+                    --title "Commit Notebook Markdown Changes" \
+                    --body-file "$BODY_FILE")
+            number="${url##*/}"
+            echo "operation=created" >> "$GITHUB_OUTPUT"
+          fi
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+
+      # The body composed above cannot reference the spawned pull request's own
+      # number, because that number does not exist until the pull request does.
+      - name: Insert preview link into the pull request body
+        if: steps.spawn_pr.outputs.number != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.spawn_pr.outputs.number }}
+          BODY_FILE: ${{ runner.temp }}/pr-body.md
+        run: |
+          set -euo pipefail
+          sed -i "s/__SPAWNED_PR_NUMBER__/${PR_NUMBER}/g" "$BODY_FILE"
+          gh pr edit "$PR_NUMBER" --body-file "$BODY_FILE"
 
       - name: Post comment flagging further action required
-        if: steps.spawn_pr.outputs.pull-request-operation == 'created'
+        if: steps.spawn_pr.outputs.operation == 'created'
         uses: mshick/add-pr-comment@v3
         with:
           message: |
             **Attention**
             
-            A notebook or Project.toml file has changed and new notebook markdown has been generated. **Review** \#${{ steps.spawn_pr.outputs.pull-request-number }}, which **replaces** the current PR, to commit the changes and update the documentation on gh-pages.
+            A notebook or Project.toml file has changed and new notebook markdown has been generated. **Review** \#${{ steps.spawn_pr.outputs.number }}, which **replaces** the current PR, to commit the changes and update the documentation on gh-pages.
             This PR can be **CLOSED** at any time.
 
